@@ -1,17 +1,20 @@
 #pragma once
+#include <string>
 
-enum Types {TOWER, KING, QUEEN, BISHOP, KNIGHT, PAWN };
+enum Types {TOWER, KING, QUEEN, BISHOP, KNIGHT, PAWN};
 enum Colors {WHITE, BLACK};
 
 class Piece
 {
 private:
-	//int _letterLocation;
-	//int _numberLocation;
-	int _color;
-	int _type;
+	Colors _color;
+	Types _type;
+	// Might turn out to be uneeded
+	int _letterLocation;
+	int _numberLocation;
+
 public:
-	Piece(int color, int type, int row, int col);
+	Piece(Colors color, Types type, int row, int col);
 	virtual ~Piece();
 	int getType();
 	int getColor();
