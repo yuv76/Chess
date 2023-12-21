@@ -19,7 +19,4 @@ public:
 	void sendNextMove();
 	void startGame(Colors FirstPlayer);
 	MsgCode turn(std::string move); // might help
-
-
-
 };
