@@ -1,19 +1,21 @@
 #include "Bishop.h"
 
 /*
-
+C'tor for Bishop object
+input: bishop's color, typerow and column
+output: none.
 */
 Bishop::Bishop(Colors color, Types type, int row, int col) :
 	Piece(color, type, row, col)
 {}
 
 /*
-
+D'tor for bishop object
+input: none.
+output: none.
 */
 Bishop::~Bishop()
-{
-
-}
+{}
 
 /*
 

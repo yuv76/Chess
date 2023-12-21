@@ -1,19 +1,21 @@
 #include "Tower.h"
 
 /*
-
+C'tor for Tower object
+input: tower's color, type, row and column
+output: none.
 */
 Tower::Tower(Colors color, Types type, int row, int col) :
 	Piece(color, type, row, col)
 {}
 
 /*
-
+D'tor for tower object
+input: none
+output: none
 */
 Tower::~Tower()
-{
-
-}
+{}
 
 /*
 

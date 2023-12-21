@@ -1,8 +1,8 @@
 #include "Piece.h"
 
 /*
-C'tor for Piece class
-input: color, type, row, col.
+C'tor for Piece object
+input: Piece's color, type, row, column.
 output: none.
 */
 Piece::Piece(Colors color, Types type, int row, int col):
@@ -10,7 +10,7 @@ Piece::Piece(Colors color, Types type, int row, int col):
 {}
 
 /*
-D'tor for Piece class
+D'tor for Piece object
 input: none.
 output: none.
 */
