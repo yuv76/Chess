@@ -16,8 +16,8 @@ private:
 public:
 	Piece(Colors color, Types type, int row, int col);
 	virtual ~Piece();
-	int getType();
-	int getColor();
+	Types getType();
+	Colors getColor();
 	virtual bool canBeMoved(int sourceRow, int sourceCol, int dest, int destCol) = 0;
 	virtual bool canEatKing(int row, int col) = 0;
 };
