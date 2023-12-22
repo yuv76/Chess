@@ -15,12 +15,6 @@ output: none
 Board::Board()
 {
 	int i = 0, j = 0;
-
-	this->_pieces = new Piece** [ROWS];
-	for (i = 0; i < ROWS; i++)
-	{
-		this->_pieces[i] = new Piece* [COLS];
-	}
 	
 	//first white line
 	this->_pieces[0][0] = new Tower(WHITE, TOWER, 0, 0);
@@ -31,13 +25,15 @@ Board::Board()
 	this->_pieces[0][5] = new Bishop(WHITE, BISHOP, 0, 5);
 	this->_pieces[0][6] = new knight(WHITE, KNIGHT, 0, 6);
 	this->_pieces[0][7] = new Tower(WHITE, TOWER, 0, 7);
+
 	//pawn white line
 	for (i = 0; i < COLS; i++)
 	{
 		this->_pieces[1][i] = new Pawn(WHITE, PAWN, 1, i);
 	}
+
 	//four blank lines
-	for (i = 0; i < MUN_OF_BLANK_START_LINES; i++)
+	for (i = 2; i < MUN_OF_BLANK_START_LINES + 2; i++)
 	{
 		for (j = 0; j < COLS; j++)
 		{
@@ -49,6 +45,7 @@ Board::Board()
 	{
 		this->_pieces[6][i] = new Pawn(BLACK, PAWN, 6, i);
 	}
+
 	//black first line
 	this->_pieces[7][0] = new Tower(BLACK, TOWER, 7, 0);
 	this->_pieces[7][1] = new knight(BLACK, KNIGHT, 7, 1);
@@ -61,15 +58,15 @@ Board::Board()
 }
 
 /*
-D'tor for board object.
-input: none
-output: none
+D'tor for board object, free all memory.
+input: none.
+output: none.
 */
 Board::~Board()
 {
 	int i = 0, j = 0;
 
-	for (i = 0, i < ROWS; i++)
+	for (i = 0; i < ROWS; i++)
 	{
 		for (j = 0; j < COLS; j++)
 		{
@@ -79,22 +76,28 @@ Board::~Board()
 			}
 		}
 	}
+
+	/*
+	* I don't think it's needed after the changes I added to the array.
 	for (i = 0; i < ROWS; i++)
 	{
 		delete[] this->_pieces[i];
 	}
 	delete[] this->_pieces;
+	*/
 }
 
 /*
+* This function made errors and I did not understand what it does.
 returns triple pointer to the pieces 2d array
 input: none
 output: the triple pointer
-*/
-Piece*** Board::getPieces()
+
+Piece* Board::getPieces()
 {
 	return this->_pieces;
 }
+*/
 
 /*
 

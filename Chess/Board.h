@@ -1,6 +1,7 @@
 #pragma once
 #include "Piece.h"
 
+#define BOARD_SIZE 64
 #define ROWS 8
 #define COLS 8
 #define MUN_OF_BLANK_START_LINES 4
@@ -8,8 +9,8 @@
 class Board
 {
 private:
-	Piece*** _pieces;
-	//std::string _kingPosition;
+	Piece* _pieces[ROWS][COLS];
+	//std::string _kingPosition;	good idea
 public:
 	Board();
 	~Board();
