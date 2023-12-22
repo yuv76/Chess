@@ -18,19 +18,20 @@ Board::Board()
 	
 	//first white line
 	this->_pieces[0][0] = new Tower(WHITE, TOWER, 0, 0);
-	this->_pieces[0][1] = new knight(WHITE, KNIGHT, 0, 1);
-	this->_pieces[0][2] = new Bishop(WHITE, BISHOP, 0, 2);
-	this->_pieces[0][3] = new King(WHITE, KING, 0, 3);
-	this->_pieces[0][4] = new Queen(WHITE, QUEEN, 0, 4);
-	this->_pieces[0][5] = new Bishop(WHITE, BISHOP, 0, 5);
-	this->_pieces[0][6] = new knight(WHITE, KNIGHT, 0, 6);
-	this->_pieces[0][7] = new Tower(WHITE, TOWER, 0, 7);
-
+	this->_pieces[0][1] = nullptr;//new knight(WHITE, KNIGHT, 0, 1);
+	this->_pieces[0][2] = nullptr;//new Bishop(WHITE, BISHOP, 0, 2);
+	this->_pieces[0][3] = nullptr;//new King(WHITE, KING, 0, 3);
+	this->_pieces[0][4] = nullptr;//new Queen(WHITE, QUEEN, 0, 4);
+	this->_pieces[0][5] = nullptr;//new Bishop(WHITE, BISHOP, 0, 5);
+	this->_pieces[0][6] = nullptr;//new knight(WHITE, KNIGHT, 0, 6);
+	this->_pieces[0][7] = nullptr;//new Tower(WHITE, TOWER, 0, 7);
+	/*
 	//pawn white line
 	for (i = 0; i < COLS; i++)
 	{
 		this->_pieces[1][i] = new Pawn(WHITE, PAWN, 1, i);
 	}
+	*/
 
 	//four blank lines
 	for (i = 2; i < MUN_OF_BLANK_START_LINES + 2; i++)
@@ -40,20 +41,22 @@ Board::Board()
 			this->_pieces[i][j] = nullptr;
 		}
 	}
+	/*
 	//pawn black line
 	for (i = 0; i < COLS; i++)
 	{
 		this->_pieces[6][i] = new Pawn(BLACK, PAWN, 6, i);
 	}
+	*/
 
 	//black first line
 	this->_pieces[7][0] = new Tower(BLACK, TOWER, 7, 0);
-	this->_pieces[7][1] = new knight(BLACK, KNIGHT, 7, 1);
-	this->_pieces[7][2] = new Bishop(BLACK, BISHOP, 7, 2);
-	this->_pieces[7][3] = new King(BLACK, KING, 7, 3);
-	this->_pieces[7][4] = new Queen(BLACK, QUEEN, 7, 4);
-	this->_pieces[7][5] = new Bishop(BLACK, BISHOP, 7, 5);
-	this->_pieces[7][6] = new knight(BLACK, KNIGHT, 7, 6);
+	this->_pieces[7][1] = nullptr;//new knight(BLACK, KNIGHT, 7, 1);
+	this->_pieces[7][2] = nullptr;//new Bishop(BLACK, BISHOP, 7, 2);
+	this->_pieces[7][3] = nullptr;//new King(BLACK, KING, 7, 3);
+	this->_pieces[7][4] = nullptr;//new Queen(BLACK, QUEEN, 7, 4);
+	this->_pieces[7][5] = nullptr;//new Bishop(BLACK, BISHOP, 7, 5);
+	this->_pieces[7][6] = nullptr;//new knight(BLACK, KNIGHT, 7, 6);
 	this->_pieces[7][7] = new Tower(BLACK, TOWER, 7, 7);
 	
 	this->_blackKingPosition[0] = 7;
@@ -96,7 +99,7 @@ bool Board::move(std::string move)
 /*
 
 */
-bool Board::isTaken(std::string dest)
+MsgCode Board::isTaken(int row, int col, bool isSource)
 {
 
 }
@@ -120,7 +123,7 @@ bool Board::isEating(std::string move)
 /*
 
 */
-bool Board::checkIfChess(std::string move)
+MsgCode Board::checkIfChess(std::string move)
 {
 
 }
@@ -128,7 +131,7 @@ bool Board::checkIfChess(std::string move)
 /*
 
 */
-bool Board::checkIfCheckmate(std::string move)
+MsgCode Board::checkIfCheckmate(std::string move)
 {
 
 }
@@ -175,4 +178,12 @@ void Board::printBoard()
 		}
 		std::cout << std::endl;
 	}
+}
+
+/*
+
+*/
+MsgCode canEatKing(int row, int col)
+{
+
 }
