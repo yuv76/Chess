@@ -32,3 +32,24 @@ bool Tower::canEatKing(int row, int col)
 {
 
 }
+
+/*
+the << operator, will print R uppercase if white or lowercase if black
+input: stream, Knight
+output: stream with the letter
+*/
+std::ostream& operator<<(std::ostream& os, Tower& tow)
+{
+	char expression = ' ';
+
+	if (tow.getColor() == WHITE)
+	{
+		expression = WHITE_TOWER;
+	}
+	else
+	{
+		expression = BLACK_TOWER;
+	}
+	os << expression;
+	return os;
+}

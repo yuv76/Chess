@@ -51,3 +51,24 @@ bool Pawn::canEat(int row, int col)
 {
 
 }
+
+/*
+the << operator, will print P uppercase if white or lowercase if black
+input: stream, Knight
+output: stream with the letter
+*/
+std::ostream& operator<<(std::ostream& os, Pawn& paw)
+{
+	char expression = ' ';
+
+	if (paw.getColor() == WHITE)
+	{
+		expression = WHITE_PAWN;
+	}
+	else
+	{
+		expression = BLACK_PAWN;
+	}
+	os << expression;
+	return os;
+}

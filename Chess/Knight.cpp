@@ -34,3 +34,24 @@ bool knight::canEatKing(int row, int col)
 {
 
 }
+
+/*
+the << operator, will print N uppercase if white or lowercase if black
+input: stream, Knight
+output: stream with the letter
+*/
+std::ostream& operator<<(std::ostream& os, knight& knig)
+{
+	char expression = ' ';
+
+	if (knig.getColor() == WHITE)
+	{
+		expression = WHITE_KNIGHT;
+	}
+	else
+	{
+		expression = BlACK_KNIGHT;
+	}
+	os << expression;
+	return os;
+}

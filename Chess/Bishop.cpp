@@ -32,3 +32,24 @@ bool Bishop::canEatKing(int row, int col)
 {
 
 }
+
+/*
+the << operator, will print B uppercase if white or lowercase if black
+input: stream, bishop
+output: stream with the letter
+*/
+std::ostream& operator<<(std::ostream& os, Bishop& bish)
+{
+	char expression = ' ';
+
+	if (bish.getColor() == WHITE)
+	{
+		expression = WHITE_BISHOP;
+	}
+	else
+	{
+		expression = BlACK_BISHOP;
+	}
+	os << expression;
+	return os;
+}

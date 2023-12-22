@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <iostream>
 
 enum Types {TOWER, KING, QUEEN, BISHOP, KNIGHT, PAWN};
 enum Colors {WHITE, BLACK};

@@ -55,6 +55,13 @@ Board::Board()
 	this->_pieces[7][5] = new Bishop(BLACK, BISHOP, 7, 5);
 	this->_pieces[7][6] = new knight(BLACK, KNIGHT, 7, 6);
 	this->_pieces[7][7] = new Tower(BLACK, TOWER, 7, 7);
+	
+	this->_blackKingPosition[0] = 7;
+	this->_blackKingPosition[1] = 3;
+
+	this->_whiteKingPosition[0] = 0;
+	this->_whiteKingPosition[1] = 3;
+
 }
 
 /*
@@ -76,28 +83,7 @@ Board::~Board()
 			}
 		}
 	}
-
-	/*
-	* I don't think it's needed after the changes I added to the array.
-	for (i = 0; i < ROWS; i++)
-	{
-		delete[] this->_pieces[i];
-	}
-	delete[] this->_pieces;
-	*/
 }
-
-/*
-* This function made errors and I did not understand what it does.
-returns triple pointer to the pieces 2d array
-input: none
-output: the triple pointer
-
-Piece* Board::getPieces()
-{
-	return this->_pieces;
-}
-*/
 
 /*
 
@@ -153,4 +139,40 @@ bool Board::checkIfCheckmate(std::string move)
 std::string Board::toString()
 {
 
+}
+
+/*
+returns a pointer to the Piece on the board on position[row][col]
+input: the row and column indexes
+output: the piece in the position's pointer
+*/
+Piece* Board::operator()(int rowIndex, int colIndex)
+{
+	return this->_pieces[rowIndex][colIndex];
+}
+
+/*
+prints board to stream
+input: none
+output: none
+*/
+void Board::printBoard()
+{
+	int i = 0, j = 0;
+
+	for (i = 0; i < ROWS; i++)
+	{
+		for (j = 0; j < COLS; j++)
+		{
+			if (this->_pieces[i][j] != nullptr)
+			{
+				std::cout << this->_pieces[i][j] << " ";
+			}
+			else
+			{
+				std::cout << BLANK_POS << " ";
+			}
+		}
+		std::cout << std::endl;
+	}
 }
