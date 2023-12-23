@@ -31,8 +31,6 @@ public:
 	Board();
 	~Board();
 	MsgCode move(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
-	MsgCode movePawn(int sourceRow, int destRow, int sourceCol, int destCol, Piece* pawn, Colors turn);
-	void eat(int sourceRow, int destRow, int sourceCol, int destCol, Colors turn);
 	bool isEating(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
 	bool isTaken(int row, int col, Colors turn);
 	MsgCode checkIfChess(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);

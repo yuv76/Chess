@@ -15,7 +15,8 @@ output: none
 Board::Board()
 {
 	int i = 0, j = 0;
-	
+	this->_pieces[2][1] = new Bishop(BLACK, BISHOP, 2, 1);
+
 	//first white line
 	this->_pieces[0][0] = new Tower(WHITE, TOWER, 0, 0);
 	this->_pieces[0][1] = new knight(WHITE, KNIGHT, 0, 1);
@@ -127,39 +128,31 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 	if (sourceRow < ROWS && destRow < ROWS && sourceCol < COLS && destCol < COLS) 
 	{
 		piece = this->_pieces[sourceRow][sourceCol];
-
-		if (piece->getType() == PAWN)
-		{
-			movePawn(sourceRow, destRow, sourceCol, destCol, piece, turn);
-			return ILLEGAL_TOOL_MOVE; //pawn is not yet supported.
-		}
 		
-		if (piece->canBeMoved(sourceRow, sourceCol, destRow, destCol)) //check if move is legal for peace
+		if (piece->canEat(sourceRow, sourceCol, destRow, destCol) || piece->canBeMoved(sourceRow, sourceCol, destRow, destCol))
 		{
-			if (piece->canEat(sourceRow, sourceCol, destRow, destCol))
+			/*if (checkIfChess(sourceRow, sourceCol, destRow, destCol, turn)) //check if there was chess
 			{
-				/*if (checkIfChess(sourceRow, sourceCol, destRow, destCol, turn)) //check if there was chess
-				{
-					_pieces[destRow][destCol] = _pieces[sourceRow][sourceCol];
-					_pieces[sourceRow][sourceCol] = nullptr;
-					return	CAUSE_CHESS;
-				}
-				*/
-
-				//if there was mate
-				/*if (checkIfCheckmate(sourceRow, sourceCol, destRow, destCol, turn))
-				{
-					_pieces[destRow][destCol] = _pieces[sourceRow][sourceCol];
-					_pieces[sourceRow][sourceCol] = nullptr;
-					return	CHECKMATE;
-				}
-				*/
-
-				//everything is valid
 				_pieces[destRow][destCol] = _pieces[sourceRow][sourceCol];
 				_pieces[sourceRow][sourceCol] = nullptr;
+				return	CAUSE_CHESS;
 			}
+			*/
+
+			//if there was mate
+			/*if (checkIfCheckmate(sourceRow, sourceCol, destRow, destCol, turn))
+			{
+				_pieces[destRow][destCol] = _pieces[sourceRow][sourceCol];
+				_pieces[sourceRow][sourceCol] = nullptr;
+				return	CHECKMATE;
+			}
+			*/
+
+			//everything is valid
+			_pieces[destRow][destCol] = _pieces[sourceRow][sourceCol];
+			_pieces[sourceRow][sourceCol] = nullptr;
 		}
+		
 		else
 		{
 			return ILLEGAL_TOOL_MOVE;
@@ -172,52 +165,6 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 	return VALID;
 }
 
-
-
-MsgCode Board::movePawn(int sourceRow, int destRow, int sourceCol, int destCol, Piece* pawn, Colors turn)
-{	
-	if (pawn->canBeMoved(sourceRow, sourceCol, destRow, destCol))
-	{
-		_pieces[destRow][destCol] = _pieces[sourceRow][sourceCol];
-		_pieces[sourceRow][sourceCol] = nullptr;
-	}
-	if (turn == WHITE)
-	{
-		if (isTaken(destRow, destCol, BLACK))
-		{
-			if (pawn->canEat(sourceRow, sourceCol, destRow, destCol))
-			{
-				_pieces[destRow][destCol] = _pieces[sourceRow][sourceCol];
-				_pieces[sourceRow][sourceCol] = nullptr;
-				return VALID;
-			}
-			else
-			{
-				return ILLEGAL_TOOL_MOVE;
-			}
-		}
-	}
-	else
-	{
-		if (isTaken(destRow, destCol, WHITE))
-		{
-			if (pawn->canEat(sourceRow, sourceCol, destRow, destCol))
-			{
-				return VALID;
-			}
-		}
-		else
-		{
-			return ILLEGAL_TOOL_MOVE;
-		}
-	}
-}
-
-
-void eat(int sourceRow, int destRow, int sourceCol, int destCol, Colors turn)
-{
-
-}
 
 /*
 function checks if location ([row][col]) is taken by the player that it's his turn (black/white).
