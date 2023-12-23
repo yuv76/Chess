@@ -36,11 +36,11 @@ the << operator, will print R uppercase if white or lowercase if black
 input: stream, Knight
 output: stream with the letter
 */
-std::ostream& operator<<(std::ostream& os, Tower& tow)
+std::ostream& operator<<(std::ostream& os, const Tower& tower)
 {
 	char expression = ' ';
 
-	if (tow.getColor() == WHITE)
+	if (tower.getColor() == WHITE)
 	{
 		expression = WHITE_TOWER;
 	}

@@ -2,6 +2,7 @@
 #include <string>
 #include <iostream>
 
+
 enum Types {TOWER, KING, QUEEN, BISHOP, KNIGHT, PAWN};
 enum Colors {WHITE, BLACK};
 
@@ -9,7 +10,7 @@ enum Colors {WHITE, BLACK};
 
 class Piece
 {
-private:
+protected:
 	Colors _color;
 	Types _type;
 	// Might turn out to be unneeded
@@ -19,7 +20,8 @@ private:
 public:
 	Piece(Colors color, Types type, int row, int col);
 	virtual ~Piece();
-	Types getType();
-	Colors getColor();
+	Types getType() const;
+	Colors getColor() const;
+	bool canEat(int sourceRow, int sourceCol, int destRow, int destCol) const;
 	virtual bool canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) const = 0;
 };

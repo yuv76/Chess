@@ -130,33 +130,35 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 
 		if (piece->getType() == PAWN)
 		{
-			//movePawn(sourceRow, destRow, sourceCol, destCol, piece, turn);
+			movePawn(sourceRow, destRow, sourceCol, destCol, piece, turn);
 			return ILLEGAL_TOOL_MOVE; //pawn is not yet supported.
 		}
 		
 		if (piece->canBeMoved(sourceRow, sourceCol, destRow, destCol)) //check if move is legal for peace
 		{
-
-			/*if (checkIfChess(sourceRow, sourceCol, destRow, destCol, turn)) //check if there was chess
+			if (piece->canEat(sourceRow, sourceCol, destRow, destCol))
 			{
+				/*if (checkIfChess(sourceRow, sourceCol, destRow, destCol, turn)) //check if there was chess
+				{
+					_pieces[destRow][destCol] = _pieces[sourceRow][sourceCol];
+					_pieces[sourceRow][sourceCol] = nullptr;
+					return	CAUSE_CHESS;
+				}
+				*/
+
+				//if there was mate
+				/*if (checkIfCheckmate(sourceRow, sourceCol, destRow, destCol, turn))
+				{
+					_pieces[destRow][destCol] = _pieces[sourceRow][sourceCol];
+					_pieces[sourceRow][sourceCol] = nullptr;
+					return	CHECKMATE;
+				}
+				*/
+
+				//everything is valid
 				_pieces[destRow][destCol] = _pieces[sourceRow][sourceCol];
 				_pieces[sourceRow][sourceCol] = nullptr;
-				return	CAUSE_CHESS;
 			}
-			*/
-
-			//if there was mate
-			/*if (checkIfCheckmate(sourceRow, sourceCol, destRow, destCol, turn))
-			{
-				_pieces[destRow][destCol] = _pieces[sourceRow][sourceCol];
-				_pieces[sourceRow][sourceCol] = nullptr;
-				return	CHECKMATE;
-			}
-			*/
-
-			//everything is normal
-			_pieces[destRow][destCol] = _pieces[sourceRow][sourceCol];
-			_pieces[sourceRow][sourceCol] = nullptr;
 		}
 		else
 		{
@@ -171,8 +173,8 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 }
 
 
-/*
-MsgCode Board::movePawn(int sourceRow, int destRow, int sourceCol, int destCol, Pawn* pawn, Colors turn)
+
+MsgCode Board::movePawn(int sourceRow, int destRow, int sourceCol, int destCol, Piece* pawn, Colors turn)
 {	
 	if (pawn->canBeMoved(sourceRow, sourceCol, destRow, destCol))
 	{
@@ -185,7 +187,8 @@ MsgCode Board::movePawn(int sourceRow, int destRow, int sourceCol, int destCol, 
 		{
 			if (pawn->canEat(sourceRow, sourceCol, destRow, destCol))
 			{
-				eat(sourceRow, destRow, sourceCol, destCol, turn);
+				_pieces[destRow][destCol] = _pieces[sourceRow][sourceCol];
+				_pieces[sourceRow][sourceCol] = nullptr;
 				return VALID;
 			}
 			else
@@ -200,7 +203,6 @@ MsgCode Board::movePawn(int sourceRow, int destRow, int sourceCol, int destCol, 
 		{
 			if (pawn->canEat(sourceRow, sourceCol, destRow, destCol))
 			{
-				eat(sourceRow, destRow, sourceCol, destCol, turn);
 				return VALID;
 			}
 		}
@@ -210,7 +212,7 @@ MsgCode Board::movePawn(int sourceRow, int destRow, int sourceCol, int destCol, 
 		}
 	}
 }
-*/
+
 
 void eat(int sourceRow, int destRow, int sourceCol, int destCol, Colors turn)
 {
@@ -240,21 +242,23 @@ bool Board::isTaken(int row, int col, Colors turn)
 /*
 bool Board::isEating(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
 {
-
+	
 }
 */
 
 /*
 MsgCode Board::checkIfChess(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
 {
-
+	* go over all the pieces and check if the can move to the king.
+	* if at least one of them can it's chess
 }
 */
 
 /*
 MsgCode Board::checkIfCheckmate(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
 {
-
+	* check if chess on all pf the king's routs and on his curr place
+	* if yes then it's checkmate
 }
 */
 

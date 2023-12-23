@@ -22,7 +22,7 @@ returns Piece's type.
 input: none.
 output: the Piece's type (from Types enum)
 */
-Types Piece::getType()
+Types Piece::getType() const
 {
 	return this->_type;
 }
@@ -32,7 +32,16 @@ Returns Piece's color.
 input: none.
 output: the color (from Colors enum)
 */
-Colors Piece::getColor()
+Colors Piece::getColor() const
 {
 	return this->_color;
+}
+
+bool Piece::canEat(int sourceRow, int sourceCol, int destRow, int destCol) const
+{
+	if (this->canBeMoved(sourceRow, sourceCol, destRow, destCol))
+	{
+		return true;
+	}
+	return false;
 }
