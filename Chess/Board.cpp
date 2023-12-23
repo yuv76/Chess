@@ -102,7 +102,7 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 	}
 
 	//invalid move, can't go on the same pose as teammate. 
-	if (isTaken(destRow, destCol, turn))
+	if (this->isTaken(destRow, destCol, turn))
 	{
 		return PIECE_IN_DEST;
 	}
@@ -110,23 +110,23 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 	//invalid move, no piece of the curr player in source.
 	if (turn == WHITE)
 	{
-		if (isTaken(sourceRow, sourceCol, BLACK))
+		if (this->isTaken(sourceRow, sourceCol, BLACK))
 		{
 			return NO_PIECE;
 		}
 	}
 	if (turn == BLACK)
 	{
-		if (isTaken(sourceRow, sourceCol, WHITE))
+		if (this->isTaken(sourceRow, sourceCol, WHITE))
 		{
 			return NO_PIECE;
 		}
 	}
 
-
-	if (sourceRow < ROWS && destRow < ROWS && sourceCol < COLS && destCol < COLS) //check if move is out of range
+	//check if move is out of range
+	if (sourceRow < ROWS && destRow < ROWS && sourceCol < COLS && destCol < COLS) 
 	{
-		piece = _pieces[sourceRow][sourceCol];
+		piece = this->_pieces[sourceRow][sourceCol];
 
 		if (piece->getType() == PAWN)
 		{
@@ -224,6 +224,10 @@ output: true if location is taken and false if not.
 */
 bool Board::isTaken(int row, int col, Colors turn)
 {
+	if (this->_pieces[row][col] == nullptr)
+	{
+		return false;
+	}
 	if (this->_pieces[row][col]->getColor() == turn) //if the location has a player from the same color.
 	{
 		return true;
