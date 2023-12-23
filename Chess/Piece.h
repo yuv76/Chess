@@ -6,6 +6,8 @@ enum Types {TOWER, KING, QUEEN, BISHOP, KNIGHT, PAWN};
 enum Colors {WHITE, BLACK};
 enum MsgCode {VALID, CHESS, NO_PIECE, PIECE_IN_DEST, CAUSE_CHESS, INVALID_INDEXES, ILLEGAL_TOOL_MOVE, SAME_POS, CHECKMATE};
 
+#define MAX_ROW_AND_COL 8
+
 class Piece
 {
 private:
@@ -20,5 +22,5 @@ public:
 	virtual ~Piece();
 	Types getType();
 	Colors getColor();
-	virtual MsgCode canBeMoved(int sourceRow, int sourceCol, int dest, int destCol) = 0;
+	virtual bool canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) = 0;
 };

@@ -20,17 +20,13 @@ Tower::~Tower()
 /*
 
 */
-bool Tower::canBeMoved(int sourceRow, int sourceCol, int dest, int destCol)
+bool Tower::canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol)
 {
-
-}
-
-/*
-
-*/
-bool Tower::canEatKing(int row, int col)
-{
-
+	if ((sourceRow == destRow || sourceCol == destCol) && destRow < MAX_ROW_AND_COL && destCol < MAX_ROW_AND_COL && sourceRow < MAX_ROW_AND_COL && sourceCol < MAX_ROW_AND_COL) //out of range
+	{
+		return true;
+	}
+	return false;
 }
 
 /*

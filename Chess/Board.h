@@ -29,7 +29,7 @@ public:
 	MsgCode isTaken(int row, int col, bool isSource);
 	MsgCode checkIfChess(std::string move);
 	MsgCode checkIfCheckmate(std::string move);
-	MsgCode canEatKing(int row, int col);
+	MsgCode canOtherKingGetEaten(int row, int col);
 	std::string toString();
 	Piece* operator()(int rowIndex, int colIndex);
 

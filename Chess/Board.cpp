@@ -101,7 +101,7 @@ bool Board::move(std::string move)
 */
 MsgCode Board::isTaken(int row, int col, bool isSource)
 {
-
+	
 }
 
 /*
