@@ -9,7 +9,7 @@ class Tower : public Piece
 public:
 	Tower(Colors color, Types type, int row, int col);
 	virtual ~Tower();
-	bool canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) override;
+	bool canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) const override;
 
 	friend std::ostream& operator<<(std::ostream& os, Tower& tow);
 };

@@ -22,7 +22,7 @@ function checks if tower can move in this direction.
 input: source row and col, dest row and col.
 output: true if can be moved and false if not.
 */
-bool Tower::canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol)
+bool Tower::canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) const
 {
 	if (sourceRow == destRow || sourceCol == destCol)
 	{

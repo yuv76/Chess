@@ -18,20 +18,19 @@ Bishop::~Bishop()
 {}
 
 /*
-
+function checks if Bishop can move in this direction.
+input: source row and col, dest row and col.
+output: true if can be moved and false if not.
 */
-bool Bishop::canBeMoved(int sourceRow, int sourceCol, int dest, int destCol)
+bool Bishop::canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) const
 {
-
+	if ((destRow - sourceRow == destCol - sourceCol) || (destRow - sourceRow == -1 * (destCol - sourceCol)))
+	{
+		return true;
+	}
+	return false;
 }
 
-/*
-
-*/
-bool Bishop::canEatKing(int row, int col)
-{
-
-}
 
 /*
 the << operator, will print B uppercase if white or lowercase if black

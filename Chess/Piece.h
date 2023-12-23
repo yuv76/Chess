@@ -22,5 +22,5 @@ public:
 	virtual ~Piece();
 	Types getType();
 	Colors getColor();
-	virtual bool canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) = 0;
+	virtual bool canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) const = 0;
 };

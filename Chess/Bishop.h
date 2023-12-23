@@ -9,8 +9,7 @@ class Bishop : public Piece
 public:
 	Bishop(Colors color, Types type, int row, int col);
 	virtual ~Bishop();
-	virtual bool canBeMoved(int sourceRow, int sourceCol, int dest, int destCol);
-	virtual bool canEatKing(int row, int col);
+	bool canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) const override;
 
 	friend std::ostream& operator<<(std::ostream& os, Bishop& bish);
 };

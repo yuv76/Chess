@@ -18,20 +18,20 @@ Queen::~Queen()
 {}
 
 /*
-
+function checks if Queen can move in this direction.
+input: source row and col, dest row and col.
+output: true if can be moved and false if not.
 */
-bool Queen::canBeMoved(int sourceRow, int sourceCol, int dest, int destCol)
+bool Queen::canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) const
 {
-
+	if (((destRow - sourceRow == destCol - sourceCol) || (destRow - sourceRow == -1 * (destCol - sourceCol))) || (sourceRow == destRow || sourceCol == destCol))
+	{
+		return true;
+	}
+	return false;
 }
 
-/*
 
-*/
-bool Queen::canEatKing(int row, int col)
-{
-
-}
 
 /*
 the << operator, will print Q uppercase if white or lowercase if black

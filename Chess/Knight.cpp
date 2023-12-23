@@ -22,18 +22,19 @@ knight::~knight()
 /*
 
 */
-bool knight::canBeMoved(int sourceRow, int sourceCol, int dest, int destCol)
+bool knight::canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) const
 {
-
+	if (destRow - sourceRow == abs(2) && destCol - sourceCol == abs(1))
+	{
+		return true;
+	}
+	if (destRow - sourceRow == abs(1) && destCol - sourceCol == abs(2))
+	{
+		return true;
+	}
+	return false;
 }
 
-/*
-
-*/
-bool knight::canEatKing(int row, int col)
-{
-
-}
 
 /*
 the << operator, will print N uppercase if white or lowercase if black
