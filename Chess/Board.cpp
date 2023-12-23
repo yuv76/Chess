@@ -18,20 +18,20 @@ Board::Board()
 	
 	//first white line
 	this->_pieces[0][0] = new Tower(WHITE, TOWER, 0, 0);
-	this->_pieces[0][1] = nullptr;//new knight(WHITE, KNIGHT, 0, 1);
-	this->_pieces[0][2] = nullptr;//new Bishop(WHITE, BISHOP, 0, 2);
-	this->_pieces[0][3] = nullptr;//new King(WHITE, KING, 0, 3);
-	this->_pieces[0][4] = nullptr;//new Queen(WHITE, QUEEN, 0, 4);
-	this->_pieces[0][5] = nullptr;//new Bishop(WHITE, BISHOP, 0, 5);
-	this->_pieces[0][6] = nullptr;//new knight(WHITE, KNIGHT, 0, 6);
-	this->_pieces[0][7] = nullptr;//new Tower(WHITE, TOWER, 0, 7);
-	/*
+	this->_pieces[0][1] = new knight(WHITE, KNIGHT, 0, 1);
+	this->_pieces[0][2] = new Bishop(WHITE, BISHOP, 0, 2);
+	this->_pieces[0][3] = new King(WHITE, KING, 0, 3);
+	this->_pieces[0][4] = new Queen(WHITE, QUEEN, 0, 4);
+	this->_pieces[0][5] = new Bishop(WHITE, BISHOP, 0, 5);
+	this->_pieces[0][6] = new knight(WHITE, KNIGHT, 0, 6);
+	this->_pieces[0][7] = new Tower(WHITE, TOWER, 0, 7);
+	
 	//pawn white line
 	for (i = 0; i < COLS; i++)
 	{
 		this->_pieces[1][i] = new Pawn(WHITE, PAWN, 1, i);
 	}
-	*/
+	
 
 	//four blank lines
 	for (i = 2; i < MUN_OF_BLANK_START_LINES + 2; i++)
@@ -41,22 +41,22 @@ Board::Board()
 			this->_pieces[i][j] = nullptr;
 		}
 	}
-	/*
+	
 	//pawn black line
 	for (i = 0; i < COLS; i++)
 	{
 		this->_pieces[6][i] = new Pawn(BLACK, PAWN, 6, i);
 	}
-	*/
+	
 
 	//black first line
 	this->_pieces[7][0] = new Tower(BLACK, TOWER, 7, 0);
-	this->_pieces[7][1] = nullptr;//new knight(BLACK, KNIGHT, 7, 1);
-	this->_pieces[7][2] = nullptr;//new Bishop(BLACK, BISHOP, 7, 2);
-	this->_pieces[7][3] = nullptr;//new King(BLACK, KING, 7, 3);
-	this->_pieces[7][4] = nullptr;//new Queen(BLACK, QUEEN, 7, 4);
-	this->_pieces[7][5] = nullptr;//new Bishop(BLACK, BISHOP, 7, 5);
-	this->_pieces[7][6] = nullptr;//new knight(BLACK, KNIGHT, 7, 6);
+	this->_pieces[7][1] = new knight(BLACK, KNIGHT, 7, 1);
+	this->_pieces[7][2] = new Bishop(BLACK, BISHOP, 7, 2);
+	this->_pieces[7][3] = new King(BLACK, KING, 7, 3);
+	this->_pieces[7][4] = new Queen(BLACK, QUEEN, 7, 4);
+	this->_pieces[7][5] = new Bishop(BLACK, BISHOP, 7, 5);
+	this->_pieces[7][6] = new knight(BLACK, KNIGHT, 7, 6);
 	this->_pieces[7][7] = new Tower(BLACK, TOWER, 7, 7);
 	
 	this->_blackKingPosition[0] = 7;
@@ -91,7 +91,128 @@ Board::~Board()
 /*
 
 */
-bool Board::move(std::string move)
+MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
+{
+	Piece* piece = nullptr;
+	
+	//invalid move, same pose to source and dest.
+	if (sourceRow == destRow && sourceCol == destCol)
+	{
+		return SAME_POS;
+	}
+
+	//invalid move, can't go on the same pose as teammate. 
+	if (isTaken(destRow, destCol, turn))
+	{
+		return PIECE_IN_DEST;
+	}
+
+	//invalid move, no piece of the curr player in source.
+	if (turn == WHITE)
+	{
+		if (isTaken(sourceRow, sourceCol, BLACK))
+		{
+			return NO_PIECE;
+		}
+	}
+	if (turn == BLACK)
+	{
+		if (isTaken(sourceRow, sourceCol, WHITE))
+		{
+			return NO_PIECE;
+		}
+	}
+
+
+	if (sourceRow < ROWS && destRow < ROWS && sourceCol < COLS && destCol < COLS) //check if move is out of range
+	{
+		piece = _pieces[sourceRow][sourceCol];
+
+		if (piece->getType() == PAWN)
+		{
+			//movePawn(sourceRow, destRow, sourceCol, destCol, piece, turn);
+			return ILLEGAL_TOOL_MOVE; //pawn is not yet supported.
+		}
+		
+		if (piece->canBeMoved(sourceRow, sourceCol, destRow, destCol)) //check if move is legal for peace
+		{
+
+			/*if (checkIfChess(sourceRow, sourceCol, destRow, destCol, turn)) //check if there was chess
+			{
+				_pieces[destRow][destCol] = _pieces[sourceRow][sourceCol];
+				_pieces[sourceRow][sourceCol] = nullptr;
+				return	CAUSE_CHESS;
+			}
+			*/
+
+			//if there was mate
+			/*if (checkIfCheckmate(sourceRow, sourceCol, destRow, destCol, turn))
+			{
+				_pieces[destRow][destCol] = _pieces[sourceRow][sourceCol];
+				_pieces[sourceRow][sourceCol] = nullptr;
+				return	CHECKMATE;
+			}
+			*/
+
+			//everything is normal
+			_pieces[destRow][destCol] = _pieces[sourceRow][sourceCol];
+			_pieces[sourceRow][sourceCol] = nullptr;
+		}
+		else
+		{
+			return ILLEGAL_TOOL_MOVE;
+		}
+	}
+	else
+	{
+		return INVALID_INDEXES;
+	}
+	return VALID;
+}
+
+
+/*
+MsgCode Board::movePawn(int sourceRow, int destRow, int sourceCol, int destCol, Pawn* pawn, Colors turn)
+{	
+	if (pawn->canBeMoved(sourceRow, sourceCol, destRow, destCol))
+	{
+		_pieces[destRow][destCol] = _pieces[sourceRow][sourceCol];
+		_pieces[sourceRow][sourceCol] = nullptr;
+	}
+	if (turn == WHITE)
+	{
+		if (isTaken(destRow, destCol, BLACK))
+		{
+			if (pawn->canEat(sourceRow, sourceCol, destRow, destCol))
+			{
+				eat(sourceRow, destRow, sourceCol, destCol, turn);
+				return VALID;
+			}
+			else
+			{
+				return ILLEGAL_TOOL_MOVE;
+			}
+		}
+	}
+	else
+	{
+		if (isTaken(destRow, destCol, WHITE))
+		{
+			if (pawn->canEat(sourceRow, sourceCol, destRow, destCol))
+			{
+				eat(sourceRow, destRow, sourceCol, destCol, turn);
+				return VALID;
+			}
+		}
+		else
+		{
+			return ILLEGAL_TOOL_MOVE;
+		}
+	}
+}
+*/
+
+void eat(int sourceRow, int destRow, int sourceCol, int destCol, Colors turn)
 {
 
 }
@@ -110,45 +231,35 @@ bool Board::isTaken(int row, int col, Colors turn)
 	return false;
 }
 
-/*
 
-*/
-bool Board::eat(std::string eatingPos, std::string eatedPos)
+
+/*
+bool Board::isEating(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
 {
 
 }
+*/
 
 /*
-
-*/
-bool Board::isEating(std::string move)
+MsgCode Board::checkIfChess(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
 {
 
 }
+*/
 
 /*
-
-*/
-MsgCode Board::checkIfChess(std::string move)
+MsgCode Board::checkIfCheckmate(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
 {
 
 }
+*/
 
 /*
-
-*/
-MsgCode Board::checkIfCheckmate(std::string move)
-{
-
-}
-
-/*
-
-*/
 std::string Board::toString()
 {
 
 }
+*/
 
 /*
 returns a pointer to the Piece on the board on position[row][col]
@@ -188,8 +299,8 @@ void Board::printBoard()
 
 /*
 
-*/
 MsgCode canEatKing(int row, int col)
 {
 
 }
+*/

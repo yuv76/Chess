@@ -48,24 +48,21 @@ Board& Game::getGameBoard()
 }
 
 /*
-
-*/
 std::string Game::decodeMsg(std::string msg)
 {
 
 }
+*/
 
 /*
-
-*/
 void Game::sendNextMove()
 {
 
 }
+*/
 
 /*
 
-*/
 void Game::playGame(Colors FirstPlayer)
 {
 	std::string msg = "";
@@ -84,18 +81,16 @@ void Game::playGame(Colors FirstPlayer)
 		this->turn(msg);
 	}
 }
+*/
 
 /*
-
-*/
 MsgCode Game::turn(std::string move)
 {
 
 }
+*/
 
 /*
-
-*/
 MsgCode Game::checkMsg(std::string msg)
 {
 	int extractedMsg[4] = { 0 };
@@ -132,4 +127,6 @@ MsgCode Game::checkMsg(std::string msg)
 
 	//send 
 }
+*/
+
 

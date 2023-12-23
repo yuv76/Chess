@@ -1,5 +1,10 @@
 #pragma once
 #include "Piece.h"
+#include "Tower.h"
+#include "Bishop.h"
+#include "Queen.h"
+#include "King.h"
+#include "Pawn.h"
 
 #define BLANK_POS '#'
 
@@ -14,6 +19,8 @@
 #define CHECK_SOURCE_POSITION true
 #define CHECK_DEST_POSITION false
 
+enum MsgCode { VALID, CHESS, NO_PIECE, PIECE_IN_DEST, CAUSE_CHESS, INVALID_INDEXES, ILLEGAL_TOOL_MOVE, SAME_POS, CHECKMATE };
+
 class Board
 {
 private:
@@ -23,12 +30,13 @@ private:
 public:
 	Board();
 	~Board();
-	bool move(std::string move);
-	bool eat(std::string eatingPos, std::string eatedPos);
-	bool isEating(std::string move);
+	MsgCode move(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
+	MsgCode movePawn(int sourceRow, int destRow, int sourceCol, int destCol, Pawn* pawn, Colors turn);
+	void eat(int sourceRow, int destRow, int sourceCol, int destCol, Colors turn);
+	bool isEating(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
 	bool isTaken(int row, int col, Colors turn);
-	MsgCode checkIfChess(std::string move);
-	MsgCode checkIfCheckmate(std::string move);
+	MsgCode checkIfChess(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
+	MsgCode checkIfCheckmate(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
 	MsgCode canOtherKingGetEaten(int row, int col);
 	std::string toString();
 	Piece* operator()(int rowIndex, int colIndex);
