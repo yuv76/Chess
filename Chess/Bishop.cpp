@@ -31,6 +31,23 @@ bool Bishop::canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) 
 	return false;
 }
 
+/*
+
+*/
+char Bishop::getInitial(Colors color)
+{
+	char expression = ' ';
+
+	if (color == WHITE)
+	{
+		expression = WHITE_BISHOP;
+	}
+	else
+	{
+		expression = BlACK_BISHOP;
+	}
+	return expression;
+}
 
 /*
 the << operator, will print B uppercase if white or lowercase if black
@@ -39,16 +56,7 @@ output: stream with the letter
 */
 std::ostream& operator<<(std::ostream& os, Bishop& bish)
 {
-	char expression = ' ';
-
-	if (bish.getColor() == WHITE)
-	{
-		expression = WHITE_BISHOP;
-	}
-	else
-	{
-		expression = BlACK_BISHOP;
-	}
-	os << expression;
+	Colors color = bish.getColor();
+	os << bish.getInitial(color);
 	return os;
 }

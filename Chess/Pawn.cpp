@@ -46,6 +46,7 @@ bool Pawn::canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) co
 	{
 		return true;
 	}
+	this->_hasWalked = true;
 	return false;
 }
 

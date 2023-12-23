@@ -17,5 +17,6 @@ public:
 	bool canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) const override;
 	bool canEat(int sourceRow, int sourceCol, int destRow, int destCol) const;
 
+	virtual char getInitial(Colors color);
 	friend std::ostream& operator<<(std::ostream& os, Pawn& paw);
 };
