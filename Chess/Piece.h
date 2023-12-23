@@ -22,6 +22,6 @@ public:
 	virtual ~Piece();
 	Types getType() const;
 	Colors getColor() const;
-	bool canEat(int sourceRow, int sourceCol, int destRow, int destCol) const;
+	virtual bool canEat(int sourceRow, int sourceCol, int destRow, int destCol) const;
 	virtual bool canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) const = 0;
 };
