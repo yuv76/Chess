@@ -36,7 +36,7 @@ prints queen's initial, according to its color
 input: the queen's color
 output: the initial
 */
-void Queen::getInitial(std::ostream& os, Colors color)
+char Queen::getInitial(Colors color)
 {
 	char expression = ' ';
 
@@ -48,5 +48,5 @@ void Queen::getInitial(std::ostream& os, Colors color)
 	{
 		expression = BLACK_QUEEN;
 	}
-	os << expression;
+	return expression;
 }

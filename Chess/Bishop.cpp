@@ -36,7 +36,7 @@ prints bishop's initial, according to its color
 input: the bishop's color
 output: the initial
 */
-void Bishop::getInitial(std::ostream& os, Colors color)
+char Bishop::getInitial(Colors color)
 {
 	char expression = ' ';
 
@@ -48,6 +48,6 @@ void Bishop::getInitial(std::ostream& os, Colors color)
 	{
 		expression = BlACK_BISHOP;
 	}
-	os << expression;
+	return expression;
 }
 

@@ -69,7 +69,7 @@ prints pawn's initial, according to its color
 input: the pawn's color
 output: the initial
 */
-void Pawn::getInitial(std::ostream& os, Colors color)
+char Pawn::getInitial(Colors color)
 {
 	char expression = ' ';
 
@@ -81,5 +81,5 @@ void Pawn::getInitial(std::ostream& os, Colors color)
 	{
 		expression = BLACK_PAWN;
 	}
-	os << expression;
+	return expression;
 }

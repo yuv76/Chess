@@ -54,6 +54,6 @@ output: stream with the letter
 std::ostream& operator<<(std::ostream& os, Piece& piece)
 {
 	Colors color = piece.getColor();
-	piece.getInitial(os, color);
+	os << piece.getInitial(color);
 	return os;
 }

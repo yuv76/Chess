@@ -38,7 +38,7 @@ prints king's initial, according to its color
 input: the king's color
 output: the initial
 */
-void King::getInitial(std::ostream& os, Colors color)
+char King::getInitial(Colors color)
 {
 	char expression = ' ';
 
@@ -50,5 +50,5 @@ void King::getInitial(std::ostream& os, Colors color)
 	{
 		expression = BlACK_KING;
 	}
-	os << expression;
+	return expression;
 }

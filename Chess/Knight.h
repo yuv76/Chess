@@ -11,5 +11,5 @@ public:
 	virtual ~knight();
 	bool canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) const override;
 
-	virtual void getInitial(std::ostream& os, Colors color);
+	virtual char getInitial(Colors color);
 };

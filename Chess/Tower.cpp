@@ -57,7 +57,7 @@ prints tower's initial, according to its color
 input: the tower's color
 output: the initial
 */
-void Tower::getInitial(std::ostream& os, Colors color)
+char Tower::getInitial(Colors color)
 {
 	char expression = ' ';
 
@@ -69,5 +69,5 @@ void Tower::getInitial(std::ostream& os, Colors color)
 	{
 		expression = BLACK_TOWER;
 	}
-	os << expression;
+	return expression;
 }

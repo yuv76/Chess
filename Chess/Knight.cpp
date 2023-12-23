@@ -42,7 +42,7 @@ prints knight's initial, according to its color
 input: the knight's color
 output: the initial
 */
-void knight::getInitial(std::ostream& os, Colors color)
+char knight::getInitial(Colors color)
 {
 	char expression = ' ';
 
@@ -54,5 +54,5 @@ void knight::getInitial(std::ostream& os, Colors color)
 	{
 		expression = BlACK_KNIGHT;
 	}
-	os << expression;
+	return expression;
 }
