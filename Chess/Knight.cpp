@@ -37,17 +37,16 @@ bool knight::canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) 
 	return false;
 }
 
-
 /*
-the << operator, will print N uppercase if white or lowercase if black
-input: stream, Knight
-output: stream with the letter
+prints knight's initial, according to its color
+input: the knight's color
+output: the initial
 */
-std::ostream& operator<<(std::ostream& os, knight& knig)
+void knight::getInitial(std::ostream& os, Colors color)
 {
 	char expression = ' ';
 
-	if (knig.getColor() == WHITE)
+	if (color == WHITE)
 	{
 		expression = WHITE_KNIGHT;
 	}
@@ -56,5 +55,4 @@ std::ostream& operator<<(std::ostream& os, knight& knig)
 		expression = BlACK_KNIGHT;
 	}
 	os << expression;
-	return os;
 }

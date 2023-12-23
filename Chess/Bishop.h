@@ -11,6 +11,5 @@ public:
 	virtual ~Bishop();
 	bool canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) const override;
 
-	virtual char getInitial(Colors color);
-	friend std::ostream& operator<<(std::ostream& os, Bishop& bish);
+	virtual void getInitial(std::ostream& os, Colors color);
 };

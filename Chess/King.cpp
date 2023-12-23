@@ -33,17 +33,16 @@ bool King::canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) co
 	return false;
 }
 
-
 /*
-the << operator, will print K uppercase if white or lowercase if black
-input: stream, king
-output: stream with the letter
+prints king's initial, according to its color
+input: the king's color
+output: the initial
 */
-std::ostream& operator<<(std::ostream& os, King& king)
+void King::getInitial(std::ostream& os, Colors color)
 {
 	char expression = ' ';
 
-	if (king.getColor() == WHITE)
+	if (color == WHITE)
 	{
 		expression = WHITE_KING;
 	}
@@ -52,5 +51,4 @@ std::ostream& operator<<(std::ostream& os, King& king)
 		expression = BlACK_KING;
 	}
 	os << expression;
-	return os;
 }

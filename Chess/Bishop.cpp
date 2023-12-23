@@ -32,9 +32,11 @@ bool Bishop::canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) 
 }
 
 /*
-
+prints bishop's initial, according to its color
+input: the bishop's color
+output: the initial
 */
-char Bishop::getInitial(Colors color)
+void Bishop::getInitial(std::ostream& os, Colors color)
 {
 	char expression = ' ';
 
@@ -46,17 +48,6 @@ char Bishop::getInitial(Colors color)
 	{
 		expression = BlACK_BISHOP;
 	}
-	return expression;
+	os << expression;
 }
 
-/*
-the << operator, will print B uppercase if white or lowercase if black
-input: stream, bishop
-output: stream with the letter
-*/
-std::ostream& operator<<(std::ostream& os, Bishop& bish)
-{
-	Colors color = bish.getColor();
-	os << bish.getInitial(color);
-	return os;
-}

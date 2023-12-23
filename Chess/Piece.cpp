@@ -45,3 +45,15 @@ bool Piece::canEat(int sourceRow, int sourceCol, int destRow, int destCol) const
 	}
 	return false;
 }
+
+/*
+the << operator, will print the piece's initial uppercase if white or lowercase if black
+input: stream, Piece
+output: stream with the letter
+*/
+std::ostream& operator<<(std::ostream& os, Piece& piece)
+{
+	Colors color = piece.getColor();
+	piece.getInitial(os, color);
+	return os;
+}

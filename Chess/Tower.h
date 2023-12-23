@@ -11,6 +11,6 @@ public:
 	virtual ~Tower();
 	bool canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) const override;
 
-	virtual char getInitial(Colors color);
-	friend std::ostream& operator<<(std::ostream& os, const Tower& tower);
+	virtual void getInitial(std::ostream& os, Colors color);
 };
+

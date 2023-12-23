@@ -241,7 +241,7 @@ void Board::printBoard()
 		{
 			if (this->_pieces[i][j] != nullptr)
 			{
-				std::cout << this->_pieces[i][j] << " ";
+				std::cout << *this->_pieces[i][j] << " ";
 			}
 			else
 			{

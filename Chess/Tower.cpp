@@ -51,3 +51,23 @@ std::ostream& operator<<(std::ostream& os, const Tower& tower)
 	os << expression;
 	return os;
 }
+
+/*
+prints tower's initial, according to its color
+input: the tower's color
+output: the initial
+*/
+void Tower::getInitial(std::ostream& os, Colors color)
+{
+	char expression = ' ';
+
+	if (color == WHITE)
+	{
+		expression = WHITE_TOWER;
+	}
+	else
+	{
+		expression = BLACK_TOWER;
+	}
+	os << expression;
+}
