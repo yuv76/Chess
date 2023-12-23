@@ -14,9 +14,8 @@ public:
 	Pawn(Colors color, Types type, int row, int col);
 	virtual ~Pawn();
 	bool getIfWalked();
-	virtual bool canBeMoved(int sourceRow, int sourceCol, int dest, int destCol);
-	virtual bool canEatKing(int row, int col);
-	bool canEat(int row, int col);
+	bool canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) const override;
+	bool canEat(int sourceRow, int sourceCol, int destRow, int destCol) const;
 
 	friend std::ostream& operator<<(std::ostream& os, Pawn& paw);
 };

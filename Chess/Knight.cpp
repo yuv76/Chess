@@ -20,7 +20,9 @@ knight::~knight()
 }
 
 /*
-
+function checks if knight can move in this direction.
+input: source row and col, dest row and col.
+output: true if can be moved and false if not.
 */
 bool knight::canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) const
 {

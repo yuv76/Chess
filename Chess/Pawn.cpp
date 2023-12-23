@@ -29,27 +29,39 @@ bool Pawn::getIfWalked()
 }
 
 /*
-
+function checks if pawn can move in this direction.
+input: source row and col, dest row and col.
+output: true if can be moved and false if not.
 */
-bool Pawn::canBeMoved(int sourceRow, int sourceCol, int dest, int destCol)
+bool Pawn::canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) const
 {
-
+	if (this->_hasWalked == false)
+	{
+		if (destRow - sourceRow == 2 && destCol - sourceCol == 0)
+		{
+			return true;
+		}
+	}
+	if (destRow - sourceRow == 1 && destCol - sourceCol == 0)
+	{
+		return true;
+	}
+	return false;
 }
 
-/*
-
-*/
-bool Pawn::canEatKing(int row, int col)
-{
-
-}
 
 /*
-
+function checks if pawn can eat in the route (from [sourceRow][sourceCol] to [destRow][destCol].
+input: source row and col, dest row and col.
+output: true if can eat and false if not.
 */
-bool Pawn::canEat(int row, int col)
+bool Pawn::canEat(int sourceRow, int sourceCol, int destRow, int destCol) const
 {
-
+	if (destRow - sourceRow == 1 && destCol - sourceCol == 1)
+	{
+		return true;
+	}
+	return false;
 }
 
 /*
