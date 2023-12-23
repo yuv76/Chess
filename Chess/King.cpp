@@ -20,19 +20,17 @@ King::~King()
 }
 
 /*
-
+function checks if king can move in this direction.
+input: source row and col, dest row and col.
+output: true if can be moved and false if not.
 */
-bool King::canBeMoved(int sourceRow, int sourceCol, int dest, int destCol)
+bool King::canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol)
 {
-
-}
-
-/*
-
-*/
-bool King::canEatKing(int row, int col)
-{
-
+	if (destRow - sourceRow == 1 || destRow - sourceRow == -1 || destCol - sourceCol == 1 || destCol - sourceCol == -1)
+	{
+		return true;
+	}
+	return false;
 }
 
 

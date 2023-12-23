@@ -26,7 +26,7 @@ public:
 	bool move(std::string move);
 	bool eat(std::string eatingPos, std::string eatedPos);
 	bool isEating(std::string move);
-	MsgCode isTaken(int row, int col, bool isSource);
+	bool isTaken(int row, int col, Colors turn);
 	MsgCode checkIfChess(std::string move);
 	MsgCode checkIfCheckmate(std::string move);
 	MsgCode canOtherKingGetEaten(int row, int col);

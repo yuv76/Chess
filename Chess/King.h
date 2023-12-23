@@ -9,8 +9,7 @@ class King : public Piece
 public:
 	King(Colors color, Types type, int row, int col);
 	virtual ~King();
-	virtual bool canBeMoved(int sourceRow, int sourceCol, int dest, int destCol);
-	virtual bool canEatKing(int row, int col);
+	bool canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) override;
 
 	friend std::ostream& operator<<(std::ostream& os, King& king);
 };

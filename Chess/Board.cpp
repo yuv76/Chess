@@ -97,11 +97,17 @@ bool Board::move(std::string move)
 }
 
 /*
-
+function checks if location ([row][col]) is taken by the player that it's his turn (black/white).
+input: row - row to check, col - col to check, turn - the curr player that it's his turn.
+output: true if location is taken and false if not.
 */
-MsgCode Board::isTaken(int row, int col, bool isSource)
+bool Board::isTaken(int row, int col, Colors turn)
 {
-	
+	if (this->_pieces[row][col]->getColor() == turn) //if the location has a player from the same color.
+	{
+		return true;
+	}
+	return false;
 }
 
 /*

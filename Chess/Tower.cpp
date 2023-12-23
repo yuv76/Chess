@@ -18,11 +18,13 @@ Tower::~Tower()
 {}
 
 /*
-
+function checks if tower can move in this direction.
+input: source row and col, dest row and col.
+output: true if can be moved and false if not.
 */
 bool Tower::canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol)
 {
-	if ((sourceRow == destRow || sourceCol == destCol) && destRow < MAX_ROW_AND_COL && destCol < MAX_ROW_AND_COL && sourceRow < MAX_ROW_AND_COL && sourceCol < MAX_ROW_AND_COL) //out of range
+	if (sourceRow == destRow || sourceCol == destCol)
 	{
 		return true;
 	}
