@@ -30,11 +30,12 @@ private:
 public:
 	Board();
 	~Board();
+	MsgCode checkIfCanMove(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
 	MsgCode move(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
 	bool isEating(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
 	bool isTaken(int row, int col, Colors turn);
-	MsgCode checkIfChess(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
-	MsgCode checkIfCheckmate(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
+	bool checkIfChess(Colors turn, int kingRow, int kingCol);
+	bool checkIfCheckmate(Colors turn);
 	MsgCode canOtherKingGetEaten(int row, int col);
 	std::string toString();
 	Piece* operator()(int rowIndex, int colIndex);

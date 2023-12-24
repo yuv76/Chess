@@ -89,13 +89,11 @@ Board::~Board()
 	}
 }
 
-/*
 
-*/
-MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
+MsgCode Board::checkIfCanMove(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
 {
 	Piece* piece = nullptr;
-	
+
 	//invalid move, same pose to source and dest.
 	if (sourceRow == destRow && sourceCol == destCol)
 	{
@@ -125,35 +123,11 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 	}
 
 	//check if move is out of range
-	if (sourceRow < ROWS && destRow < ROWS && sourceCol < COLS && destCol < COLS) 
+	if (sourceRow < ROWS && destRow < ROWS && sourceCol < COLS && destCol < COLS)
 	{
 		piece = this->_pieces[sourceRow][sourceCol];
-		
-		if (piece->canEat(sourceRow, sourceCol, destRow, destCol) || piece->canBeMoved(sourceRow, sourceCol, destRow, destCol))
-		{
-			/*if (checkIfChess(sourceRow, sourceCol, destRow, destCol, turn)) //check if there was chess
-			{
-				_pieces[destRow][destCol] = _pieces[sourceRow][sourceCol];
-				_pieces[sourceRow][sourceCol] = nullptr;
-				return	CAUSE_CHESS;
-			}
-			*/
 
-			//if there was mate
-			/*if (checkIfCheckmate(sourceRow, sourceCol, destRow, destCol, turn))
-			{
-				_pieces[destRow][destCol] = _pieces[sourceRow][sourceCol];
-				_pieces[sourceRow][sourceCol] = nullptr;
-				return	CHECKMATE;
-			}
-			*/
-
-			//everything is valid
-			_pieces[destRow][destCol] = _pieces[sourceRow][sourceCol];
-			_pieces[sourceRow][sourceCol] = nullptr;
-		}
-		
-		else
+		if (!(piece->canEat(sourceRow, sourceCol, destRow, destCol) || piece->canBeMoved(sourceRow, sourceCol, destRow, destCol)))
 		{
 			return ILLEGAL_TOOL_MOVE;
 		}
@@ -161,6 +135,57 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 	else
 	{
 		return INVALID_INDEXES;
+	}
+	return VALID;
+}
+
+
+/*
+
+*/
+MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
+{
+	Piece* piece = this->_pieces[sourceRow][sourceCol];
+
+	if (checkIfCanMove(sourceRow, sourceCol, destRow, destCol, turn) == VALID)
+	{
+		/*if (checkIfChess(sourceRow, sourceCol, destRow, destCol, turn)) //check if there was chess
+		{
+			if (_pieces[destRow][destCol] != nullptr)
+			{
+				delete _pieces[destRow][destCol];
+			}
+			_pieces[destRow][destCol] = _pieces[sourceRow][sourceCol];
+			_pieces[sourceRow][sourceCol] = nullptr;
+			return	CAUSE_CHESS;
+		}
+		*/
+
+		//if there was mate
+		/*if (checkIfCheckmate(sourceRow, sourceCol, destRow, destCol, turn))
+		{
+			if (_pieces[destRow][destCol] != nullptr)
+			{
+				delete _pieces[destRow][destCol];
+			}
+			_pieces[destRow][destCol] = _pieces[sourceRow][sourceCol];
+			_pieces[sourceRow][sourceCol] = nullptr;
+			return	CHECKMATE;
+		}
+		*/
+
+		//everything is valid
+		if (_pieces[destRow][destCol] != nullptr)
+		{
+			delete _pieces[destRow][destCol];
+		}
+		_pieces[destRow][destCol] = _pieces[sourceRow][sourceCol];
+		_pieces[sourceRow][sourceCol] = nullptr;
+	}
+
+	else
+	{
+		return checkIfCanMove(sourceRow, sourceCol, destRow, destCol, turn);
 	}
 	return VALID;
 }
@@ -185,29 +210,74 @@ bool Board::isTaken(int row, int col, Colors turn)
 }
 
 
+/*
+function checks if there is a chess on a king, (checks if there is a piece that threatens the king).
+input: turn - the current player (white or black), kingRow - the king's row, kingCol - the king's col.
+output: true if there was a chess and false if not.
+*/
+bool Board::checkIfChess(Colors turn, int kingRow, int kingCol)
+{
+	int i = 0, j = 0;
+
+	for (i = 0; i < ROWS; i++)
+	{
+		for (j = 0; j < COLS; j++)
+		{
+			if (_pieces[i][j] != nullptr)
+			{
+				if (this->checkIfCanMove(i, j, kingRow, kingCol, turn) == VALID) //white's turn
+				{
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+}
 
 /*
-bool Board::isEating(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
+function checks if there is checkmate on the curr king, (checks if there is chess on all the king's possible destinations).
+input: turn - the current player (white or black).
+output: true if there was a checkmate and false if not.
+*/
+bool Board::checkIfCheckmate(Colors turn)
 {
+	//* check if chess on all pf the king's routs and on his curr place
+	//* if yes then it's checkmate
+	bool isMate = true;
+	int startPoseRow = 0, startPoseCol = 0;
+	int i = 0, j  = 0;
 	
-}
-*/
+	if (turn == WHITE)
+	{
+		startPoseRow = _whiteKingPosition[0] - 1;
+		startPoseCol = _whiteKingPosition[1] - 1;
+	}
+	if (turn == BLACK)
+	{
+		startPoseRow = _blackKingPosition[0] - 1;
+		startPoseCol = _blackKingPosition[1] - 1;
+	}
 
-/*
-MsgCode Board::checkIfChess(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
-{
-	* go over all the pieces and check if the can move to the king.
-	* if at least one of them can it's chess
+	for (i = startPoseRow; i < (startPoseRow + 3); i++)
+	{
+		for (j = startPoseRow; j < (startPoseRow + 3); j++)
+		{
+			if (i != startPoseRow + 1 && j != startPoseCol + 1)
+			{
+				if (i < ROWS && j < COLS)
+				{
+					if (!checkIfChess(turn, i, j))
+					{
+						return false;
+					}
+				}
+			}
+		}
+	}
+	return true;
 }
-*/
 
-/*
-MsgCode Board::checkIfCheckmate(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
-{
-	* check if chess on all pf the king's routs and on his curr place
-	* if yes then it's checkmate
-}
-*/
 
 /*
 std::string Board::toString()
