@@ -89,7 +89,11 @@ Board::~Board()
 	}
 }
 
-
+/*
+function checks if it's possible to move piece by the chess rules.
+input: (sourceRow, sourceCol) - source row and col, (destRow, destCol) - dest row and col, turn - curr player's turn.
+output: MsgCode - code to the front-end that explains the result of the move (errors or success).
+*/
 MsgCode Board::checkIfCanMove(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
 {
 	Piece* piece = nullptr;
@@ -139,9 +143,42 @@ MsgCode Board::checkIfCanMove(int sourceRow, int sourceCol, int destRow, int des
 	return VALID;
 }
 
+/*
+function changes the location of a piece on the board and updates the king if need.
+input: (sourceRow, sourceCol) - source row and col, (destRow, destCol) - dest row and col, turn - curr player's turn.
+output: none.
+*/
+void Board::changePieceLocation(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
+{
+	if (_pieces[destRow][destCol] != nullptr)
+	{
+		delete _pieces[destRow][destCol];
+	}
+
+	if (_pieces[sourceRow][sourceCol] != nullptr)
+	{
+		if (_pieces[sourceRow][sourceCol]->getType() == KING)
+		{
+			if (_pieces[sourceRow][sourceCol]->getColor() == WHITE)
+			{
+				_whiteKingPosition[0] = destRow;
+				_whiteKingPosition[1] = destCol;
+			}
+			if (_pieces[sourceRow][sourceCol]->getColor() == BLACK)
+			{
+				_blackKingPosition[0] = destRow;
+				_blackKingPosition[1] = destCol;
+			}
+		}
+	}
+	_pieces[destRow][destCol] = _pieces[sourceRow][sourceCol];
+	_pieces[sourceRow][sourceCol] = nullptr;
+}
 
 /*
-
+function moves a piece from source to dest by the ruls of chess.
+input: (sourceRow, sourceCol) - source row and col, (destRow, destCol) - dest row and col, turn - curr player's turn.
+output: MsgCode - code to the front-end that explains the result of the move (errors or success).
 */
 MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
 {
@@ -149,30 +186,20 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 
 	if (checkIfCanMove(sourceRow, sourceCol, destRow, destCol, turn) == VALID)
 	{
-		/*if (checkIfChess(sourceRow, sourceCol, destRow, destCol, turn)) //check if there was chess
-		{
-			if (_pieces[destRow][destCol] != nullptr)
-			{
-				delete _pieces[destRow][destCol];
-			}
-			_pieces[destRow][destCol] = _pieces[sourceRow][sourceCol];
-			_pieces[sourceRow][sourceCol] = nullptr;
-			return	CAUSE_CHESS;
-		}
-		*/
-
 		//if there was mate
-		/*if (checkIfCheckmate(sourceRow, sourceCol, destRow, destCol, turn))
+		if (checkIfCheckmate(turn))
 		{
-			if (_pieces[destRow][destCol] != nullptr)
-			{
-				delete _pieces[destRow][destCol];
-			}
-			_pieces[destRow][destCol] = _pieces[sourceRow][sourceCol];
-			_pieces[sourceRow][sourceCol] = nullptr;
+			changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
 			return	CHECKMATE;
 		}
-		*/
+
+		//if there was chess
+		if ((turn == WHITE && checkIfChess(turn, _blackKingPosition[0], _blackKingPosition[1])) || (turn == BLACK && checkIfChess(turn, _whiteKingPosition[0], _whiteKingPosition[1])))
+		{
+			changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
+			return	CAUSE_CHESS;
+		}
+		
 
 		//everything is valid
 		if (_pieces[destRow][destCol] != nullptr)
@@ -236,7 +263,7 @@ bool Board::checkIfChess(Colors turn, int kingRow, int kingCol)
 }
 
 /*
-function checks if there is checkmate on the curr king, (checks if there is chess on all the king's possible destinations).
+function checks if there is checkmate on the opponent's king, (checks if there is chess on all the king's possible destinations).
 input: turn - the current player (white or black).
 output: true if there was a checkmate and false if not.
 */
@@ -250,13 +277,13 @@ bool Board::checkIfCheckmate(Colors turn)
 	
 	if (turn == WHITE)
 	{
-		startPoseRow = _whiteKingPosition[0] - 1;
-		startPoseCol = _whiteKingPosition[1] - 1;
+		startPoseRow = _blackKingPosition[0] - 1;
+		startPoseCol = _blackKingPosition[1] - 1;
 	}
 	if (turn == BLACK)
 	{
-		startPoseRow = _blackKingPosition[0] - 1;
-		startPoseCol = _blackKingPosition[1] - 1;
+		startPoseRow = _whiteKingPosition[0] - 1;
+		startPoseCol = _whiteKingPosition[1] - 1;
 	}
 
 	for (i = startPoseRow; i < (startPoseRow + 3); i++)
@@ -267,6 +294,15 @@ bool Board::checkIfCheckmate(Colors turn)
 			{
 				if (i < ROWS && j < COLS)
 				{
+					if (_pieces[i][j] != nullptr)
+					{
+						//if king can eat [i, j] it's not chess 
+						if (_pieces[i][j]->getColor() == turn)
+						{
+							return false;
+						}
+
+					}
 					if (!checkIfChess(turn, i, j))
 					{
 						return false;
