@@ -46,7 +46,6 @@ bool Pawn::canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) co
 	{
 		return true;
 	}
-	this->_hasWalked = true;
 	return false;
 }
 
@@ -66,15 +65,15 @@ bool Pawn::canEat(int sourceRow, int sourceCol, int destRow, int destCol) const
 }
 
 /*
-the << operator, will print P uppercase if white or lowercase if black
-input: stream, Knight
-output: stream with the letter
+prints pawn's initial, according to its color
+input: the pawn's color
+output: the initial
 */
-std::ostream& operator<<(std::ostream& os, Pawn& paw)
+char Pawn::getInitial(Colors color)
 {
 	char expression = ' ';
 
-	if (paw.getColor() == WHITE)
+	if (color == WHITE)
 	{
 		expression = WHITE_PAWN;
 	}
@@ -82,6 +81,5 @@ std::ostream& operator<<(std::ostream& os, Pawn& paw)
 	{
 		expression = BLACK_PAWN;
 	}
-	os << expression;
-	return os;
+	return expression;
 }

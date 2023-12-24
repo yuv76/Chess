@@ -12,5 +12,5 @@ public:
 	bool canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) const override;
 
 	virtual char getInitial(Colors color);
-	friend std::ostream& operator<<(std::ostream& os, const Tower& tower);
 };
+

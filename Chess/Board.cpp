@@ -316,11 +316,32 @@ bool Board::checkIfCheckmate(Colors turn)
 
 
 /*
+returns a string that presents the board with initials of the pieces
+input: none
+output: the string
+*/
 std::string Board::toString()
 {
+	int i = 0, j = 0;
+	std::string board = "";
 
+	for (i = 0; i < ROWS; i++)
+	{
+		for (j = 0; j < COLS; j++)
+		{
+			if (this->_pieces[i][j] != nullptr)
+			{
+				board += this->_pieces[i][j]->getInitial(this->_pieces[i][j]->getColor());
+			}
+			else
+			{
+				board += BLANK_POS;
+			}
+		}
+	}
+	return board;
 }
-*/
+
 
 /*
 returns a pointer to the Piece on the board on position[row][col]
@@ -347,7 +368,7 @@ void Board::printBoard()
 		{
 			if (this->_pieces[i][j] != nullptr)
 			{
-				std::cout << this->_pieces[i][j] << " ";
+				std::cout << *this->_pieces[i][j] << " ";
 			}
 			else
 			{

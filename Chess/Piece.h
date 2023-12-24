@@ -25,4 +25,6 @@ public:
 	virtual bool canEat(int sourceRow, int sourceCol, int destRow, int destCol) const;
 	virtual bool canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) const = 0;
 	virtual char getInitial(Colors color) = 0;
+
+	friend std::ostream& operator<<(std::ostream& os, Piece& piece);
 };

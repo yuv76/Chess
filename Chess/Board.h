@@ -8,7 +8,7 @@
 
 #define BLANK_POS '#'
 
-#define BOARD_SIZE 64 // wasn't used... why needed?
+#define BOARD_SIZE 64
 #define ROWS 8
 #define COLS 8
 #define MUN_OF_BLANK_START_LINES 6 //4 /will be returned to 4 after pawn implementation.

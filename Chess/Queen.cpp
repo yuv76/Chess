@@ -31,18 +31,16 @@ bool Queen::canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) c
 	return false;
 }
 
-
-
 /*
-the << operator, will print Q uppercase if white or lowercase if black
-input: stream, Knight
-output: stream with the letter
+prints queen's initial, according to its color
+input: the queen's color
+output: the initial
 */
-std::ostream& operator<<(std::ostream& os, Queen& que)
+char Queen::getInitial(Colors color)
 {
 	char expression = ' ';
 
-	if (que.getColor() == WHITE)
+	if (color == WHITE)
 	{
 		expression = WHITE_QUEEN;
 	}
@@ -50,6 +48,5 @@ std::ostream& operator<<(std::ostream& os, Queen& que)
 	{
 		expression = BLACK_QUEEN;
 	}
-	os << expression;
-	return os;
+	return expression;
 }

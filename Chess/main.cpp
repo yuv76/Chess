@@ -9,7 +9,9 @@ int main()
 	*/
 
 	Board board = Board();
-	std::cout << board(1, 0) << std::endl;
+	board.printBoard();
+	std::cout << board.toString() << std::endl;
+	std::cout << *board(1, 0) << std::endl;
 	std::cout << board(1, 0)->getType() << " " << board(1, 0)->getColor() << std::endl;
 	board.move(1, 0, 4, 0, WHITE);
 	
