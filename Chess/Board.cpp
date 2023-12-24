@@ -89,6 +89,59 @@ Board::~Board()
 	}
 }
 
+
+bool Board::isPathClear(int sourceRow, int sourceCol, int destRow, int destCol)
+{
+	int row = 0, col = 0;
+	int rowAdd = 0, colAdd = 0;
+
+	//find change in row (+, - or none).
+	if (destRow > sourceRow)
+	{
+		rowAdd = 1;
+	}
+	else
+	{
+		if (destRow < sourceRow)
+		{
+			rowAdd = -1;
+		}
+		else
+		{
+			rowAdd = 0;
+		}
+	}
+
+	//find change in col (+, - or none).
+	if (destCol > sourceCol)
+	{
+		colAdd = 1;
+	}
+	else
+	{
+		if (destCol < sourceCol)
+		{
+			colAdd = -1;
+		}
+		else
+		{
+			colAdd = 0;
+		}
+	}
+
+	col = sourceCol + colAdd; //col start
+	for (row = sourceRow + rowAdd; row != destRow || col != destCol; row += rowAdd) //run until arrive to dest
+	{
+		if (_pieces[row][col] != nullptr) //if there is piece on the way
+		{
+			return false;
+		}
+		col += colAdd; //increase col counter
+	}
+	
+	return true;;
+}
+
 /*
 function checks if it's possible to move piece by the chess rules.
 input: (sourceRow, sourceCol) - source row and col, (destRow, destCol) - dest row and col, turn - curr player's turn.
