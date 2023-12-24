@@ -34,15 +34,13 @@ public:
 	MsgCode checkIfCanMove(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
 	void changePieceLocation(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
 	MsgCode move(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
-	bool isEating(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
 	bool isTaken(int row, int col, Colors turn);
 	bool checkIfChess(Colors turn, int kingRow, int kingCol);
 	bool checkIfCheckmate(Colors turn);
-	MsgCode canOtherKingGetEaten(int row, int col);
 	std::string toString();
+
 	Piece* operator()(int rowIndex, int colIndex);
 
-	//for backend interface
+	//for back-end interface
 	void printBoard();
 };
-

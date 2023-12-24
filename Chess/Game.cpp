@@ -113,6 +113,7 @@ MsgCode Game::turn(int* move, bool& validFlag)
 	{
 		this->_turn = BLACK;
 	}
+
 }
 
 
@@ -167,6 +168,7 @@ int* Game::checkMsg(std::string msg, MsgCode& code)
 	}
 
 	//send 
+
 }
 
 

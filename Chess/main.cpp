@@ -10,15 +10,15 @@ int main()
 
 	Board board = Board();
 	board.printBoard();
-	std::cout << board.toString() << std::endl;
-	std::cout << *board(1, 0) << std::endl;
-	std::cout << board(1, 0)->getType() << " " << board(1, 0)->getColor() << std::endl;
-	board.move(1, 0, 4, 0, WHITE);
+	board.move(1, 3, 3, 3, WHITE);
+	board.move(0, 3, 1, 3, WHITE); //error! for some reason is taken doesn't have correct parameters!
 	
-	if (board(1, 0) == nullptr)
+	std::cout << std::endl;
+
+	if (board(1, 3) == nullptr)
 	{
 		std::cout << "YES!" << std::endl;
 	}
-	std::cout << board(3, 0)->getType() << std::endl;
-	//board.printBoard();
+	std:: cout << std::endl;
+	board.printBoard();
 }

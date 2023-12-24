@@ -90,6 +90,11 @@ Board::~Board()
 }
 
 
+/*
+function check is there is a piece in the curr piece path.
+input: source and dest coordinations.
+output: true if path is clear and false if not.
+*/
 bool Board::isPathClear(int sourceRow, int sourceCol, int destRow, int destCol)
 {
 	int row = 0, col = 0;
@@ -184,9 +189,12 @@ MsgCode Board::checkIfCanMove(int sourceRow, int sourceCol, int destRow, int des
 	{
 		piece = this->_pieces[sourceRow][sourceCol];
 
-		if (!isPathClear(sourceRow, sourceCol, destRow, destCol))
+		if (_pieces[sourceRow][sourceCol]->getType() == QUEEN || _pieces[sourceRow][sourceCol]->getType() == BISHOP || _pieces[sourceRow][sourceCol]->getType() == TOWER)
 		{
-			return ILLEGAL_TOOL_MOVE;
+			if (!isPathClear(sourceRow, sourceCol, destRow, destCol))
+			{
+				return ILLEGAL_TOOL_MOVE;
+			}
 		}
 
 		if (!(piece->canEat(sourceRow, sourceCol, destRow, destCol) || piece->canBeMoved(sourceRow, sourceCol, destRow, destCol)))
@@ -436,11 +444,3 @@ void Board::printBoard()
 		std::cout << std::endl;
 	}
 }
-
-/*
-
-MsgCode canEatKing(int row, int col)
-{
-
-}
-*/
