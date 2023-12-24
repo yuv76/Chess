@@ -184,6 +184,11 @@ MsgCode Board::checkIfCanMove(int sourceRow, int sourceCol, int destRow, int des
 	{
 		piece = this->_pieces[sourceRow][sourceCol];
 
+		if (!isPathClear(sourceRow, sourceCol, destRow, destCol))
+		{
+			return ILLEGAL_TOOL_MOVE;
+		}
+
 		if (!(piece->canEat(sourceRow, sourceCol, destRow, destCol) || piece->canBeMoved(sourceRow, sourceCol, destRow, destCol)))
 		{
 			return ILLEGAL_TOOL_MOVE;
