@@ -252,15 +252,15 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 
 	if (checkIfCanMove(sourceRow, sourceCol, destRow, destCol, turn) == VALID)
 	{
-		//if there was mate
+		//if there was mate on the other king
 		if (checkIfCheckmate(turn))
 		{
 			changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
 			return	CHECKMATE;
 		}
 
-		//if there was chess
-		if ((turn == WHITE && checkIfChess(turn, _blackKingPosition[0], _blackKingPosition[1])) || (turn == BLACK && checkIfChess(turn, _whiteKingPosition[0], _whiteKingPosition[1])))
+		//check if movement caused chess
+		if ((turn == WHITE && checkIfCanMove(destRow, destCol, _blackKingPosition[0], _blackKingPosition[1], turn)) || (turn == BLACK && checkIfCanMove(destRow, destCol, _whiteKingPosition[0], _whiteKingPosition[1], turn)))
 		{
 			changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
 			return	CAUSE_CHESS;
@@ -268,12 +268,7 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 		
 
 		//everything is valid
-		if (_pieces[destRow][destCol] != nullptr)
-		{
-			delete _pieces[destRow][destCol];
-		}
-		_pieces[destRow][destCol] = _pieces[sourceRow][sourceCol];
-		_pieces[sourceRow][sourceCol] = nullptr;
+		changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
 	}
 
 	else
