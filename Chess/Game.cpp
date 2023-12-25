@@ -102,6 +102,7 @@ void Game::playGame(Colors FirstPlayer)
 				//send front error code
 			}
 			legalTurn = false;
+			delete[] extractedMsg;
 		}
 		//send front succes code
 		
@@ -145,7 +146,7 @@ output: an int array pointer in size of 4, each cell contains the massege positi
 */
 int* Game::checkMsg(std::string msg, MsgCode& code)
 {
-	int extractedMsg[4] = { 0 };
+	int* extractedMsg = new int(4);
 
 	//extract message
 	extractedMsg[0] = msg[0] - ASCII_SUB_FOR_COL;
