@@ -80,28 +80,23 @@ void Game::playGame(Colors FirstPlayer)
 		while (!legalTurn)
 		{
 			std::cin >> msg;
-			extractedMsg = this->checkMsg(msg, status);
-			if (extractedMsg != nullptr)
+			extractedMsg = this->extractMsg(msg);
+
+			status = this->_gameBoard.move(extractedMsg[0], extractedMsg[1], extractedMsg[2], extractedMsg[3], this->_turn);
+			this->nextTurn(extractedMsg);
+			if (status == CHECKMATE)
 			{
-				this->turn(extractedMsg);
-				if (status == CHECKMATE)
+				if (this->_turn == WHITE)
 				{
-					if (this->_turn == WHITE)
-					{
-						this->_winner = WHITE_WON;
-					}
-					else if (this->_turn == BLACK)
-					{
-						this->_winner == BLACK_WON;
-					}
+					this->_winner = WHITE_WON;
 				}
-				delete[] extractedMsg;
-				legalTurn = true;
+				else if (this->_turn == BLACK)
+				{
+					this->_winner == BLACK_WON;
+				}
 			}
-			else
-			{
-				//send front error code
-			}
+			delete[] extractedMsg;
+			legalTurn = true;
 			legalTurn = false;
 		}
 		//send front succes code
@@ -122,12 +117,8 @@ plays a turn: makes one move changes turn to the other player.
 input: the move, an int array at size of 4.
 output: none.
 */
-void Game::turn(int* move)
+void Game::nextTurn(int* move)
 {
-	//make move
-	this->_gameBoard.move(move[0], move[1], move[2], move[3], this->_turn);
-
-	//next turn
 	if (this->_turn == BLACK)
 	{
 		this->_turn = WHITE;
@@ -144,7 +135,7 @@ checks if massage is a valid move, returns the message as an array if it is
 input: the massege as string, a message code to change according to the vlidity status
 output: an int array pointer in size of 4, each cell contains the massege positions
 */
-int* Game::checkMsg(std::string msg, MsgCode& code)
+int* Game::extractMsg(std::string msg)
 {
 	int* extractedMsg = new int(4);
 
@@ -157,15 +148,6 @@ int* Game::checkMsg(std::string msg, MsgCode& code)
 	extractedMsg[2] -= ROWS;
 	extractedMsg[2] *= -1;
 	extractedMsg[3] = msg[2] - ASCII_SUB_FOR_COL;
-
-	//check all problem codes
-	code = this->_gameBoard.checkIfCanMove(extractedMsg[0], extractedMsg[1], extractedMsg[2], extractedMsg[3], this->getTurn());
-
-	//if a problen occured
-	if (code != VALID && code != CHESS && code != CHECKMATE)
-	{
-		return nullptr;
-	}
 
 	return extractedMsg;
 }

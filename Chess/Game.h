@@ -21,6 +21,6 @@ public:
 	std::string decodeMsg(std::string msg);
 	void sendNextMove();
 	void playGame(Colors FirstPlayer);
-	void turn(int* move);
-	int* checkMsg(std::string msg, MsgCode& code);
+	void nextTurn(int* move);
+	int* extractMsg(std::string msg);
 };
