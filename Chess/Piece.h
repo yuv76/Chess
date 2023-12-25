@@ -4,7 +4,7 @@
 
 
 enum Types {TOWER, KING, QUEEN, BISHOP, KNIGHT, PAWN};
-enum Colors {WHITE, BLACK};
+enum Colors {WHITE, BLACK, NOT_RELEVANT};
 
 #define MAX_ROW_AND_COL 8
 

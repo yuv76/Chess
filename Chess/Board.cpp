@@ -152,38 +152,48 @@ MsgCode Board::checkIfCanMove(int sourceRow, int sourceCol, int destRow, int des
 			return SAME_POS;
 		}
 		
-		//invalid move, can't go on the same pose as teammate. 
-		if (this->isTaken(destRow, destCol, turn))
+		if (turn != NOT_RELEVANT)
 		{
-			return PIECE_IN_DEST;
-		}
-
-		//invalid move, no piece of the curr player in source.
-		if (turn == WHITE)
-		{
-			if (this->isTaken(sourceRow, sourceCol, BLACK))
+			//invalid move, can't go on the same pose as teammate. 
+			if (this->isTaken(destRow, destCol, turn))
 			{
-				return NO_PIECE;
+				return PIECE_IN_DEST;
 			}
 		}
-		if (turn == BLACK)
+
+		if (turn != NOT_RELEVANT)
 		{
-			if (this->isTaken(sourceRow, sourceCol, WHITE))
+			//invalid move, no piece of the curr player in source.
+			if (turn == WHITE)
 			{
-				return NO_PIECE;
+				if (this->isTaken(sourceRow, sourceCol, BLACK))
+				{
+					return NO_PIECE;
+				}
+			}
+			if (turn == BLACK)
+			{
+				if (this->isTaken(sourceRow, sourceCol, WHITE))
+				{
+					return NO_PIECE;
+				}
 			}
 		}
 	
 		piece = this->_pieces[sourceRow][sourceCol];
 
-		//if is a tool that can walk more than one step and not the horse, check no pieces in their way
-		if (_pieces[sourceRow][sourceCol]->getType() == QUEEN || _pieces[sourceRow][sourceCol]->getType() == BISHOP || _pieces[sourceRow][sourceCol]->getType() == TOWER || _pieces[sourceRow][sourceCol]->getType() == PAWN)
+		if (turn != NOT_RELEVANT)
 		{
-			if (!isPathClear(sourceRow, sourceCol, destRow, destCol))
+			//if is a tool that can walk more than one step and not the horse, check no pieces in their way
+			if (_pieces[sourceRow][sourceCol]->getType() == QUEEN || _pieces[sourceRow][sourceCol]->getType() == BISHOP || _pieces[sourceRow][sourceCol]->getType() == TOWER || _pieces[sourceRow][sourceCol]->getType() == PAWN)
 			{
-				return ILLEGAL_TOOL_MOVE;
+				if (!isPathClear(sourceRow, sourceCol, destRow, destCol))
+				{
+					return ILLEGAL_TOOL_MOVE;
+				}
 			}
 		}
+
 
 		if (!(piece->canEat(sourceRow, sourceCol, destRow, destCol) || piece->canBeMoved(sourceRow, sourceCol, destRow, destCol)))
 		{
@@ -236,25 +246,50 @@ function moves a piece from source to dest by the ruls of chess.
 input: (sourceRow, sourceCol) - source row and col, (destRow, destCol) - dest row and col, turn - curr player's turn.
 output: none.
 */
-void Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
+MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
 {
 	Piece* piece = this->_pieces[sourceRow][sourceCol];
 
 
-	//if there was checkmate on the other king
-	if (checkIfCheckmate(turn))
+	if (checkIfCanMove(sourceRow, sourceCol, destRow, destCol, turn) == VALID)
 	{
-		changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
-	}
+		//if there was checkmate on the other king
+		if (checkIfCheckmate(turn))
+		{
+			changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
+			return CHECKMATE;
+		}
 
-	//check if movement caused chess
-	if ((turn == WHITE && checkIfCanMove(destRow, destCol, _blackKingPosition[0], _blackKingPosition[1], turn)) || (turn == BLACK && checkIfCanMove(destRow, destCol, _whiteKingPosition[0], _whiteKingPosition[1], turn)))
-	{
-		changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
+		//check if movement caused chess
+		if (_pieces[sourceRow][sourceCol]->getType() == WHITE && checkIfCanMove(destRow, destCol, _blackKingPosition[0], _blackKingPosition[1], NOT_RELEVANT))
+		{
+			if (_pieces[sourceRow][sourceCol]->getType() == QUEEN || _pieces[sourceRow][sourceCol]->getType() == BISHOP || _pieces[sourceRow][sourceCol]->getType() == TOWER || _pieces[sourceRow][sourceCol]->getType() == PAWN)
+			{
+				if (!isPathClear(destRow, destCol, _blackKingPosition[0], _blackKingPosition[1]))
+				{
+					return ILLEGAL_TOOL_MOVE;
+				}
+			}
+			changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
+			return CAUSE_CHESS;
+		}
+		else if (turn == BLACK && checkIfCanMove(destRow, destCol, _blackKingPosition[0], _blackKingPosition[1], NOT_RELEVANT))
+		{
+			if (turn == QUEEN || _pieces[sourceRow][sourceCol]->getType() == BISHOP || _pieces[sourceRow][sourceCol]->getType() == TOWER || _pieces[sourceRow][sourceCol]->getType() == PAWN)
+			{
+				if (!isPathClear(destRow, destCol, _whiteKingPosition[0], _whiteKingPosition[1]))
+				{
+					return ILLEGAL_TOOL_MOVE;
+				}
+			}
+			changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
+			return CAUSE_CHESS;
+		}
 	}
 	
 	//everything is valid
 	changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
+	return VALID;
 }
 
 
