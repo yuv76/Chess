@@ -7,7 +7,7 @@
 #include "Knight.h"
 #include "Pawn.h"
 #include "Queen.h"
-#include "Tower.h"
+#include "Tower.h" 
 
 
 #define BLANK_POS '#'

@@ -98,16 +98,13 @@ bool Board::isPathClear(int sourceRow, int sourceCol, int destRow, int destCol)
 	{
 		rowAdd = 1;
 	}
+	else if (destRow < sourceRow)
+	{
+		rowAdd = -1;
+	}
 	else
 	{
-		if (destRow < sourceRow)
-		{
-			rowAdd = -1;
-		}
-		else
-		{
-			rowAdd = 0;
-		}
+		rowAdd = 0;
 	}
 
 	//find change in col (+, - or none).
@@ -115,16 +112,13 @@ bool Board::isPathClear(int sourceRow, int sourceCol, int destRow, int destCol)
 	{
 		colAdd = 1;
 	}
+	else if (destCol < sourceCol)
+	{
+		colAdd = -1;
+	}
 	else
 	{
-		if (destCol < sourceCol)
-		{
-			colAdd = -1;
-		}
-		else
-		{
-			colAdd = 0;
-		}
+		colAdd = 0;
 	}
 
 	col = sourceCol + colAdd; //col start
@@ -137,7 +131,7 @@ bool Board::isPathClear(int sourceRow, int sourceCol, int destRow, int destCol)
 		col += colAdd; //increase col counter
 	}
 	
-	return true;;
+	return true;
 }
 
 /*
@@ -178,11 +172,12 @@ MsgCode Board::checkIfCanMove(int sourceRow, int sourceCol, int destRow, int des
 	}
 
 	//check if move is out of range
-	if (sourceRow < ROWS && destRow < ROWS && sourceCol < COLS && destCol < COLS)
+	if (sourceRow < ROWS && sourceRow > 0 && destRow < ROWS && destRow > 0 && sourceCol < COLS && sourceCol < 0 && destCol < COLS && destCol > 0)
 	{
 		piece = this->_pieces[sourceRow][sourceCol];
 
-		if (_pieces[sourceRow][sourceCol]->getType() == QUEEN || _pieces[sourceRow][sourceCol]->getType() == BISHOP || _pieces[sourceRow][sourceCol]->getType() == TOWER)
+		//if is a tool that can walk more than one step and not the horse, check no pieces in their way
+		if (_pieces[sourceRow][sourceCol]->getType() == QUEEN || _pieces[sourceRow][sourceCol]->getType() == BISHOP || _pieces[sourceRow][sourceCol]->getType() == TOWER || _pieces[sourceRow][sourceCol]->getType() == PAWN)
 		{
 			if (!isPathClear(sourceRow, sourceCol, destRow, destCol))
 			{
@@ -209,11 +204,13 @@ output: none.
 */
 void Board::changePieceLocation(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
 {
+	//if there is a piece in the location, eat it.
 	if (_pieces[destRow][destCol] != nullptr)
 	{
 		delete _pieces[destRow][destCol];
 	}
-
+	
+	//if one of the kings was moved update its location.
 	if (_pieces[sourceRow][sourceCol] != nullptr)
 	{
 		if (_pieces[sourceRow][sourceCol]->getType() == KING)
@@ -340,6 +337,7 @@ bool Board::checkIfCheckmate(Colors turn)
 		startPoseCol = _whiteKingPosition[1] - 1;
 	}
 
+	//check the 3x3 positions that the king is in the middle of
 	for (i = startPoseRow; i < (startPoseRow + 3); i++)
 	{
 		for (j = startPoseRow; j < (startPoseRow + 3); j++)

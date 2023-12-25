@@ -79,8 +79,12 @@ void Game::playGame(Colors FirstPlayer)
 		this->_gameBoard.printBoard();
 		while (!legalTurn)
 		{
+			std::cin >> msg;
 			extractedMsg = this->checkMsg(msg, status);
-			turnStatus = this->turn(extractedMsg, legalTurn);
+			if (extractedMsg != nullptr)
+			{
+				this->turn(extractedMsg, legalTurn);
+			}
 		}
 		
 	}
@@ -125,51 +129,21 @@ output: an int array pointer in size of 4, each cell contains the massege positi
 int* Game::checkMsg(std::string msg, MsgCode& code)
 {
 	int extractedMsg[4] = { 0 };
-	MsgCode valid = VALID;
 
-	//check msg has valid chars
-	if ((msg[0] >= 'a' && msg[0] <= 'h') && (msg[1] >= '1' && msg[1] <= '8') && (msg[3] >= 'a' && msg[3] <= 'h') && (msg[1] >= '1' && msg[1] <= '8'))
+	//extract message
+	extractedMsg[0] = msg[0] - ASCII_SUB_FOR_COL;
+	extractedMsg[1] = msg[1] - ASCII_SUB_FOR_ROW;
+	extractedMsg[2] = msg[2] - ASCII_SUB_FOR_COL;
+	extractedMsg[3] = msg[3] - ASCII_SUB_FOR_ROW;
+
+	//check all problem codes
+	code = this->_gameBoard.checkIfCanMove(extractedMsg[0], extractedMsg[1], extractedMsg[2], extractedMsg[3], this->getTurn());
+
+	//if a problen occured
+	if (code != VALID || code != CHESS || code != CHECKMATE)
 	{
-		//extract message
-		extractedMsg[0] = msg[0] - ASCII_SUB_FOR_COL;
-		extractedMsg[1] = msg[1] - ASCII_SUB_FOR_ROW;
-		extractedMsg[2] = msg[2] - ASCII_SUB_FOR_COL;
-		extractedMsg[3] = msg[3] - ASCII_SUB_FOR_ROW;
-
-		//check if the source and destination are different
-		if (msg[0] != msg[2] && msg[1] != msg[3])
-		{
-			return VALID; //not final at all/
-		}
-		else
-		{
-			return SAME_POS;
-		}
-		/*
-		//check if a chess occured.
-		valid = this->_gameBoard.checkIfChess(msg);
-		//check if source position has player's piece
-		valid = this->_gameBoard.isTaken(extractedMsg[0], extractedMsg[1], CHECK_SOURCE_POSITION);
-		//check if destination position contains current player's piece
-		valid = this->_gameBoard.isTaken(extractedMsg[2], extractedMsg[3], CHECK_DEST_POSITION);
-		//check if move will result chess on current player
-
-		//check if piece's move is legal
-
-		//check if same position on source and destination
-
-		//check if checkmate
-		valid = this->_gameBoard.checkIfCheckmate(msg);
-		*/
-	}
-	else
-	{
-		return INVALID_INDEXES;
+		return nullptr;
 	}
 
-	//send 
-
+	return extractedMsg;
 }
-
-
-
