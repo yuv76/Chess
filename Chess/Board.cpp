@@ -143,37 +143,37 @@ MsgCode Board::checkIfCanMove(int sourceRow, int sourceCol, int destRow, int des
 {
 	Piece* piece = nullptr;
 
-	//invalid move, same pose to source and dest.
-	if (sourceRow == destRow && sourceCol == destCol)
-	{
-		return SAME_POS;
-	}
-
-	//invalid move, can't go on the same pose as teammate. 
-	if (this->isTaken(destRow, destCol, turn))
-	{
-		return PIECE_IN_DEST;
-	}
-
-	//invalid move, no piece of the curr player in source.
-	if (turn == WHITE)
-	{
-		if (this->isTaken(sourceRow, sourceCol, BLACK))
-		{
-			return NO_PIECE;
-		}
-	}
-	if (turn == BLACK)
-	{
-		if (this->isTaken(sourceRow, sourceCol, WHITE))
-		{
-			return NO_PIECE;
-		}
-	}
-
 	//check if move is out of range
-	if (sourceRow < ROWS && sourceRow > 0 && destRow < ROWS && destRow > 0 && sourceCol < COLS && sourceCol < 0 && destCol < COLS && destCol > 0)
+	if (sourceRow < ROWS && sourceRow > 0 && destRow < ROWS && destRow > 0 && sourceCol < COLS && sourceCol > 0 && destCol < COLS && destCol > 0)
 	{
+		//invalid move, same pose to source and dest.
+		if (sourceRow == destRow && sourceCol == destCol)
+		{
+			return SAME_POS;
+		}
+		
+		//invalid move, can't go on the same pose as teammate. 
+		if (this->isTaken(destRow, destCol, turn))
+		{
+			return PIECE_IN_DEST;
+		}
+
+		//invalid move, no piece of the curr player in source.
+		if (turn == WHITE)
+		{
+			if (this->isTaken(sourceRow, sourceCol, BLACK))
+			{
+				return NO_PIECE;
+			}
+		}
+		if (turn == BLACK)
+		{
+			if (this->isTaken(sourceRow, sourceCol, WHITE))
+			{
+				return NO_PIECE;
+			}
+		}
+	
 		piece = this->_pieces[sourceRow][sourceCol];
 
 		//if is a tool that can walk more than one step and not the horse, check no pieces in their way
