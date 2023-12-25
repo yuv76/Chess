@@ -95,6 +95,7 @@ void Game::playGame(Colors FirstPlayer)
 						this->_winner == BLACK_WON;
 					}
 				}
+				delete[] extractedMsg;
 				legalTurn = true;
 			}
 			else
@@ -102,7 +103,6 @@ void Game::playGame(Colors FirstPlayer)
 				//send front error code
 			}
 			legalTurn = false;
-			delete[] extractedMsg;
 		}
 		//send front succes code
 		
@@ -149,16 +149,16 @@ int* Game::checkMsg(std::string msg, MsgCode& code)
 	int* extractedMsg = new int(4);
 
 	//extract message
-	extractedMsg[0] = msg[0] - ASCII_SUB_FOR_COL;
-	extractedMsg[1] = msg[1] - ASCII_SUB_FOR_ROW;
-	extractedMsg[2] = msg[2] - ASCII_SUB_FOR_COL;
-	extractedMsg[3] = msg[3] - ASCII_SUB_FOR_ROW;
+	extractedMsg[0] = msg[1] - ASCII_SUB_FOR_ROW;
+	extractedMsg[1] = msg[0] - ASCII_SUB_FOR_COL;
+	extractedMsg[2] = msg[3] - ASCII_SUB_FOR_ROW;
+	extractedMsg[3] = msg[2] - ASCII_SUB_FOR_COL;
 
 	//check all problem codes
 	code = this->_gameBoard.checkIfCanMove(extractedMsg[0], extractedMsg[1], extractedMsg[2], extractedMsg[3], this->getTurn());
 
 	//if a problen occured
-	if (code != VALID || code != CHESS || code != CHECKMATE)
+	if (code != VALID && code != CHESS && code != CHECKMATE)
 	{
 		return nullptr;
 	}
