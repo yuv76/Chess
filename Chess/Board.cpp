@@ -1,12 +1,5 @@
 #include "Board.h"
 
-#include "Bishop.h"
-#include "King.h"
-#include "Knight.h"
-#include "Pawn.h"
-#include "Queen.h"
-#include "Tower.h"
-
 /*
 C'tor for board object, arranging the pieces on the board array.
 input; none

@@ -1,10 +1,14 @@
 #pragma once
+
 #include "Piece.h"
-#include "Tower.h"
+
 #include "Bishop.h"
-#include "Queen.h"
 #include "King.h"
+#include "Knight.h"
 #include "Pawn.h"
+#include "Queen.h"
+#include "Tower.h"
+
 
 #define BLANK_POS '#'
 
