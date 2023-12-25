@@ -77,6 +77,7 @@ void Game::playGame(Colors FirstPlayer)
 	while (this->getWinState() == UNDETERMINED)
 	{
 		this->_gameBoard.printBoard();
+		std::cout << std::endl;
 		do
 		{
 			std::cin >> msg;
@@ -98,6 +99,7 @@ void Game::playGame(Colors FirstPlayer)
 			if (status != VALID && status != CHECKMATE && status != CAUSE_CHESS)
 			{
 				legalTurn = false;
+				std::cout << "Ilegal move" << std::endl << std::endl;
 			}
 			else
 			{
@@ -106,7 +108,7 @@ void Game::playGame(Colors FirstPlayer)
 
 			delete[] extractedMsg;
 		} while (!legalTurn);
-		//send front succes code
+		//send front success code
 		
 	}
 	if (this->getWinState() == WHITE)

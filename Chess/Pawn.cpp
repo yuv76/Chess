@@ -7,7 +7,7 @@ input: pawn's color, type, row and column
 output: none
 */
 Pawn::Pawn(Colors color, Types type, int row, int col) :
-	Piece(color, type, row, col), _hasWalked(DIDNT_WALK_YET)
+	Piece(color, type, row, col)
 {}
 
 /*
@@ -17,16 +17,6 @@ output: none
 */
 Pawn::~Pawn()
 {}
-
-/*
-Returns whether the pawn had moved already or not
-input: none
-output: true if already walked, false otherwise
-*/
-bool Pawn::getIfWalked()
-{
-	return this->_hasWalked;
-}
 
 /*
 function checks if pawn can move in this direction.

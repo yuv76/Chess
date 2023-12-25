@@ -5,8 +5,8 @@ C'tor for Piece object
 input: Piece's color, type, row, column.
 output: none.
 */
-Piece::Piece(Colors color, Types type, int row, int col):
-	_color(color), _type(type), _letterLocation(row), _numberLocation(col)
+Piece::Piece(Colors color, Types type, int row, int col) :
+	_color(color), _type(type), _letterLocation(row), _numberLocation(col), _hasWalked(false)
 {}
 
 /*
@@ -44,6 +44,26 @@ bool Piece::canEat(int sourceRow, int sourceCol, int destRow, int destCol) const
 		return true;
 	}
 	return false;
+}
+
+/*
+Returns whether the piece had moved already or not.
+input: none.
+output: true if already walked, false otherwise.
+*/
+bool Piece::getIfWalked() const
+{
+	return this->_hasWalked;
+}
+
+/*
+changes hasWalked to true.
+input: none.
+output: none.
+*/
+void Piece::changehasWalkedToTrue()
+{
+	this->_hasWalked = true;
 }
 
 /*

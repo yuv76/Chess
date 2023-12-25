@@ -16,6 +16,7 @@ protected:
 	// Might turn out to be unneeded
 	int _letterLocation;
 	int _numberLocation;
+	bool _hasWalked;
 
 public:
 	Piece(Colors color, Types type, int row, int col);
@@ -23,6 +24,8 @@ public:
 	Types getType() const;
 	Colors getColor() const;
 	virtual bool canEat(int sourceRow, int sourceCol, int destRow, int destCol) const;
+	bool getIfWalked() const;
+	void changehasWalkedToTrue();
 	virtual bool canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) const = 0;
 	virtual char getInitial(Colors color) = 0;
 

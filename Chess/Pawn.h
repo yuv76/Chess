@@ -8,12 +8,9 @@
 
 class Pawn : public Piece
 {
-private:
-	bool _hasWalked;
 public:
 	Pawn(Colors color, Types type, int row, int col);
 	virtual ~Pawn();
-	bool getIfWalked();
 	bool canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) const override;
 	bool canEat(int sourceRow, int sourceCol, int destRow, int destCol) const;
 

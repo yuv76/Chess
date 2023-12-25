@@ -144,7 +144,7 @@ MsgCode Board::checkIfCanMove(int sourceRow, int sourceCol, int destRow, int des
 	Piece* piece = nullptr;
 
 	//check if move is out of range
-	if (sourceRow < ROWS && sourceRow > 0 && destRow < ROWS && destRow > 0 && sourceCol < COLS && sourceCol > 0 && destCol < COLS && destCol > 0)
+	if (sourceRow < ROWS && sourceRow >= 0 && destRow < ROWS && destRow >= 0 && sourceCol < COLS && sourceCol >= 0 && destCol < COLS && destCol >= 0)
 	{
 		//invalid move, same pose to source and dest.
 		if (sourceRow == destRow && sourceCol == destCol)
@@ -237,6 +237,17 @@ void Board::changePieceLocation(int sourceRow, int sourceCol, int destRow, int d
 			}
 		}
 	}
+
+	//changed walking status
+	if (_pieces[sourceRow][sourceCol] != nullptr)
+	{
+		if (!_pieces[sourceRow][sourceCol]->getIfWalked())
+		{
+			_pieces[sourceRow][sourceCol]->changehasWalkedToTrue();
+		}
+	}
+
+	//move
 	_pieces[destRow][destCol] = _pieces[sourceRow][sourceCol];
 	_pieces[sourceRow][sourceCol] = nullptr;
 }
@@ -285,11 +296,15 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 			changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
 			return CAUSE_CHESS;
 		}
+
+		changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
+		//everything is valid
+		return VALID;
 	}
-	
-	//everything is valid
-	changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
-	return VALID;
+	else
+	{
+		return checkIfCanMove(sourceRow, sourceCol, destRow, destCol, turn);
+	}
 }
 
 
