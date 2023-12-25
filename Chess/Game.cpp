@@ -77,7 +77,7 @@ void Game::playGame(Colors FirstPlayer)
 	while (this->getWinState() == UNDETERMINED)
 	{
 		this->_gameBoard.printBoard();
-		while (!legalTurn)
+		do
 		{
 			std::cin >> msg;
 			extractedMsg = this->extractMsg(msg);
@@ -95,10 +95,17 @@ void Game::playGame(Colors FirstPlayer)
 					this->_winner == BLACK_WON;
 				}
 			}
+			if (status != VALID && status != CHECKMATE && status != CAUSE_CHESS)
+			{
+				legalTurn = false;
+			}
+			else
+			{
+				legalTurn = true;
+			}
+
 			delete[] extractedMsg;
-			legalTurn = true;
-			legalTurn = false;
-		}
+		} while (!legalTurn);
 		//send front succes code
 		
 	}
@@ -137,16 +144,19 @@ output: an int array pointer in size of 4, each cell contains the massege positi
 */
 int* Game::extractMsg(std::string msg)
 {
-	int* extractedMsg = new int(4);
-
+	int* extractedMsg = new int[4];
+	
 	//extract message
 	extractedMsg[0] = msg[1] - ASCII_SUB_FOR_ROW;
-	extractedMsg[0] -= ROWS;
+	extractedMsg[0] -= ROWS - 1;
 	extractedMsg[0] *= -1;
+
 	extractedMsg[1] = msg[0] - ASCII_SUB_FOR_COL;
+
 	extractedMsg[2] = msg[3] - ASCII_SUB_FOR_ROW;
-	extractedMsg[2] -= ROWS;
+	extractedMsg[2] -= ROWS - 1;
 	extractedMsg[2] *= -1;
+
 	extractedMsg[3] = msg[2] - ASCII_SUB_FOR_COL;
 
 	return extractedMsg;
