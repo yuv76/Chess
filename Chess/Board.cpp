@@ -234,38 +234,27 @@ void Board::changePieceLocation(int sourceRow, int sourceCol, int destRow, int d
 /*
 function moves a piece from source to dest by the ruls of chess.
 input: (sourceRow, sourceCol) - source row and col, (destRow, destCol) - dest row and col, turn - curr player's turn.
-output: MsgCode - code to the front-end that explains the result of the move (errors or success).
+output: none.
 */
-MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
+void Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
 {
 	Piece* piece = this->_pieces[sourceRow][sourceCol];
 
-	if (checkIfCanMove(sourceRow, sourceCol, destRow, destCol, turn) == VALID)
+
+	//if there was checkmate on the other king
+	if (checkIfCheckmate(turn))
 	{
-		//if there was mate on the other king
-		if (checkIfCheckmate(turn))
-		{
-			changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
-			return	CHECKMATE;
-		}
-
-		//check if movement caused chess
-		if ((turn == WHITE && checkIfCanMove(destRow, destCol, _blackKingPosition[0], _blackKingPosition[1], turn)) || (turn == BLACK && checkIfCanMove(destRow, destCol, _whiteKingPosition[0], _whiteKingPosition[1], turn)))
-		{
-			changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
-			return	CAUSE_CHESS;
-		}
-		
-
-		//everything is valid
 		changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
 	}
 
-	else
+	//check if movement caused chess
+	if ((turn == WHITE && checkIfCanMove(destRow, destCol, _blackKingPosition[0], _blackKingPosition[1], turn)) || (turn == BLACK && checkIfCanMove(destRow, destCol, _whiteKingPosition[0], _whiteKingPosition[1], turn)))
 	{
-		return checkIfCanMove(sourceRow, sourceCol, destRow, destCol, turn);
+		changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
 	}
-	return VALID;
+	
+	//everything is valid
+	changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
 }
 
 

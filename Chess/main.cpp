@@ -9,7 +9,7 @@ int main()
 	*/
 
 	Board board = Board();
-	board.printBoard();
+	
 	board.move(1, 3, 3, 3, WHITE);
 	board.move(0, 3, 1, 3, WHITE); //error! for some reason is taken doesn't have correct parameters!
 	

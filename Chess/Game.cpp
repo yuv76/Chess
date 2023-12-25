@@ -83,9 +83,27 @@ void Game::playGame(Colors FirstPlayer)
 			extractedMsg = this->checkMsg(msg, status);
 			if (extractedMsg != nullptr)
 			{
-				this->turn(extractedMsg, legalTurn);
+				this->turn(extractedMsg);
+				if (status == CHECKMATE)
+				{
+					if (this->_turn == WHITE)
+					{
+						this->_winner = WHITE_WON;
+					}
+					else if (this->_turn == BLACK)
+					{
+						this->_winner == BLACK_WON;
+					}
+				}
+				legalTurn = true;
 			}
+			else
+			{
+				//send front error code
+			}
+			legalTurn = false;
 		}
+		//send front succes code
 		
 	}
 	if (this->getWinState() == WHITE)
@@ -99,12 +117,12 @@ void Game::playGame(Colors FirstPlayer)
 }
 
 /*
-
+plays a turn: makes one move changes turn to the other player.
+input: the move, an int array at size of 4.
+output: none.
 */
-MsgCode Game::turn(int* move, bool& validFlag)
+void Game::turn(int* move)
 {
-	bool valid = false;
-
 	//make move
 	this->_gameBoard.move(move[0], move[1], move[2], move[3], this->_turn);
 
@@ -117,7 +135,6 @@ MsgCode Game::turn(int* move, bool& validFlag)
 	{
 		this->_turn = BLACK;
 	}
-
 }
 
 
