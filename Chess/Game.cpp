@@ -150,8 +150,12 @@ int* Game::checkMsg(std::string msg, MsgCode& code)
 
 	//extract message
 	extractedMsg[0] = msg[1] - ASCII_SUB_FOR_ROW;
+	extractedMsg[0] -= ROWS;
+	extractedMsg[0] *= -1;
 	extractedMsg[1] = msg[0] - ASCII_SUB_FOR_COL;
 	extractedMsg[2] = msg[3] - ASCII_SUB_FOR_ROW;
+	extractedMsg[2] -= ROWS;
+	extractedMsg[2] *= -1;
 	extractedMsg[3] = msg[2] - ASCII_SUB_FOR_COL;
 
 	//check all problem codes
