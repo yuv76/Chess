@@ -37,7 +37,7 @@ public:
 	bool isPathClear(int sourceRow, int sourceCol, int destRow, int destCol);
 	MsgCode checkIfCanMove(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
 	void changePieceLocation(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
-	void move(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
+	MsgCode move(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
 	bool isTaken(int row, int col, Colors turn);
 	bool checkIfChess(Colors turn, int kingRow, int kingCol);
 	bool checkIfCheckmate(Colors turn);
