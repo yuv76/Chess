@@ -272,32 +272,16 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 		}
 
 		//check if movement caused chess
-		if (_pieces[sourceRow][sourceCol]->getType() == WHITE && checkIfCanMove(destRow, destCol, _blackKingPosition[0], _blackKingPosition[1], NOT_RELEVANT))
+		changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
+		if (_pieces[destRow][destCol]->getType() == WHITE && checkIfCanMove(destRow, destCol, _blackKingPosition[0], _blackKingPosition[1], WHITE))
 		{
-			if (_pieces[sourceRow][sourceCol]->getType() == QUEEN || _pieces[sourceRow][sourceCol]->getType() == BISHOP || _pieces[sourceRow][sourceCol]->getType() == TOWER || _pieces[sourceRow][sourceCol]->getType() == PAWN)
-			{
-				if (!isPathClear(destRow, destCol, _blackKingPosition[0], _blackKingPosition[1]))
-				{
-					return ILLEGAL_TOOL_MOVE;
-				}
-			}
-			changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
 			return CAUSE_CHESS;
 		}
-		else if (turn == BLACK && checkIfCanMove(destRow, destCol, _blackKingPosition[0], _blackKingPosition[1], NOT_RELEVANT))
+		else if (turn == BLACK && checkIfCanMove(destRow, destCol, _blackKingPosition[0], _blackKingPosition[1], BLACK))
 		{
-			if (turn == QUEEN || _pieces[sourceRow][sourceCol]->getType() == BISHOP || _pieces[sourceRow][sourceCol]->getType() == TOWER || _pieces[sourceRow][sourceCol]->getType() == PAWN)
-			{
-				if (!isPathClear(destRow, destCol, _whiteKingPosition[0], _whiteKingPosition[1]))
-				{
-					return ILLEGAL_TOOL_MOVE;
-				}
-			}
-			changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
 			return CAUSE_CHESS;
 		}
 
-		changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
 		//everything is valid
 		return VALID;
 	}
@@ -363,17 +347,54 @@ bool Board::checkIfCheckmate(Colors turn)
 	//* if yes then it's checkmate
 	bool isMate = true;
 	int startPoseRow = 0, startPoseCol = 0;
+	int kingRow = 0, kingCol = 0;
 	int i = 0, j  = 0;
 	
 	if (turn == WHITE)
 	{
-		startPoseRow = _blackKingPosition[0] - 1;
-		startPoseCol = _blackKingPosition[1] - 1;
+		if (startPoseRow != 0)
+		{
+			startPoseRow = _blackKingPosition[0] - 1;
+			kingRow = _blackKingPosition[0];
+		}
+		else
+		{
+			startPoseRow = 0;
+			kingRow = startPoseRow;
+		}
+		if (startPoseCol != 0)
+		{
+			startPoseCol = _blackKingPosition[1] - 1;
+			kingCol = _blackKingPosition[1];
+		}
+		else
+		{
+			startPoseCol = 0;
+			kingCol = startPoseCol;
+		}
 	}
 	if (turn == BLACK)
 	{
-		startPoseRow = _whiteKingPosition[0] - 1;
-		startPoseCol = _whiteKingPosition[1] - 1;
+		if (startPoseRow != 0)
+		{
+			startPoseRow = _whiteKingPosition[0] - 1;
+			kingRow = _whiteKingPosition[0];
+		}
+		else
+		{
+			startPoseRow = 0;
+			kingRow = startPoseRow;
+		}
+		if (startPoseCol != 0)
+		{
+			startPoseCol = _whiteKingPosition[1] - 1;
+			kingCol = _whiteKingPosition[1];
+		}
+		else
+		{
+			startPoseCol = 0;
+			kingCol = startPoseCol;
+		}
 	}
 
 	//check the 3x3 positions that the king is in the middle of
@@ -381,7 +402,7 @@ bool Board::checkIfCheckmate(Colors turn)
 	{
 		for (j = startPoseRow; j < (startPoseRow + 3); j++)
 		{
-			if (i != startPoseRow + 1 && j != startPoseCol + 1)
+			if (i != kingRow && j != kingCol)
 			{
 				if (i < ROWS && j < COLS)
 				{

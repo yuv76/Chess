@@ -25,16 +25,33 @@ output: true if can be moved and false if not.
 */
 bool Pawn::canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) const
 {
-	if (this->_hasWalked == false)
+	if (this->_color == WHITE)
 	{
-		if (destRow - sourceRow == 2 && destCol - sourceCol == 0)
+		if (this->_hasWalked == false)
+		{
+			if (destRow - sourceRow == 2 && destCol - sourceCol == 0)
+			{
+				return true;
+			}
+		}
+		if (destRow - sourceRow == 1 && destCol - sourceCol == 0)
 		{
 			return true;
 		}
 	}
-	if (destRow - sourceRow == 1 && destCol - sourceCol == 0)
+	else
 	{
-		return true;
+		if (this->_hasWalked == false)
+		{
+			if (destRow - sourceRow == -2 && destCol - sourceCol == 0)
+			{
+				return true;
+			}
+		}
+		if (destRow - sourceRow == -1 && destCol - sourceCol == 0)
+		{
+			return true;
+		}
 	}
 	return false;
 }

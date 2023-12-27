@@ -82,31 +82,36 @@ void Game::playGame(Colors FirstPlayer)
 		{
 			std::cin >> msg;
 			extractedMsg = this->extractMsg(msg);
-
-			status = this->_gameBoard.move(extractedMsg[0], extractedMsg[1], extractedMsg[2], extractedMsg[3], this->_turn);
-			this->nextTurn(extractedMsg);
-			if (status == CHECKMATE)
+			if (extractedMsg != nullptr)
 			{
-				if (this->_turn == WHITE)
+				status = this->_gameBoard.move(extractedMsg[0], extractedMsg[1], extractedMsg[2], extractedMsg[3], this->_turn);
+				if (status == VALID || status == CHESS) // (|| ststus == checkmate?)
 				{
-					this->_winner = WHITE_WON;
+					this->nextTurn(extractedMsg);
 				}
-				else if (this->_turn == BLACK)
+				if (status == CHECKMATE)
 				{
-					this->_winner == BLACK_WON;
+					if (this->_turn == WHITE)
+					{
+						this->_winner = WHITE_WON;
+					}
+					else if (this->_turn == BLACK)
+					{
+						this->_winner == BLACK_WON;
+					}
 				}
-			}
-			if (status != VALID && status != CHECKMATE && status != CAUSE_CHESS)
-			{
-				legalTurn = false;
-				std::cout << "Ilegal move" << std::endl << std::endl;
-			}
-			else
-			{
-				legalTurn = true;
-			}
+				if (status != VALID && status != CHECKMATE && status != CAUSE_CHESS)
+				{
+					legalTurn = false;
+					std::cout << "Ilegal move" << std::endl << std::endl;
+				}
+				else
+				{
+					legalTurn = true;
+				}
 
-			delete[] extractedMsg;
+				delete[] extractedMsg;
+			}
 		} while (!legalTurn);
 		//send front success code
 		
@@ -147,19 +152,26 @@ output: an int array pointer in size of 4, each cell contains the massege positi
 int* Game::extractMsg(std::string msg)
 {
 	int* extractedMsg = new int[4];
-	
-	//extract message
-	extractedMsg[0] = msg[1] - ASCII_SUB_FOR_ROW;
-	extractedMsg[0] -= ROWS - 1;
-	extractedMsg[0] *= -1;
+	if (msg.length() >= 4)
+	{
+		//extract message
+		extractedMsg[0] = msg[1] - ASCII_SUB_FOR_ROW;
+		extractedMsg[0] -= ROWS - 1;
+		extractedMsg[0] *= -1;
 
-	extractedMsg[1] = msg[0] - ASCII_SUB_FOR_COL;
+		extractedMsg[1] = msg[0] - ASCII_SUB_FOR_COL;
 
-	extractedMsg[2] = msg[3] - ASCII_SUB_FOR_ROW;
-	extractedMsg[2] -= ROWS - 1;
-	extractedMsg[2] *= -1;
+		extractedMsg[2] = msg[3] - ASCII_SUB_FOR_ROW;
+		extractedMsg[2] -= ROWS - 1;
+		extractedMsg[2] *= -1;
 
-	extractedMsg[3] = msg[2] - ASCII_SUB_FOR_COL;
+		extractedMsg[3] = msg[2] - ASCII_SUB_FOR_COL;
+	}
+	else
+	{
+		delete[] extractedMsg;
+		extractedMsg = nullptr;
+	}
 
 	return extractedMsg;
 }
