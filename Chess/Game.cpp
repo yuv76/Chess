@@ -67,9 +67,9 @@ void Game::playGame(Colors FirstPlayer)
 	MsgCode status;
 	int* extractedMsg = nullptr;
 	Pipe p;
-
 	bool isConnect = p.connect();
 	std::string ans;
+
 	while (!isConnect)
 	{
 		std::cout << "cant connect to graphics" << std::endl;
@@ -103,8 +103,7 @@ void Game::playGame(Colors FirstPlayer)
 		std::cout << std::endl;
 		do
 		{
-			std::cin >> msg;
-			extractedMsg = this->extractMsg(msg);
+			extractedMsg = this->extractMsg(msgFromGraphics);
 			if (extractedMsg != nullptr)
 			{
 				status = this->_gameBoard.move(extractedMsg[0], extractedMsg[1], extractedMsg[2], extractedMsg[3], this->_turn);
