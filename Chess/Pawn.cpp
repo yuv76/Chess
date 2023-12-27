@@ -64,9 +64,19 @@ output: true if can eat and false if not.
 */
 bool Pawn::canEat(int sourceRow, int sourceCol, int destRow, int destCol) const
 {
-	if (destRow - sourceRow == 1 && destCol - sourceCol == 1)
+	if (this->_color == WHITE)
 	{
-		return true;
+		if (destRow - sourceRow == 1 && abs(destCol - sourceCol) == 1)
+		{
+			return true;
+		}
+	}
+	else
+	{
+		if (destRow - sourceRow == -1 && abs(destCol - sourceCol) == 1)
+		{
+			return true;
+		}
 	}
 	return false;
 }
