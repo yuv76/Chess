@@ -319,7 +319,7 @@ bool Board::checkIfChess(Colors turn, int kingRow, int kingCol)
 	{
 		for (col = 0; col  < COLS; col++)
 		{
-			if (_pieces[row][j] != nullptr)
+			if (_pieces[row][col] != nullptr)
 			{
 				if (this->checkIfCanMove(row, col, kingRow, kingCol, turn) == VALID) //white's turn
 				{
