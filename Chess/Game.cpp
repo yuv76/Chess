@@ -103,7 +103,9 @@ void Game::playGame(Colors FirstPlayer)
 		std::cout << std::endl;
 		do
 		{
+			msgFromGraphics = p.getMessageFromGraphics();
 			extractedMsg = this->extractMsg(msgFromGraphics);
+
 			if (extractedMsg != nullptr)
 			{
 				status = this->_gameBoard.move(extractedMsg[0], extractedMsg[1], extractedMsg[2], extractedMsg[3], this->_turn);
