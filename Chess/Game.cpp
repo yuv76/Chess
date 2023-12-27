@@ -94,16 +94,14 @@ void Game::playGame(Colors FirstPlayer)
 	//start game by sending board to front
 	msgToGraphics = this->_gameBoard.toString();
 	p.sendMessageToGraphics(msgToGraphics);
-	delete[] msgToGraphics;
 	std::string msgFromGraphics = p.getMessageFromGraphics();
 
-	while (this->getWinState() == UNDETERMINED)
+	while (this->getWinState() == UNDETERMINED || msgFromGraphics != "quit")
 	{
 		this->_gameBoard.printBoard();
 		std::cout << std::endl;
 		do
 		{
-			msgFromGraphics = p.getMessageFromGraphics();
 			extractedMsg = this->extractMsg(msgFromGraphics);
 
 			if (extractedMsg != nullptr)
@@ -133,8 +131,13 @@ void Game::playGame(Colors FirstPlayer)
 				{
 					legalTurn = true;
 				}
+				msgToGraphics[0] = std::to_string(status)[0];
+				msgToGraphics[1] = '\0';
+				p.sendMessageToGraphics(msgToGraphics);
+				msgFromGraphics = p.getMessageFromGraphics();
 
 				delete[] extractedMsg;
+				delete[] msgToGraphics;
 			}
 		} while (!legalTurn);
 		//send front success code
@@ -148,6 +151,7 @@ void Game::playGame(Colors FirstPlayer)
 	{
 		std::cout << "black won!";
 	}
+	p.close();
 }
 
 /*
