@@ -1,6 +1,6 @@
 #include "Game.h"
 
-int main()
+int maing()
 {
 	/*
 	Colors startPlayer = WHITE;
@@ -22,4 +22,5 @@ int main()
 	}*/
 	//std:: cout << std::endl;
 	//board.printBoard();
+	return 0;
 }
