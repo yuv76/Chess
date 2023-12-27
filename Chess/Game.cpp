@@ -107,7 +107,7 @@ void Game::playGame(Colors FirstPlayer)
 			if (extractedMsg != nullptr)
 			{
 				status = this->_gameBoard.move(extractedMsg[0], extractedMsg[1], extractedMsg[2], extractedMsg[3], this->_turn);
-				if (status == VALID || status == CHESS) // (|| ststus == checkmate?)
+				if (status == VALID || status == CHESS)
 				{
 					this->nextTurn(extractedMsg);
 				}

@@ -346,7 +346,7 @@ bool Board::checkIfCheckmate(Colors turn)
 	
 	if (turn == WHITE)
 	{
-		if (startPoseRow != 0) //update start row to the most high place of the king's movement
+		if (_blackKingPosition[0] != 0) //update start row to the most high place of the king's movement
 		{
 			startPoseRow = _blackKingPosition[0] - 1;
 			kingRow = _blackKingPosition[0];
@@ -356,7 +356,7 @@ bool Board::checkIfCheckmate(Colors turn)
 			startPoseRow = 0;
 			kingRow = startPoseRow;
 		}
-		if (startPoseCol != 0)
+		if (_blackKingPosition[1] != 0)
 		{
 			startPoseCol = _blackKingPosition[1] - 1;
 			kingCol = _blackKingPosition[1];
@@ -369,7 +369,7 @@ bool Board::checkIfCheckmate(Colors turn)
 	}
 	if (turn == BLACK)
 	{
-		if (startPoseRow != 0)
+		if (_whiteKingPosition[0] != 0)
 		{
 			startPoseRow = _whiteKingPosition[0] - 1;
 			kingRow = _whiteKingPosition[0];
@@ -379,7 +379,7 @@ bool Board::checkIfCheckmate(Colors turn)
 			startPoseRow = 0;
 			kingRow = startPoseRow;
 		}
-		if (startPoseCol != 0)
+		if (_whiteKingPosition[1] != 0)
 		{
 			startPoseCol = _whiteKingPosition[1] - 1;
 			kingCol = _whiteKingPosition[1];
