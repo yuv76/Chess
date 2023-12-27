@@ -70,6 +70,7 @@ Board::~Board()
 {
 	int i = 0, j = 0;
 
+	//delete all pieces:
 	for (i = 0; i < ROWS; i++)
 	{
 		for (j = 0; j < COLS; j++)
@@ -152,49 +153,43 @@ MsgCode Board::checkIfCanMove(int sourceRow, int sourceCol, int destRow, int des
 			return SAME_POS;
 		}
 		
-		if (turn != NOT_RELEVANT)
+		//invalid move, can't go on the same pose as teammate. 
+		if (this->isTaken(destRow, destCol, turn))
 		{
-			//invalid move, can't go on the same pose as teammate. 
-			if (this->isTaken(destRow, destCol, turn))
-			{
-				return PIECE_IN_DEST;
-			}
+			return PIECE_IN_DEST;
 		}
 
-		if (turn != NOT_RELEVANT)
+
+		
+		//invalid move, no piece of the curr player in source.
+		if (turn == WHITE)
 		{
-			//invalid move, no piece of the curr player in source.
-			if (turn == WHITE)
+			if (this->isTaken(sourceRow, sourceCol, BLACK) || this->_pieces[sourceRow][sourceCol] == nullptr)
 			{
-				if (this->isTaken(sourceRow, sourceCol, BLACK) || this->_pieces[sourceRow][sourceCol] == nullptr)
-				{
-					return NO_PIECE;
-				}
-			}
-			if (turn == BLACK)
-			{
-				if (this->isTaken(sourceRow, sourceCol, WHITE) || this->_pieces[sourceRow][sourceCol] == nullptr)
-				{
-					return NO_PIECE;
-				}
+				return NO_PIECE;
 			}
 		}
+		if (turn == BLACK)
+		{
+			if (this->isTaken(sourceRow, sourceCol, WHITE) || this->_pieces[sourceRow][sourceCol] == nullptr)
+			{
+				return NO_PIECE;
+			}
+		}
+		
 	
 		piece = this->_pieces[sourceRow][sourceCol];
 
-		if (turn != NOT_RELEVANT)
+		//if is a tool that can walk more than one step and not the horse, check no pieces in their way
+		if (_pieces[sourceRow][sourceCol]->getType() == QUEEN || _pieces[sourceRow][sourceCol]->getType() == BISHOP || _pieces[sourceRow][sourceCol]->getType() == TOWER || _pieces[sourceRow][sourceCol]->getType() == PAWN)
 		{
-			//if is a tool that can walk more than one step and not the horse, check no pieces in their way
-			if (_pieces[sourceRow][sourceCol]->getType() == QUEEN || _pieces[sourceRow][sourceCol]->getType() == BISHOP || _pieces[sourceRow][sourceCol]->getType() == TOWER || _pieces[sourceRow][sourceCol]->getType() == PAWN)
+			if (!isPathClear(sourceRow, sourceCol, destRow, destCol))
 			{
-				if (!isPathClear(sourceRow, sourceCol, destRow, destCol))
-				{
-					return ILLEGAL_TOOL_MOVE;
-				}
+				return ILLEGAL_TOOL_MOVE;
 			}
 		}
 
-
+		//check if piece can't it in this direction or can't move
 		if (!(piece->canEat(sourceRow, sourceCol, destRow, destCol) || piece->canBeMoved(sourceRow, sourceCol, destRow, destCol)))
 		{
 			return ILLEGAL_TOOL_MOVE;
@@ -220,7 +215,7 @@ void Board::changePieceLocation(int sourceRow, int sourceCol, int destRow, int d
 		delete _pieces[destRow][destCol];
 	}
 	
-	//if one of the kings was moved update its location.
+	//if one of the kings was moved, update his location.
 	if (_pieces[sourceRow][sourceCol] != nullptr)
 	{
 		if (_pieces[sourceRow][sourceCol]->getType() == KING)
@@ -260,9 +255,9 @@ output: none.
 MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
 {
 	Piece* piece = this->_pieces[sourceRow][sourceCol];
+	MsgCode canMove = checkIfCanMove(sourceRow, sourceCol, destRow, destCol, turn);
 
-
-	if (checkIfCanMove(sourceRow, sourceCol, destRow, destCol, turn) == VALID)
+	if (canMove == VALID)
 	{
 		//if there was checkmate on the other king
 		if (checkIfCheckmate(turn))
@@ -287,7 +282,7 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 	}
 	else
 	{
-		return checkIfCanMove(sourceRow, sourceCol, destRow, destCol, turn);
+		return canMove;
 	}
 }
 
@@ -299,7 +294,7 @@ output: true if location is taken and false if not.
 */
 bool Board::isTaken(int row, int col, Colors turn)
 {
-	if (this->_pieces[row][col] == nullptr)
+	if (this->_pieces[row][col] == nullptr) //if location is empty
 	{
 		return false;
 	}
@@ -318,15 +313,15 @@ output: true if there was a chess and false if not.
 */
 bool Board::checkIfChess(Colors turn, int kingRow, int kingCol)
 {
-	int i = 0, j = 0;
+	int row = 0, col = 0;
 
-	for (i = 0; i < ROWS; i++)
+	for (row = 0; row < ROWS; row++)
 	{
-		for (j = 0; j < COLS; j++)
+		for (col = 0; col  < COLS; col++)
 		{
-			if (_pieces[i][j] != nullptr)
+			if (_pieces[row][j] != nullptr)
 			{
-				if (this->checkIfCanMove(i, j, kingRow, kingCol, turn) == VALID) //white's turn
+				if (this->checkIfCanMove(row, col, kingRow, kingCol, turn) == VALID) //white's turn
 				{
 					return true;
 				}
@@ -345,19 +340,18 @@ bool Board::checkIfCheckmate(Colors turn)
 {
 	//* check if chess on all pf the king's routs and on his curr place
 	//* if yes then it's checkmate
-	bool isMate = true;
 	int startPoseRow = 0, startPoseCol = 0;
 	int kingRow = 0, kingCol = 0;
 	int i = 0, j  = 0;
 	
 	if (turn == WHITE)
 	{
-		if (startPoseRow != 0)
+		if (startPoseRow != 0) //update start row to the most high place of the king's movement
 		{
 			startPoseRow = _blackKingPosition[0] - 1;
 			kingRow = _blackKingPosition[0];
 		}
-		else
+		else //if there is no top left corner (king is on the edge)
 		{
 			startPoseRow = 0;
 			kingRow = startPoseRow;
@@ -367,7 +361,7 @@ bool Board::checkIfCheckmate(Colors turn)
 			startPoseCol = _blackKingPosition[1] - 1;
 			kingCol = _blackKingPosition[1];
 		}
-		else
+		else //if there is no top left corner (king is on the edge)
 		{
 			startPoseCol = 0;
 			kingCol = startPoseCol;
@@ -415,7 +409,7 @@ bool Board::checkIfCheckmate(Colors turn)
 						}
 
 					}
-					if (!checkIfChess(turn, i, j))
+					if (!checkIfChess(turn, i, j)) //check if it's checkmate
 					{
 						return false;
 					}
