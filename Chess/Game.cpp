@@ -125,7 +125,7 @@ void Game::playGame(Colors FirstPlayer)
 				if (status != VALID && status != CHECKMATE && status != CAUSE_CHESS)
 				{
 					legalTurn = false;
-					std::cout << "Ilegal move" << std::endl << std::endl;
+					std::cout << status << std::endl << std::endl;
 				}
 				else
 				{
@@ -137,7 +137,6 @@ void Game::playGame(Colors FirstPlayer)
 				msgFromGraphics = p.getMessageFromGraphics();
 
 				delete[] extractedMsg;
-				delete[] msgToGraphics;
 			}
 		} while (!legalTurn);
 		//send front success code
@@ -151,6 +150,7 @@ void Game::playGame(Colors FirstPlayer)
 	{
 		std::cout << "black won!";
 	}
+	delete[] msgToGraphics;
 	p.close();
 }
 
