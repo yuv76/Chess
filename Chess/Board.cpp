@@ -159,8 +159,6 @@ MsgCode Board::checkIfCanMove(int sourceRow, int sourceCol, int destRow, int des
 			return PIECE_IN_DEST;
 		}
 
-
-		
 		//invalid move, no piece of the curr player in source.
 		if (turn == WHITE)
 		{
@@ -266,15 +264,31 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 			return CHECKMATE;
 		}
 
+		//check if movement will cause chess on curr king
+		if (turn == WHITE)
+		{
+			if (checkIfChess(turn, _whiteKingPosition[0], _whiteKingPosition[1]))
+			{
+				return CAUSE_CHESS;
+			}
+		}
+		if (turn == BLACK)
+		{
+			if (checkIfChess(turn, _blackKingPosition[0], _blackKingPosition[1]))
+			{
+				return CAUSE_CHESS;
+			}
+		}
+
 		//check if movement caused chess
 		changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
-		if (_pieces[destRow][destCol]->getType() == WHITE && checkIfCanMove(destRow, destCol, _blackKingPosition[0], _blackKingPosition[1], WHITE) == VALID)
+		if (turn == WHITE && checkIfCanMove(destRow, destCol, _blackKingPosition[0], _blackKingPosition[1], WHITE) == VALID)
 		{
-			return CAUSE_CHESS;
+			return CHESS;
 		}
-		else if (turn == BLACK && checkIfCanMove(destRow, destCol, _blackKingPosition[0], _blackKingPosition[1], BLACK) == VALID)
+		else if (turn == BLACK && checkIfCanMove(destRow, destCol, _whiteKingPosition[0], _whiteKingPosition[1], BLACK) == VALID)
 		{
-			return CAUSE_CHESS;
+			return CHESS;
 		}
 
 		//everything is valid
@@ -343,64 +357,34 @@ bool Board::checkIfCheckmate(Colors turn)
 	int startPoseRow = 0, startPoseCol = 0;
 	int kingRow = 0, kingCol = 0;
 	int i = 0, j  = 0;
+	bool gotToLoop = false;
 	
 	if (turn == WHITE)
 	{
-		if (_blackKingPosition[0] != 0) //update start row to the most high place of the king's movement
-		{
-			startPoseRow = _blackKingPosition[0] - 1;
-			kingRow = _blackKingPosition[0];
-		}
-		else //if there is no top left corner (king is on the edge)
-		{
-			startPoseRow = 0;
-			kingRow = startPoseRow;
-		}
-		if (_blackKingPosition[1] != 0)
-		{
-			startPoseCol = _blackKingPosition[1] - 1;
-			kingCol = _blackKingPosition[1];
-		}
-		else //if there is no top left corner (king is on the edge)
-		{
-			startPoseCol = 0;
-			kingCol = startPoseCol;
-		}
+		startPoseRow = _blackKingPosition[0] - 1;
+		kingRow = _blackKingPosition[0];
+		startPoseCol = _blackKingPosition[1] - 1;
+		kingCol = _blackKingPosition[1];
 	}
 	if (turn == BLACK)
 	{
-		if (_whiteKingPosition[0] != 0)
-		{
-			startPoseRow = _whiteKingPosition[0] - 1;
-			kingRow = _whiteKingPosition[0];
-		}
-		else
-		{
-			startPoseRow = 0;
-			kingRow = startPoseRow;
-		}
-		if (_whiteKingPosition[1] != 0)
-		{
-			startPoseCol = _whiteKingPosition[1] - 1;
-			kingCol = _whiteKingPosition[1];
-		}
-		else
-		{
-			startPoseCol = 0;
-			kingCol = startPoseCol;
-		}
+		
+		startPoseRow = _whiteKingPosition[0] - 1;
+		kingRow = _whiteKingPosition[0];
+		startPoseCol = _whiteKingPosition[1] - 1;
+		kingCol = _whiteKingPosition[1];
 	}
 
 	//check the 3x3 positions that the king is in the middle of
-	for (i = startPoseRow; i < (startPoseRow + 3); i++)
+	for (i = startPoseRow; i < (startPoseRow + 3) && i < ROWS && i > 0; i++)
 	{
-		for (j = startPoseCol; j < (startPoseCol + 3); j++)
+		for (j = startPoseCol; j < (startPoseCol + 3) && j < COLS && j > 0; j++)
 		{
 			if (i != kingRow && j != kingCol)
 			{
-				if (i < ROWS && j < COLS)
+				if (i < ROWS && j < COLS && i > 0 && j > 0) //run for all legal indexes around the king
 				{
-					if (_pieces[i][j] != nullptr)
+					/*if (_pieces[i][j] != nullptr)
 					{
 						//if king can eat [i, j] it's not chess 
 						if (_pieces[i][j]->getColor() == turn)
@@ -408,16 +392,20 @@ bool Board::checkIfCheckmate(Colors turn)
 							return false;
 						}
 
-					}
-					if (!checkIfChess(turn, i, j)) //check if it's checkmate
+					}*/
+					if (_pieces[i][j] == nullptr || _pieces[i][j]->getColor() == turn)
 					{
-						return false;
+						if (!checkIfChess(turn, i, j)) //check if it's checkmate
+						{
+							return false;
+						}
+						gotToLoop = true;
 					}
 				}
 			}
 		}
 	}
-	return true;
+	return gotToLoop;
 }
 
 
