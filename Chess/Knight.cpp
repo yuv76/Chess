@@ -26,11 +26,11 @@ output: true if can be moved and false if not.
 */
 bool knight::canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) const
 {
-	if (destRow - sourceRow == abs(2) && destCol - sourceCol == abs(1))
+	if (abs(destRow - sourceRow) == 2 && abs(destCol - sourceCol) == 1)
 	{
 		return true;
 	}
-	if (destRow - sourceRow == abs(1) && destCol - sourceCol == abs(2))
+	if (abs(destRow - sourceRow) == 1 && abs(destCol - sourceCol) == 2)
 	{
 		return true;
 	}

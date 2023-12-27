@@ -166,14 +166,14 @@ MsgCode Board::checkIfCanMove(int sourceRow, int sourceCol, int destRow, int des
 			//invalid move, no piece of the curr player in source.
 			if (turn == WHITE)
 			{
-				if (this->isTaken(sourceRow, sourceCol, BLACK))
+				if (this->isTaken(sourceRow, sourceCol, BLACK) || this->_pieces[sourceRow][sourceCol] == nullptr)
 				{
 					return NO_PIECE;
 				}
 			}
 			if (turn == BLACK)
 			{
-				if (this->isTaken(sourceRow, sourceCol, WHITE))
+				if (this->isTaken(sourceRow, sourceCol, WHITE) || this->_pieces[sourceRow][sourceCol] == nullptr)
 				{
 					return NO_PIECE;
 				}
@@ -273,11 +273,11 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 
 		//check if movement caused chess
 		changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
-		if (_pieces[destRow][destCol]->getType() == WHITE && checkIfCanMove(destRow, destCol, _blackKingPosition[0], _blackKingPosition[1], WHITE))
+		if (_pieces[destRow][destCol]->getType() == WHITE && checkIfCanMove(destRow, destCol, _blackKingPosition[0], _blackKingPosition[1], WHITE) == VALID)
 		{
 			return CAUSE_CHESS;
 		}
-		else if (turn == BLACK && checkIfCanMove(destRow, destCol, _blackKingPosition[0], _blackKingPosition[1], BLACK))
+		else if (turn == BLACK && checkIfCanMove(destRow, destCol, _blackKingPosition[0], _blackKingPosition[1], BLACK) == VALID)
 		{
 			return CAUSE_CHESS;
 		}
