@@ -446,7 +446,7 @@ char* Board::toString()
 			k++;
 		}
 	}
-	board[k] = 0;//change according to turn?
+	board[k] = '0';//change according to turn?
 	board[k + 1] = '\0';
 	return board;
 }

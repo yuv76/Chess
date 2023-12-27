@@ -1,6 +1,6 @@
 #include "Game.h"
 #include "Pipe.h"
-//#include <thread>
+#include <thread>
 
 /*
 C'tor for game object
@@ -68,12 +68,34 @@ void Game::playGame(Colors FirstPlayer)
 	int* extractedMsg = nullptr;
 	Pipe p;
 
-	char* sendMsg;
+	bool isConnect = p.connect();
+	std::string ans;
+	while (!isConnect)
+	{
+		std::cout << "cant connect to graphics" << std::endl;
+		std::cout << "Do you try to connect again or exit? (0-try again, 1-exit)" << std::endl;
+		std::cin >> ans;
+
+		if (ans == "0")
+		{
+			std::cout << "trying connect again.." << std::endl;
+			Sleep(5000);
+			isConnect = p.connect();
+		}
+		else
+		{
+			p.close();
+			return;
+		}
+	}
+
+	char* msgToGraphics;
 
 	//start game by sending board to front
-	sendMsg = this->_gameBoard.toString();
-	p.sendMessageToGraphics(sendMsg);
-	delete[] sendMsg;
+	msgToGraphics = this->_gameBoard.toString();
+	p.sendMessageToGraphics(msgToGraphics);
+	delete[] msgToGraphics;
+	std::string msgFromGraphics = p.getMessageFromGraphics();
 
 	while (this->getWinState() == UNDETERMINED)
 	{
