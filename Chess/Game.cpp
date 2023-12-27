@@ -76,7 +76,7 @@ void Game::playGame(Colors FirstPlayer)
 		std::cout << "Do you try to connect again or exit? (0-try again, 1-exit)" << std::endl;
 		std::cin >> ans;
 
-		if (ans == "0")
+		if (ans == "0") 
 		{
 			std::cout << "trying connect again.." << std::endl;
 			Sleep(5000);
