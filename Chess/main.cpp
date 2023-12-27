@@ -1,6 +1,6 @@
 #include "Game.h"
 
-int maing()
+int main()
 {
 	/*
 	Colors startPlayer = WHITE;

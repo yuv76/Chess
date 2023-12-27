@@ -13,7 +13,7 @@ using std::endl;
 using std::string;
 
 
-void main()
+void maing()
 {
 	srand(time_t(NULL));
 

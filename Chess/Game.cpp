@@ -1,4 +1,6 @@
 #include "Game.h"
+#include "Pipe.h"
+//#include <thread>
 
 /*
 C'tor for game object
@@ -48,18 +50,12 @@ Board& Game::getGameBoard()
 }
 
 /*
-std::string Game::decodeMsg(std::string msg)
-{
 
-}
 */
-
-/*
 void Game::sendNextMove()
 {
 
 }
-*/
 
 /*
 
@@ -70,9 +66,14 @@ void Game::playGame(Colors FirstPlayer)
 	bool legalTurn = false;
 	MsgCode status;
 	int* extractedMsg = nullptr;
+	Pipe p;
 
+	char* sendMsg;
 
 	//start game by sending board to front
+	sendMsg = this->_gameBoard.toString();
+	p.sendMessageToGraphics(sendMsg);
+	delete[] sendMsg;
 
 	while (this->getWinState() == UNDETERMINED)
 	{

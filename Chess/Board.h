@@ -23,6 +23,8 @@
 #define CHECK_SOURCE_POSITION true
 #define CHECK_DEST_POSITION false
 
+#define BUFF_SIZE 1024
+
 enum MsgCode { VALID, CHESS, NO_PIECE, PIECE_IN_DEST, CAUSE_CHESS, INVALID_INDEXES, ILLEGAL_TOOL_MOVE, SAME_POS, CHECKMATE };
 
 class Board
@@ -41,7 +43,7 @@ public:
 	bool isTaken(int row, int col, Colors turn);
 	bool checkIfChess(Colors turn, int kingRow, int kingCol);
 	bool checkIfCheckmate(Colors turn);
-	std::string toString();
+	char* toString();
 
 	Piece* operator()(int rowIndex, int colIndex);
 

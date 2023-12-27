@@ -428,14 +428,14 @@ bool Board::checkIfCheckmate(Colors turn)
 
 
 /*
-returns a string that presents the board with initials of the pieces
+returns a char array that presents the board with initials of the pieces
 input: none
-output: the string
+output: the char array
 */
-std::string Board::toString()
+char* Board::toString()
 {
-	int i = 0, j = 0;
-	std::string board = "";
+	int i = 0, j = 0, k = 0;
+	char* board = new char[1024];
 
 	for (i = 0; i < ROWS; i++)
 	{
@@ -443,14 +443,17 @@ std::string Board::toString()
 		{
 			if (this->_pieces[i][j] != nullptr)
 			{
-				board += this->_pieces[i][j]->getInitial(this->_pieces[i][j]->getColor());
+				board[k] = this->_pieces[i][j]->getInitial(this->_pieces[i][j]->getColor());
 			}
 			else
 			{
-				board += BLANK_POS;
+				board[k] = BLANK_POS;
 			}
+			k++;
 		}
 	}
+	board[k] = 0;//change according to turn?
+	board[k + 1] = '\0';
 	return board;
 }
 
