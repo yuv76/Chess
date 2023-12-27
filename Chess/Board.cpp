@@ -394,7 +394,7 @@ bool Board::checkIfCheckmate(Colors turn)
 	//check the 3x3 positions that the king is in the middle of
 	for (i = startPoseRow; i < (startPoseRow + 3); i++)
 	{
-		for (j = startPoseRow; j < (startPoseRow + 3); j++)
+		for (j = startPoseCol; j < (startPoseCol + 3); j++)
 		{
 			if (i != kingRow && j != kingCol)
 			{
