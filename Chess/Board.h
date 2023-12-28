@@ -25,7 +25,7 @@
 
 #define BUFF_SIZE 1024
 
-enum MsgCode { VALID, CHESS, NO_PIECE, PIECE_IN_DEST, CAUSE_CHESS, INVALID_INDEXES, ILLEGAL_TOOL_MOVE, SAME_POS, CHECKMATE };
+enum MsgCode {VALID, CHESS, NO_PIECE, PIECE_IN_DEST, CAUSE_SELF_CHESS, INVALID_INDEXES, ILLEGAL_TOOL_MOVE, SAME_POS, CHECKMATE};
 
 class Board
 {
@@ -44,6 +44,7 @@ public:
 	bool checkIfChess(Colors turn, int kingRow, int kingCol);
 	bool checkIfCheckmate(Colors turn);
 	char* toString();
+	bool didMoveCauseChess(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn, int kingRow, int kingCol);
 
 	Piece* operator()(int rowIndex, int colIndex);
 

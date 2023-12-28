@@ -248,7 +248,7 @@ void Board::changePieceLocation(int sourceRow, int sourceCol, int destRow, int d
 /*
 function moves a piece from source to dest by the ruls of chess.
 input: (sourceRow, sourceCol) - source row and col, (destRow, destCol) - dest row and col, turn - curr player's turn.
-output: none.
+output: the move result according to the MsgCode enum.
 */
 MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
 {
@@ -280,8 +280,14 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 			}
 		}
 
-		//check if movement caused chess
+		//check movement didnt cause self chess - if it didnt, it will move.
+		if (didMoveCauseChess)
+		{
+			return CAUSE_SELF_CHESS;
+		}
+		
 		changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
+		//check if movement caused chess
 		if (turn == WHITE && checkIfCanMove(destRow, destCol, _blackKingPosition[0], _blackKingPosition[1], WHITE) == VALID)
 		{
 			return CHESS;
@@ -474,4 +480,29 @@ void Board::printBoard()
 		}
 		std::cout << std::endl;
 	}
+}
+
+bool Board::didMoveCauseChess(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn, int kingRow, int kingCol)
+{
+	Piece* eated = nullptr; //will propably need to save in another way, if pointer was deleted it wont matter it was saved.
+	bool causedChess = false;
+
+	//if there is a piece in the destination, save it in case the action wont be legal.
+	eated = this->_pieces[destRow][destCol];
+
+	//move the desired tool to the wanted destination. - will happen only if all the checks were made so won't need to check again.
+	changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
+
+	//check if a chess occured to the current player, if it did not return true - else false.
+	if (!checkIfChess(turn, kingRow, kingCol)) // is turn for check if chess the turn to check if chess was on?
+	{
+		causedChess =  false;
+	}
+	else
+	{
+		//return the moved piece and the eated piece if there was one to its old location(the source and destination respectively).
+		changePieceLocation(destRow, destCol, sourceRow, sourceCol, turn);
+		this->_pieces[destRow][destCol] = eated;
+	}
+
 }
