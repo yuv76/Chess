@@ -264,26 +264,21 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 			return CHECKMATE;
 		}
 
-		//check if movement will cause chess on curr king
+
+		//check movement didnt cause self chess - if it didnt, it will move.
 		if (turn == WHITE)
 		{
-			if (checkIfChess(turn, _whiteKingPosition[0], _whiteKingPosition[1]))
+			if (didMoveCauseChess(sourceRow, sourceCol, destRow, destCol, turn, _whiteKingPosition[0], _whiteKingPosition[1]))
 			{
-				return CAUSE_CHESS;
+				return CAUSE_SELF_CHESS;
 			}
 		}
 		if (turn == BLACK)
 		{
-			if (checkIfChess(turn, _blackKingPosition[0], _blackKingPosition[1]))
+			if (didMoveCauseChess(sourceRow, sourceCol, destRow, destCol, turn, _blackKingPosition[0], _blackKingPosition[1]))
 			{
-				return CAUSE_CHESS;
+				return CAUSE_SELF_CHESS;
 			}
-		}
-
-		//check movement didnt cause self chess - if it didnt, it will move.
-		if (didMoveCauseChess)
-		{
-			return CAUSE_SELF_CHESS;
 		}
 		
 		changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
