@@ -26,7 +26,19 @@ output: true if can be moved and false if not.
 */
 bool King::canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) const
 {
-	if (destRow - sourceRow == 1 || destRow - sourceRow == -1 || destCol - sourceCol == 1 || destCol - sourceCol == -1)
+	if (((destRow - sourceRow == 1) && (destCol == sourceCol)) || ((destRow - sourceRow == 1) && (destCol - sourceCol == 1)) || ((destRow - sourceRow == 1) && (destCol - sourceCol == -1)))
+	{
+		return true;
+	}
+	if (((destRow - sourceRow == -1) && (destCol == sourceCol)) || ((destRow - sourceRow == -1) && (destCol - sourceCol == 1)) || ((destRow - sourceRow == -1) && (destCol - sourceCol == -1)))
+	{
+		return true;
+	}
+	if ((destCol - sourceCol == 1) && (destRow == sourceRow))
+	{
+		return true;
+	}
+	if (((destCol - sourceCol == -1) && (destRow == sourceRow)))
 	{
 		return true;
 	}

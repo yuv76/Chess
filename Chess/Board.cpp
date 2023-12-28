@@ -247,7 +247,6 @@ output: the move result according to the MsgCode enum.
 MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
 {
 	Piece* piece = this->_pieces[sourceRow][sourceCol];
-	Piece* destPiece = this->_pieces[destRow][destCol];
 	MsgCode canMove = checkIfCanMove(sourceRow, sourceCol, destRow, destCol, turn);
 
 	if (canMove == VALID)
@@ -255,12 +254,6 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 		//if there was checkmate on the other king
 		if (checkIfCheckmate(turn))
 		{
-			changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
-			//if there is a piece in the location, eat it.
-			if (destPiece != nullptr)
-			{
-				delete destPiece;
-			}
 			return CHECKMATE;
 		}
 
@@ -281,13 +274,6 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 			}
 		}
 		
-
-		changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
-		//if there is a piece in the location, eat it.
-		if (destPiece != nullptr)
-		{
-			delete destPiece;
-		}
 
 		//check if movement caused chess
 		if (turn == WHITE && checkIfCanMove(destRow, destCol, _blackKingPosition[0], _blackKingPosition[1], WHITE) == VALID)
@@ -337,13 +323,14 @@ bool Board::checkIfChess(Colors turn, int kingRow, int kingCol)
 {
 	int row = 0, col = 0;
 
+	//go over board
 	for (row = 0; row < ROWS; row++)
 	{
 		for (col = 0; col  < COLS; col++)
 		{
-			if (_pieces[row][col] != nullptr)
+			if (_pieces[row][col] != nullptr) //if place is empty
 			{
-				if (this->checkIfCanMove(row, col, kingRow, kingCol, turn) == VALID) //white's turn
+				if (this->checkIfCanMove(row, col, kingRow, kingCol, turn) == VALID)
 				{
 					return true;
 				}
