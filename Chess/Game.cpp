@@ -122,7 +122,7 @@ void Game::playGame(Colors FirstPlayer)
 						this->_winner == BLACK_WON;
 					}
 				}
-				if (status != VALID && status != CHECKMATE && status != CAUSE_CHESS)
+				if (status != VALID && status != CHECKMATE && status != CHESS)
 				{
 					legalTurn = false;
 					std::cout << status << std::endl << std::endl;
