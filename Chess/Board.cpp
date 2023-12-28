@@ -207,12 +207,6 @@ output: none.
 */
 void Board::changePieceLocation(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
 {
-	//if there is a piece in the location, eat it.
-	if (_pieces[destRow][destCol] != nullptr)
-	{
-		delete _pieces[destRow][destCol];
-	}
-	
 	//if one of the kings was moved, update his location.
 	if (_pieces[sourceRow][sourceCol] != nullptr)
 	{
@@ -253,6 +247,7 @@ output: the move result according to the MsgCode enum.
 MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
 {
 	Piece* piece = this->_pieces[sourceRow][sourceCol];
+	Piece* destPiece = this->_pieces[destRow][destCol];
 	MsgCode canMove = checkIfCanMove(sourceRow, sourceCol, destRow, destCol, turn);
 
 	if (canMove == VALID)
@@ -261,6 +256,11 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 		if (checkIfCheckmate(turn))
 		{
 			changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
+			//if there is a piece in the location, eat it.
+			if (destPiece != nullptr)
+			{
+				delete destPiece;
+			}
 			return CHECKMATE;
 		}
 
@@ -286,7 +286,14 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 			return CAUSE_SELF_CHESS;
 		}
 		
+
 		changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
+		//if there is a piece in the location, eat it.
+		if (destPiece != nullptr)
+		{
+			delete destPiece;
+		}
+
 		//check if movement caused chess
 		if (turn == WHITE && checkIfCanMove(destRow, destCol, _blackKingPosition[0], _blackKingPosition[1], WHITE) == VALID)
 		{
@@ -484,8 +491,8 @@ void Board::printBoard()
 
 bool Board::didMoveCauseChess(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn, int kingRow, int kingCol)
 {
-	Piece* eated = nullptr; //will propably need to save in another way, if pointer was deleted it wont matter it was saved.
-	bool causedChess = false;
+	Piece* eated = nullptr; //will probably need to save in another way, if pointer was deleted it wont matter it was saved.
+	bool causedChess = true;
 
 	//if there is a piece in the destination, save it in case the action wont be legal.
 	eated = this->_pieces[destRow][destCol];
@@ -493,9 +500,14 @@ bool Board::didMoveCauseChess(int sourceRow, int sourceCol, int destRow, int des
 	//move the desired tool to the wanted destination. - will happen only if all the checks were made so won't need to check again.
 	changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
 
-	//check if a chess occured to the current player, if it did not return true - else false.
+	//check if a chess occurred to the current player, if it did not return true - else false.
 	if (!checkIfChess(turn, kingRow, kingCol)) // is turn for check if chess the turn to check if chess was on?
 	{
+		//if there is a piece in the location, eat it.
+		if (eated != nullptr)
+		{
+			delete eated;
+		}
 		causedChess =  false;
 	}
 	else
@@ -504,5 +516,7 @@ bool Board::didMoveCauseChess(int sourceRow, int sourceCol, int destRow, int des
 		changePieceLocation(destRow, destCol, sourceRow, sourceCol, turn);
 		this->_pieces[destRow][destCol] = eated;
 	}
+
+	return causedChess;
 
 }
