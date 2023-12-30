@@ -261,15 +261,7 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 
 	if (canMove == VALID)
 	{
-		//if there was checkmate on the other king
-		if (checkIfCheckmate(turn))
-		{
-			return CHECKMATE;
-		}
-
-
 		//check movement didn't cause self chess - if it didn't, it will move.
-		
 		if (turn == WHITE)
 		{
 			if (didMoveCauseChess(sourceRow, sourceCol, destRow, destCol, turn, _whiteKingPosition[0], _whiteKingPosition[1]))
@@ -283,6 +275,12 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 			{
 				return CAUSE_SELF_CHESS;
 			}
+		}
+
+		//if there was checkmate on the other king
+		if (checkIfCheckmate(turn))
+		{
+			return CHECKMATE;
 		}
 		
 
@@ -382,9 +380,9 @@ bool Board::checkIfCheckmate(Colors turn)
 	}
 
 	//check the 3x3 positions that the king is in the middle of
-	for (i = startPoseRow; i < (startPoseRow + 3) && i < ROWS && i > 0; i++)
+	for (i = startPoseRow; i < (startPoseRow + 3) && i < ROWS; i++)
 	{
-		for (j = startPoseCol; j < (startPoseCol + 3) && j < COLS && j > 0; j++)
+		for (j = startPoseCol; j < (startPoseCol + 3) && j < COLS; j++)
 		{
 			if (i != kingRow || j != kingCol)
 			{
