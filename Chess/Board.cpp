@@ -187,10 +187,20 @@ MsgCode Board::checkIfCanMove(int sourceRow, int sourceCol, int destRow, int des
 			}
 		}
 
-		//check if piece can't it in this direction or can't move
-		if (!(piece->canEat(sourceRow, sourceCol, destRow, destCol) || piece->canBeMoved(sourceRow, sourceCol, destRow, destCol)))
+		if (piece->getType() == PAWN)
 		{
-			return ILLEGAL_TOOL_MOVE;
+			if (!((piece->canBeMoved(sourceRow, sourceCol, destRow, destCol) && _pieces[destRow][destCol] == nullptr) || (piece->canEat(sourceRow, sourceCol, destRow, destCol) && _pieces[destRow][destCol] != nullptr)))
+			{
+				return ILLEGAL_TOOL_MOVE;
+			}
+		}
+		else
+		{
+			//check if piece can't it in this direction or can't move
+			if (!(piece->canEat(sourceRow, sourceCol, destRow, destCol) || piece->canBeMoved(sourceRow, sourceCol, destRow, destCol)))
+			{
+				return ILLEGAL_TOOL_MOVE;
+			}
 		}
 	}
 	else
@@ -487,6 +497,7 @@ bool Board::didMoveCauseChess(int sourceRow, int sourceCol, int destRow, int des
 	//if there is a piece in the destination, save it in case the action wont be legal.
 	eated = this->_pieces[destRow][destCol];
 
+	//update king location
 	if (_pieces[sourceRow][sourceCol]->getType() == KING)
 	{
 		kingRow = destRow;
