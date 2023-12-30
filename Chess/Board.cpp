@@ -376,7 +376,7 @@ bool Board::checkIfCheckmate(Colors turn)
 	{
 		for (j = startPoseCol; j < (startPoseCol + 3) && j < COLS && j > 0; j++)
 		{
-			if (i != kingRow && j != kingCol)
+			if (i != kingRow || j != kingCol)
 			{
 				if (i < ROWS && j < COLS && i > 0 && j > 0) //run for all legal indexes around the king
 				{
