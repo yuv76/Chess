@@ -69,7 +69,7 @@ void maing()
 
 
 		// return result to graphics		
-		p.sendMessageToGraphics(msgToGraphics);   
+		p.sendMessageToGraphics(msgToGraphics); 
 
 		// get message from graphics
 		msgFromGraphics = p.getMessageFromGraphics();

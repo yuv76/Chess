@@ -94,7 +94,7 @@ void Game::playGame(Colors FirstPlayer)
 	//start game by sending board to front
 	msgToGraphics = this->_gameBoard.toString();
 	p.sendMessageToGraphics(msgToGraphics);
-	std::string msgFromGraphics = p.getMessageFromGraphics();
+	std::string msgFromGraphics = "";
 
 	while (this->getWinState() == UNDETERMINED || msgFromGraphics != "quit")
 	{
@@ -102,6 +102,7 @@ void Game::playGame(Colors FirstPlayer)
 		std::cout << std::endl;
 		do
 		{
+			msgFromGraphics = p.getMessageFromGraphics();
 			extractedMsg = this->extractMsg(msgFromGraphics);
 
 			if (extractedMsg != nullptr)
@@ -116,10 +117,20 @@ void Game::playGame(Colors FirstPlayer)
 					if (this->_turn == WHITE)
 					{
 						this->_winner = WHITE_WON;
+						//if caused chess make wanted move, only then declare chess
+						msgToGraphics[0] = '0';
+						msgToGraphics[1] = '\0';
+						p.sendMessageToGraphics(msgToGraphics);
+						msgFromGraphics = p.getMessageFromGraphics();
 					}
 					else if (this->_turn == BLACK)
 					{
 						this->_winner == BLACK_WON;
+						//if caused chess make wanted move, only then declare chess
+						msgToGraphics[0] = '0';
+						msgToGraphics[1] = '\0';
+						p.sendMessageToGraphics(msgToGraphics);
+						msgFromGraphics = p.getMessageFromGraphics();
 					}
 				}
 				if (status != VALID && status != CHECKMATE && status != CHESS)
@@ -134,12 +145,10 @@ void Game::playGame(Colors FirstPlayer)
 				msgToGraphics[0] = std::to_string(status)[0];
 				msgToGraphics[1] = '\0';
 				p.sendMessageToGraphics(msgToGraphics);
-				msgFromGraphics = p.getMessageFromGraphics();
 
 				delete[] extractedMsg;
 			}
 		} while (!legalTurn);
-		//send front success code
 		
 	}
 	if (this->getWinState() == WHITE)
