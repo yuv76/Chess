@@ -258,6 +258,7 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 {
 	Piece* piece = this->_pieces[sourceRow][sourceCol];
 	MsgCode canMove = checkIfCanMove(sourceRow, sourceCol, destRow, destCol, turn);
+	Piece* eated = this->_pieces[destRow][destCol];
 
 	if (canMove == VALID)
 	{
@@ -268,12 +269,30 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 			{
 				return CAUSE_SELF_CHESS;
 			}
+			else
+			{
+				changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
+				//if there is a piece in the location, eat it.
+				if (eated != nullptr)
+				{
+					delete eated;
+				}
+			}
 		}
 		if (turn == BLACK)
 		{
 			if (didMoveCauseChess(sourceRow, sourceCol, destRow, destCol, turn, _blackKingPosition[0], _blackKingPosition[1]))
 			{
 				return CAUSE_SELF_CHESS;
+			}
+			else
+			{
+				changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
+				//if there is a piece in the location, eat it.
+				if (eated != nullptr)
+				{
+					delete eated;
+				}
 			}
 		}
 
@@ -543,13 +562,13 @@ bool Board::didMoveCauseChess(int sourceRow, int sourceCol, int destRow, int des
 	bool causedChess = true;
 	Colors turnToCheck = WHITE;
 
-	//I'm calling with the reverse turn because the other pieces could not move (in checkIfChess).
+	//calling with the reverse turn because the other pieces could not move (in checkIfChess).
 	if (turn == WHITE)
 	{
 		turnToCheck = BLACK;
 	}
 
-	//if there is a piece in the destination, save it in case the action wont be legal.
+	//if there is a piece in the destination, save it in case the action won't be legal.
 	eated = this->_pieces[destRow][destCol];
 
 	//update king location
@@ -566,18 +585,17 @@ bool Board::didMoveCauseChess(int sourceRow, int sourceCol, int destRow, int des
 	if (checkIfChess(turnToCheck, kingRow, kingCol)) // is turn for check if chess the turn to check if chess was on?
 	{
 		//return the moved piece and the eated piece if there was one to its old location(the source and destination respectively).
-		changePieceLocation(destRow, destCol, sourceRow, sourceCol, turn);
-		this->_pieces[destRow][destCol] = eated;
+
+		causedChess = true;
 	}
 	else
 	{
-		//if there is a piece in the location, eat it.
-		if (eated != nullptr)
-		{
-			delete eated;
-		}
 		causedChess =  false;
 	}
+
+	//move piece back
+	changePieceLocation(destRow, destCol, sourceRow, sourceCol, turn);
+	this->_pieces[destRow][destCol] = eated;
 
 	return causedChess;
 
