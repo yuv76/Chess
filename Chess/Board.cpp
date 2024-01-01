@@ -412,25 +412,48 @@ bool Board::checkIfKingTheOnlyOneCanMove(Colors turn)
 		opTurn = BLACK;
 	}
 
+	if (checkIfThereIsAPieceThatCanMove(opTurn))
+	{
+		return false;
+	}
+	if (turn == WHITE)
+	{
+		if (!checkIfCanMoveSomewhere(_whiteKingPosition[0], _whiteKingPosition[1], opTurn))
+		{
+			return false;
+		}
+	}
+	if (turn == BLACK)
+	{
+		if (!checkIfCanMoveSomewhere(_blackKingPosition[0], _blackKingPosition[1], opTurn))
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
+bool Board::checkIfThereIsAPieceThatCanMove(Colors turn)
+{
+	int row = 0, col = 0;
+
+
 	//go over board
 	for (row = 0; row < ROWS; row++)
 	{
 		for (col = 0; col < COLS; col++)
 		{
-			if (_pieces[row][col] != nullptr && _pieces[row][col]->getColor() == opTurn) //check if not empty and in the right turn
+			if (_pieces[row][col] != nullptr && _pieces[row][col]->getColor() == turn) //check if not empty and in the right turn
 			{
-				if (_pieces[row][col]->getType() != KING && checkIfCanMoveSomewhere(row, col, opTurn)) //check if not king can move somewhere
+				if (_pieces[row][col]->getType() != KING && checkIfCanMoveSomewhere(row, col, turn)) //check if not king can move somewhere
 				{
-					return false;
-				}
-				if (_pieces[row][col]->getType() == KING && !checkIfCanMoveSomewhere(row, col, opTurn)) //check if king can not move somewhere
-				{
-					return false;
+					return true;
 				}
 			}
 		}
 	}
-	return true;
+	return false;
 }
 
 /*
@@ -446,8 +469,15 @@ bool Board::checkIfCheckmate(Colors turn)
 	int kingRow = 0, kingCol = 0;
 	int i = 0, j  = 0;
 	bool gotToLoop = false;
-	bool canOnlyKingMove = checkIfKingTheOnlyOneCanMove(turn);
+	bool canOnlyKingMove = false;
 	
+	if (checkIfThereIsAPieceThatCanMove(turn))
+	{
+		return false;
+	}
+
+	canOnlyKingMove = checkIfKingTheOnlyOneCanMove(turn);
+
 	if (turn == WHITE)
 	{
 		startPoseRow = _blackKingPosition[0] - 1;
