@@ -470,8 +470,14 @@ bool Board::checkIfCheckmate(Colors turn)
 	int i = 0, j  = 0;
 	bool gotToLoop = false;
 	bool canOnlyKingMove = false;
+	Colors opTurn = WHITE;
+
+	if (turn == WHITE)
+	{
+		opTurn = BLACK;
+	}
 	
-	if (checkIfThereIsAPieceThatCanMove(turn))
+	if (checkIfThereIsAPieceThatCanMove(opTurn))
 	{
 		return false;
 	}
