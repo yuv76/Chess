@@ -6,7 +6,7 @@ input: Piece's color, type, row, column.
 output: none.
 */
 Piece::Piece(Colors color, Types type, int row, int col) :
-	_color(color), _type(type), _letterLocation(row), _numberLocation(col), _hasWalked(false)
+	_color(color), _type(type), _hasWalked(false)
 {}
 
 /*
