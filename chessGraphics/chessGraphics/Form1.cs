@@ -142,7 +142,7 @@ namespace chessGraphics
                     matBoard[i, j] = newBtn;
 
                     newBtn.FlatAppearance.MouseOverBackColor = btnBoard.FlatAppearance.MouseOverBackColor ;
-                    newBtn.BackColor = isColBlack ? Color.Khaki : Color.Peru;
+                    newBtn.BackColor = isColBlack ? Color.Khaki : Color.SaddleBrown;
                     newBtn.FlatAppearance.BorderColor = btnBoard.FlatAppearance.BorderColor;
                     newBtn.FlatAppearance.BorderSize = btnBoard.FlatAppearance.BorderSize;
                     newBtn.FlatStyle = btnBoard.FlatStyle;
@@ -286,12 +286,21 @@ namespace chessGraphics
                          //still do last move, just stop sfter it.
                          if (res.ToLower().StartsWith("game over"))
                          {
+                             if(isCurPlWhite)
+                             {
+                                 res += "\n\nBlack ";
+                             }
+                             else
+                             {
+                                 res += "\n\nWhite ";
+                             }
+                             res += "Won!";
                              isGameOver = true;
                              enginePipe.sendEngineMove("quit");
                          }
                      }
 
-                     lblEngineCalc.Visible = false;
+                    lblEngineCalc.Visible = false;
                     lblResult.Text = string.Format("{0}", res);
                     lblResult.Visible = true;
                     label2.Visible = true;
@@ -334,6 +343,31 @@ namespace chessGraphics
         }
 
         private void btnBoard_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblWaiting_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblEngineCalc_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblResult_Click(object sender, EventArgs e)
         {
 
         }

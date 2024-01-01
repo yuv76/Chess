@@ -1,4 +1,6 @@
-﻿namespace chessGraphics
+﻿using System.Drawing;
+
+namespace chessGraphics
 {
     partial class Form1
     {
@@ -69,6 +71,7 @@
             this.label32 = new System.Windows.Forms.Label();
             this.label33 = new System.Windows.Forms.Label();
             this.label34 = new System.Windows.Forms.Label();
+            this.trophy = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // btnBoard
@@ -115,6 +118,7 @@
             this.lblResult.TabIndex = 5;
             this.lblResult.Text = "{0}";
             this.lblResult.Visible = false;
+            this.lblResult.Click += new System.EventHandler(this.lblResult_Click);
             // 
             // label1
             // 
@@ -128,6 +132,7 @@
             this.label1.TabIndex = 6;
             this.label1.Text = "Current player: ";
             this.label1.Visible = false;
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // lblCurrentPlayer
             // 
@@ -155,6 +160,7 @@
             this.label2.TabIndex = 8;
             this.label2.Text = "Result from engine:";
             this.label2.Visible = false;
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // lblWaiting
             // 
@@ -167,6 +173,7 @@
             this.lblWaiting.Size = new System.Drawing.Size(912, 83);
             this.lblWaiting.TabIndex = 9;
             this.lblWaiting.Text = "Waiting for engine to connect...";
+            this.lblWaiting.Click += new System.EventHandler(this.lblWaiting_Click);
             // 
             // lblEngineCalc
             // 
@@ -180,6 +187,7 @@
             this.lblEngineCalc.TabIndex = 10;
             this.lblEngineCalc.Text = "Engine is calculating...";
             this.lblEngineCalc.Visible = false;
+            this.lblEngineCalc.Click += new System.EventHandler(this.lblEngineCalc_Click);
             // 
             // label3
             // 
@@ -533,6 +541,13 @@
             this.label34.TabIndex = 42;
             this.label34.Text = "h";
             // 
+            // trophy
+            // 
+            this.trophy.Location = new System.Drawing.Point(0, 0);
+            this.trophy.Name = "trophy";
+            this.trophy.Size = new System.Drawing.Size(100, 23);
+            this.trophy.TabIndex = 0;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
@@ -631,6 +646,8 @@
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.Label label34;
+
+        private System.Windows.Forms.Label trophy;
     }
 }
 
