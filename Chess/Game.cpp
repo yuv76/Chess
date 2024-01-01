@@ -129,7 +129,7 @@ void Game::playGame(Colors FirstPlayer)
 						}
 						else if (this->_turn == BLACK)
 						{
-							this->_winner == BLACK_WON;
+							this->_winner = BLACK_WON;
 							/*
 							//if caused chess make wanted move, only then declare chess
 							msgToGraphics[0] = '0';
