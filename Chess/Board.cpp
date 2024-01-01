@@ -390,12 +390,9 @@ bool Board::checkIfCanMoveSomewhere(int sourceRow, int sourceCol, Colors turn)
 	{
 		for (col = 0; col < COLS; col++)
 		{
-			if (_pieces[row][col] != nullptr) //if place is empty
+			if (this->checkIfCanMove(sourceRow, sourceCol, row, col, turn) == VALID && !didMoveCauseChess(sourceRow, sourceCol, row, col, turn, kingRow, kingCol))
 			{
-				if (this->checkIfCanMove(sourceRow, sourceCol, row, col, turn) == VALID && !didMoveCauseChess(sourceRow, sourceCol, row, col, turn, kingRow, kingCol))
-				{
-					return true;
-				}
+				return true;
 			}
 		}
 	}
