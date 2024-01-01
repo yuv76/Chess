@@ -96,64 +96,66 @@ void Game::playGame(Colors FirstPlayer)
 	p.sendMessageToGraphics(msgToGraphics);
 	std::string msgFromGraphics = "";
 
-	while (this->getWinState() == UNDETERMINED || msgFromGraphics != "quit")
+	while (this->getWinState() == UNDETERMINED && msgFromGraphics != "quit")
 	{
 		this->_gameBoard.printBoard();
 		std::cout << std::endl;
 		do
 		{
 			msgFromGraphics = p.getMessageFromGraphics();
-			extractedMsg = this->extractMsg(msgFromGraphics);
-
-			if (extractedMsg != nullptr)
+			if (msgFromGraphics != "quit")
 			{
-				status = this->_gameBoard.move(extractedMsg[0], extractedMsg[1], extractedMsg[2], extractedMsg[3], this->_turn);
-				if (status == VALID || status == CHESS)
-				{
-					this->nextTurn(extractedMsg);
-				}
-				if (status == CHECKMATE)
-				{
-					if (this->_turn == WHITE)
-					{
-						this->_winner = WHITE_WON;
-						//if caused chess make wanted move, only then declare chess
-						/*
-						msgToGraphics[0] = '0';
-						msgToGraphics[1] = '\0';
-						p.sendMessageToGraphics(msgToGraphics);
-						msgFromGraphics = p.getMessageFromGraphics();
-						*/
-					}
-					else if (this->_turn == BLACK)
-					{
-						this->_winner == BLACK_WON;
-						/*
-						//if caused chess make wanted move, only then declare chess
-						msgToGraphics[0] = '0';
-						msgToGraphics[1] = '\0';
-						p.sendMessageToGraphics(msgToGraphics);
-						msgFromGraphics = p.getMessageFromGraphics();
-						*/
-					}
-				}
-				if (status != VALID && status != CHECKMATE && status != CHESS)
-				{
-					legalTurn = false;
-					std::cout << status << std::endl << std::endl;
-				}
-				else
-				{
-					legalTurn = true;
-				}
-				msgToGraphics[0] = std::to_string(status)[0];
-				msgToGraphics[1] = '\0';
-				p.sendMessageToGraphics(msgToGraphics);
+				extractedMsg = this->extractMsg(msgFromGraphics);
 
-				delete[] extractedMsg;
+				if (extractedMsg != nullptr)
+				{
+					status = this->_gameBoard.move(extractedMsg[0], extractedMsg[1], extractedMsg[2], extractedMsg[3], this->_turn);
+					if (status == VALID || status == CHESS)
+					{
+						this->nextTurn(extractedMsg);
+					}
+					if (status == CHECKMATE)
+					{
+						if (this->_turn == WHITE)
+						{
+							this->_winner = WHITE_WON;
+							//if caused chess make wanted move, only then declare chess
+							/*
+							msgToGraphics[0] = '0';
+							msgToGraphics[1] = '\0';
+							p.sendMessageToGraphics(msgToGraphics);
+							msgFromGraphics = p.getMessageFromGraphics();
+							*/
+						}
+						else if (this->_turn == BLACK)
+						{
+							this->_winner == BLACK_WON;
+							/*
+							//if caused chess make wanted move, only then declare chess
+							msgToGraphics[0] = '0';
+							msgToGraphics[1] = '\0';
+							p.sendMessageToGraphics(msgToGraphics);
+							msgFromGraphics = p.getMessageFromGraphics();
+							*/
+						}
+					}
+					if (status != VALID && status != CHECKMATE && status != CHESS)
+					{
+						legalTurn = false;
+						std::cout << status << std::endl << std::endl;
+					}
+					else
+					{
+						legalTurn = true;
+					}
+					msgToGraphics[0] = std::to_string(status)[0];
+					msgToGraphics[1] = '\0';
+					p.sendMessageToGraphics(msgToGraphics);
+
+					delete[] extractedMsg;
+				}
 			}
-		} while (!legalTurn);
-		
+		} while (!legalTurn && msgFromGraphics != "quit");
 	}
 	if (this->getWinState() == WHITE)
 	{

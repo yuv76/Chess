@@ -273,11 +273,7 @@ namespace chessGraphics
 
                     string res = convertEngineToText(m);
 
-                    if (res.ToLower().StartsWith("game over"))
-                    {
-                        isGameOver = true;
-                    }
-                    else if (res.ToLower().StartsWith("valid"))
+                    if (res.ToLower().StartsWith("valid") || res.ToLower().StartsWith("game over"))
                     {
                         isCurPlWhite = !isCurPlWhite;
                         lblCurrentPlayer.Text = isCurPlWhite ? "White" : "Black";
@@ -287,10 +283,15 @@ namespace chessGraphics
 
                         matBoard[srcSquare.Row, srcSquare.Col].FlatAppearance.BorderColor = Color.Maroon;
                         matBoard[dstSquare.Row, dstSquare.Col].FlatAppearance.BorderColor = Color.Maroon;
-                    
-                    }
+                         //still do last move, just stop sfter it.
+                         if (res.ToLower().StartsWith("game over"))
+                         {
+                             isGameOver = true;
+                             enginePipe.sendEngineMove("quit");
+                         }
+                     }
 
-                    lblEngineCalc.Visible = false;
+                     lblEngineCalc.Visible = false;
                     lblResult.Text = string.Format("{0}", res);
                     lblResult.Visible = true;
                     label2.Visible = true;
@@ -323,8 +324,6 @@ namespace chessGraphics
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e)
         {
-   
-
             enginePipe.sendEngineMove("quit");
             enginePipe.close();
         }

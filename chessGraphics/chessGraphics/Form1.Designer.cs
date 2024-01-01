@@ -94,7 +94,7 @@
             // 
             this.lblMove.AutoSize = true;
             this.lblMove.Font = new System.Drawing.Font("Arial Narrow", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblMove.ForeColor = System.Drawing.Color.Red;
+            this.lblMove.ForeColor = System.Drawing.Color.Maroon;
             this.lblMove.Location = new System.Drawing.Point(944, 154);
             this.lblMove.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblMove.Name = "lblMove";
@@ -107,7 +107,7 @@
             // 
             this.lblResult.AutoSize = true;
             this.lblResult.Font = new System.Drawing.Font("Arial Narrow", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblResult.ForeColor = System.Drawing.Color.Red;
+            this.lblResult.ForeColor = System.Drawing.Color.Maroon;
             this.lblResult.Location = new System.Drawing.Point(944, 263);
             this.lblResult.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblResult.Name = "lblResult";
@@ -120,7 +120,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Arial Narrow", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.ForeColor = System.Drawing.Color.Red;
+            this.label1.ForeColor = System.Drawing.Color.Maroon;
             this.label1.Location = new System.Drawing.Point(944, 40);
             this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
@@ -133,7 +133,7 @@
             // 
             this.lblCurrentPlayer.AutoSize = true;
             this.lblCurrentPlayer.Font = new System.Drawing.Font("Arial Narrow", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblCurrentPlayer.ForeColor = System.Drawing.Color.Red;
+            this.lblCurrentPlayer.ForeColor = System.Drawing.Color.Maroon;
             this.lblCurrentPlayer.Location = new System.Drawing.Point(1124, 40);
             this.lblCurrentPlayer.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblCurrentPlayer.Name = "lblCurrentPlayer";
@@ -147,7 +147,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Arial Narrow", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.ForeColor = System.Drawing.Color.Red;
+            this.label2.ForeColor = System.Drawing.Color.Maroon;
             this.label2.Location = new System.Drawing.Point(944, 212);
             this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
@@ -160,7 +160,7 @@
             // 
             this.lblWaiting.AutoSize = true;
             this.lblWaiting.Font = new System.Drawing.Font("Arial Narrow", 36F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblWaiting.ForeColor = System.Drawing.Color.Red;
+            this.lblWaiting.ForeColor = System.Drawing.Color.Maroon;
             this.lblWaiting.Location = new System.Drawing.Point(332, 335);
             this.lblWaiting.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblWaiting.Name = "lblWaiting";
@@ -172,7 +172,7 @@
             // 
             this.lblEngineCalc.AutoSize = true;
             this.lblEngineCalc.Font = new System.Drawing.Font("Arial Narrow", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEngineCalc.ForeColor = System.Drawing.Color.Red;
+            this.lblEngineCalc.ForeColor = System.Drawing.Color.Maroon;
             this.lblEngineCalc.Location = new System.Drawing.Point(944, 98);
             this.lblEngineCalc.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblEngineCalc.Name = "lblEngineCalc";
