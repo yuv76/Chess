@@ -69,6 +69,7 @@ void Game::playGame(Colors FirstPlayer)
 	Pipe p;
 	bool isConnect = p.connect();
 	std::string ans;
+	char codeChar = ' ';
 
 	while (!isConnect)
 	{
@@ -149,7 +150,20 @@ void Game::playGame(Colors FirstPlayer)
 					{
 						legalTurn = true;
 					}
-					msgToGraphics[0] = std::to_string(status)[0];
+
+					if (status == CASTLING_AND_CHESS)
+					{
+						codeChar = 'a'; //code for castling and chess
+					}
+					if (status == CASTLING_AND_MATE)
+					{
+						codeChar = 'b'; //code for castling and mate
+					}
+					else
+					{
+						codeChar = std::to_string(status)[0]; //regular code
+					}
+					msgToGraphics[0] = codeChar;
 					msgToGraphics[1] = '\0';
 					p.sendMessageToGraphics(msgToGraphics);
 
