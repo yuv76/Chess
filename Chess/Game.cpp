@@ -112,39 +112,24 @@ void Game::playGame(Colors FirstPlayer)
 				if (extractedMsg != nullptr)
 				{
 					status = this->_gameBoard.move(extractedMsg[0], extractedMsg[1], extractedMsg[2], extractedMsg[3], this->_turn);
-					if (status == VALID || status == CHESS)
+					if (status == VALID || status == CHESS || status == CASTLING || status == CASTLING_AND_CHESS)
 					{
 						this->nextTurn(extractedMsg);
 					}
-					if (status == CHECKMATE)
+					if (status == CHECKMATE || status == CASTLING_AND_MATE)
 					{
 						if (this->_turn == WHITE)
 						{
 							this->_winner = WHITE_WON;
-							//if caused chess make wanted move, only then declare chess
-							/*
-							msgToGraphics[0] = '0';
-							msgToGraphics[1] = '\0';
-							p.sendMessageToGraphics(msgToGraphics);
-							msgFromGraphics = p.getMessageFromGraphics();
-							*/
 						}
 						else if (this->_turn == BLACK)
 						{
 							this->_winner = BLACK_WON;
-							/*
-							//if caused chess make wanted move, only then declare chess
-							msgToGraphics[0] = '0';
-							msgToGraphics[1] = '\0';
-							p.sendMessageToGraphics(msgToGraphics);
-							msgFromGraphics = p.getMessageFromGraphics();
-							*/
 						}
 					}
-					if (status != VALID && status != CHECKMATE && status != CHESS)
+					if (status != VALID && status != CHECKMATE && status != CHESS && status != CASTLING && status != CASTLING_AND_MATE && status != CASTLING_AND_CHESS)
 					{
 						legalTurn = false;
-						//std::cout << status << std::endl << std::endl;
 					}
 					else
 					{
@@ -155,7 +140,7 @@ void Game::playGame(Colors FirstPlayer)
 					{
 						codeChar = 'a'; //code for castling and chess
 					}
-					if (status == CASTLING_AND_MATE)
+					else if (status == CASTLING_AND_MATE)
 					{
 						codeChar = 'b'; //code for castling and mate
 					}
