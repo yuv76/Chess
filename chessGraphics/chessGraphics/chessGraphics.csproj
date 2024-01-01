@@ -123,6 +123,45 @@
   <ItemGroup>
     <None Include="Resources\r_white.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\change_skin.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\b_black_mer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\b_white_mer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\k_white_mer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\n_white_mer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\p_white_mer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\q_white_mer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\r_white_mer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\k_black_mer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\n_black_mer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\p_black_mer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\q_black_mer.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\r_black_mer.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

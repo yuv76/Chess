@@ -71,7 +71,7 @@ namespace chessGraphics
             this.label32 = new System.Windows.Forms.Label();
             this.label33 = new System.Windows.Forms.Label();
             this.label34 = new System.Windows.Forms.Label();
-            this.trophy = new System.Windows.Forms.Label();
+            this.changeSkin = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnBoard
@@ -541,12 +541,32 @@ namespace chessGraphics
             this.label34.TabIndex = 42;
             this.label34.Text = "h";
             // 
-            // trophy
+            // changeSkin
             // 
-            this.trophy.Location = new System.Drawing.Point(0, 0);
-            this.trophy.Name = "trophy";
-            this.trophy.Size = new System.Drawing.Size(100, 23);
-            this.trophy.TabIndex = 0;
+            this.changeSkin.AutoEllipsis = true;
+            this.changeSkin.BackColor = System.Drawing.Color.PapayaWhip;
+            this.changeSkin.BackgroundImage = Properties.Resources.change_skin;
+            this.changeSkin.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.changeSkin.FlatAppearance.BorderColor = System.Drawing.Color.Maroon;
+            this.changeSkin.FlatAppearance.BorderSize = 3;
+            this.changeSkin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.changeSkin.Location = new System.Drawing.Point(1054, 502);
+            this.changeSkin.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.changeSkin.Name = "changeSkin";
+            this.changeSkin.Size = new System.Drawing.Size(100, 100);
+            this.changeSkin.TabIndex = 2;
+            this.changeSkin.Tag = "a8";
+            this.changeSkin.UseVisualStyleBackColor = false;
+            this.changeSkin.Visible = true;
+            this.changeSkin.Click += new System.EventHandler(this.changeSkin_Click);
+            /*
+            this.changeSkin.Location = new System.Drawing.Point(1054, 502);
+            this.changeSkin.Name = "changeSkin";
+            this.changeSkin.Size = new System.Drawing.Size(100, 100);
+            this.changeSkin.TabIndex = 50;
+            this.changeSkin.Visible = false;
+            this.changeSkin.Click += new System.EventHandler(this.changeSkin_Click);
+            */
             // 
             // Form1
             // 
@@ -593,6 +613,7 @@ namespace chessGraphics
             this.Controls.Add(this.lblResult);
             this.Controls.Add(this.lblMove);
             this.Controls.Add(this.btnBoard);
+            this.Controls.Add(this.changeSkin);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.Name = "Form1";
@@ -646,8 +667,7 @@ namespace chessGraphics
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.Label label34;
-
-        private System.Windows.Forms.Label trophy;
+        private System.Windows.Forms.Button changeSkin;
     }
 }
 

@@ -13,6 +13,8 @@ namespace chessGraphics
 {
     public partial class Form1 : Form
     {
+        private bool gameStarted = false;
+        private bool isMer = false;
         private Square srcSquare;
         private Square dstSquare;
 
@@ -52,6 +54,7 @@ namespace chessGraphics
                 else
                 {
                     isCurPlWhite = (s[s.Length - 1] == '0');
+                    gameStarted = true;
                     paintBoard(s);
                 }
 
@@ -110,13 +113,49 @@ namespace chessGraphics
             }
         }
 
+        Image getMerImageBySign(char sign)
+        {
+            switch (sign)
+            {
+                case 'q':
+                    return Properties.Resources.q_black_mer;
+                case 'Q':
+                    return Properties.Resources.q_white_mer;
+                case 'k':
+                    return Properties.Resources.k_black_mer;
+                case 'K':
+                    return Properties.Resources.k_white_mer;
+                case 'p':
+                    return Properties.Resources.p_black_mer;
+                case 'P':
+                    return Properties.Resources.p_white_mer;
+                case 'r':
+                    return Properties.Resources.r_black_mer;
+                case 'R':
+                    return Properties.Resources.r_white_mer;
+                case 'n':
+                    return Properties.Resources.n_black_mer;
+                case 'N':
+                    return Properties.Resources.n_white_mer;
+                case 'b':
+                    return Properties.Resources.b_black_mer;
+                case 'B':
+                    return Properties.Resources.b_white_mer;
+                case '#':
+                    return null;
+                default:
+                    return Properties.Resources.x;
+
+            }
+        }
+
         private void paintBoard(string board)
         {
             int i, j, z=0;
 
             matBoard = new Button[BOARD_SIZE, BOARD_SIZE];
 
-            btnBoard.FlatAppearance.MouseOverBackColor = Color.LightGreen;
+
             
             Button newBtn;
             Point pnt;
@@ -141,19 +180,40 @@ namespace chessGraphics
                     newBtn = new Button();
                     matBoard[i, j] = newBtn;
 
-                    newBtn.FlatAppearance.MouseOverBackColor = btnBoard.FlatAppearance.MouseOverBackColor ;
-                    newBtn.BackColor = isColBlack ? Color.Khaki : Color.SaddleBrown;
-                    newBtn.FlatAppearance.BorderColor = btnBoard.FlatAppearance.BorderColor;
-                    newBtn.FlatAppearance.BorderSize = btnBoard.FlatAppearance.BorderSize;
-                    newBtn.FlatStyle = btnBoard.FlatStyle;
+                    if (!isMer)
+                    {
+                        btnBoard.FlatAppearance.MouseOverBackColor = Color.LightGreen;
+                        newBtn.FlatAppearance.MouseOverBackColor = btnBoard.FlatAppearance.MouseOverBackColor;
+                        newBtn.BackColor = isColBlack ? Color.Khaki : Color.SaddleBrown;
+                        newBtn.FlatAppearance.BorderColor = btnBoard.FlatAppearance.BorderColor;
+                        newBtn.FlatAppearance.BorderSize = btnBoard.FlatAppearance.BorderSize;
+                        newBtn.FlatStyle = btnBoard.FlatStyle;
 
-                    newBtn.Size = new System.Drawing.Size(btnBoard.Width, btnBoard.Height);
-                    newBtn.Tag = new Square(i, j);
-                    pnt = new Point(currentWidth, currentHeight );
-                    newBtn.Location = pnt;
-                    newBtn.BackgroundImageLayout = ImageLayout.Stretch;
+                        newBtn.Size = new System.Drawing.Size(btnBoard.Width, btnBoard.Height);
+                        newBtn.Tag = new Square(i, j);
+                        pnt = new Point(currentWidth, currentHeight);
+                        newBtn.Location = pnt;
+                        newBtn.BackgroundImageLayout = ImageLayout.Stretch;
 
-                    newBtn.BackgroundImage  = getImageBySign(board[z]);
+                        newBtn.BackgroundImage = getImageBySign(board[z]);
+                    }
+                    else
+                    {
+                        btnBoard.FlatAppearance.MouseOverBackColor = Color.PeachPuff;
+                        newBtn.FlatAppearance.MouseOverBackColor = btnBoard.FlatAppearance.MouseOverBackColor;
+                        newBtn.BackColor = isColBlack ? Color.Aquamarine : Color.Crimson;
+                        newBtn.FlatAppearance.BorderColor = btnBoard.FlatAppearance.BorderColor;
+                        newBtn.FlatAppearance.BorderSize = btnBoard.FlatAppearance.BorderSize;
+                        newBtn.FlatStyle = btnBoard.FlatStyle;
+
+                        newBtn.Size = new System.Drawing.Size(btnBoard.Width, btnBoard.Height);
+                        newBtn.Tag = new Square(i, j);
+                        pnt = new Point(currentWidth, currentHeight);
+                        newBtn.Location = pnt;
+                        newBtn.BackgroundImageLayout = ImageLayout.Stretch;
+
+                        newBtn.BackgroundImage = getMerImageBySign(board[z]);
+                    }
                     
                     newBtn.Click += lastlbl_Click;
 
@@ -264,7 +324,7 @@ namespace chessGraphics
 
                     // should send pipe to engine
                     enginePipe.sendEngineMove(srcSquare.ToString() + dstSquare.ToString());
-                    
+
 
                      // should get pipe from engine
                     string m = enginePipe.getEngineMessage();
@@ -360,6 +420,18 @@ namespace chessGraphics
             enginePipe.close();
         }
 
+        private void changeSkin_Click(object sender, EventArgs e)
+        {
+            if(!gameStarted)
+            {
+                isMer = !isMer;
+            }
+            else
+            {
+                MessageBox.Show("Sorry, game already started.");
+            }
+            
+        }
         private void lblCurrentPlayer_Click(object sender, EventArgs e)
         {
 
@@ -394,5 +466,6 @@ namespace chessGraphics
         {
 
         }
+
     }
 }

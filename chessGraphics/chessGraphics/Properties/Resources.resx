@@ -121,38 +121,77 @@
   <data name="b_black" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\b_black.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="b_black_mer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\b_black_mer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="b_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\b_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="b_white_mer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\b_white_mer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="change_skin" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\change_skin.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="k_black" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\k_black.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="k_black_mer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k_black_mer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="k_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\k_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="k_white_mer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\k_white_mer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="n_black" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\n_black.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="n_black_mer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\n_black_mer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="n_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\n_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="n_white_mer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\n_white_mer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="p_black" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\p_black.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="p_black_mer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\p_black_mer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="p_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\p_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="p_white_mer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\p_white_mer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="q_black" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\q_black.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="q_black_mer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\q_black_mer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="q_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\q_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="q_white_mer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\q_white_mer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="r_black" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\r_black.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="r_black_mer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\r_black_mer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="r_white" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\r_white.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="r_white_mer" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\r_white_mer.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
