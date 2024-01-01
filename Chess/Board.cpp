@@ -83,6 +83,114 @@ Board::~Board()
 	}
 }
 
+/*
+function checks if castling is possible, if it is it does it.
+input: turn - the curr turn of the player.
+output: true if castle is possible and false if not.
+*/
+bool Board::Castle(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
+{
+	bool canCastle = false;
+	if (((turn == BLACK && sourceRow == FIRST_ROW_BLACK && destRow == FIRST_ROW_BLACK) || (turn == WHITE && sourceRow == FIRST_ROW_WHITE && destRow == FIRST_ROW_WHITE)) && (sourceCol == START_KING_COL && destCol == START_TOWER_COL))
+	{
+		if (turn == WHITE && !_pieces[0][7]->getIfWalked() && !_pieces[0][3]->getIfWalked())
+		{
+			if (!checkIfChess(turn, _blackKingPosition[0], _blackKingPosition[1]) && isPathClear(sourceRow, sourceCol, destRow, destCol))
+			{
+				if (isPathChecks(sourceRow, sourceCol, destRow, destCol, turn))
+				{
+					canCastle = true;
+				}
+			}
+		}
+		if (turn == BLACK && !_pieces[7][7]->getIfWalked() && !_pieces[7][3]->getIfWalked())
+		{
+			if (!checkIfChess(turn, _blackKingPosition[0], _blackKingPosition[1]) && isPathClear(sourceRow, sourceCol, destRow, destCol))
+			{
+				if (isPathChecks(sourceRow, sourceCol, destRow, destCol, turn))
+				{
+					canCastle = true;
+				}
+			}
+		}
+	}
+	
+	if (canCastle)
+	{
+		Piece* eated = _pieces[destRow][destCol];
+		changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn); //update king
+		_pieces[sourceRow][sourceCol] = eated; //update tower
+	}
+
+	return canCastle;
+}
+
+/*
+function checks if there is chess in path.
+input: source and destination of the piece.
+output: true if path is clear and false if not.
+*/
+bool Board::isPathChecks(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
+{
+	int row = 0, col = 0;
+	int rowAdd = 0, colAdd = 0;
+	int kingRow = 0, kingCol = 0;
+
+	if (turn == WHITE)
+	{
+		kingRow = _whiteKingPosition[0];
+		kingCol = _whiteKingPosition[1];
+	}
+	if (turn == BLACK)
+	{
+		kingRow = _blackKingPosition[0];
+		kingCol = _blackKingPosition[1];
+	}
+
+
+	//find change in row (+, - or none).
+	if (destRow > sourceRow)
+	{
+		rowAdd = 1;
+	}
+	else if (destRow < sourceRow)
+	{
+		rowAdd = -1;
+	}
+	else
+	{
+		rowAdd = 0;
+	}
+
+	//find change in col (+, - or none).
+	if (destCol > sourceCol)
+	{
+		colAdd = 1;
+	}
+	else if (destCol < sourceCol)
+	{
+		colAdd = -1;
+	}
+	else
+	{
+		colAdd = 0;
+	}
+
+	col = sourceCol + colAdd; //col start
+	for (row = sourceRow + rowAdd; row != destRow || col != destCol; row += rowAdd) //run until arrive to dest
+	{
+		if (_pieces[row][col] != nullptr) //if there is piece on the way
+		{
+			if (checkIfChess(turn, kingRow, kingCol))
+			{
+				return false;
+			}
+		}
+		col += colAdd; //increase col counter
+	}
+
+	return true;
+}
 
 /*
 function check is there is a piece in the curr piece path.
@@ -260,7 +368,7 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 	MsgCode canMove = checkIfCanMove(sourceRow, sourceCol, destRow, destCol, turn);
 	Piece* eated = this->_pieces[destRow][destCol];
 
-	if (canMove == VALID)
+	if (canMove == VALID || Castle(sourceRow, sourceCol, destRow, destCol, turn))
 	{
 		//check movement didn't cause self chess - if it didn't, it will move.
 		if (turn == WHITE)

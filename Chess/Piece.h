@@ -13,9 +13,6 @@ class Piece
 protected:
 	Colors _color;
 	Types _type;
-	// Might turn out to be unneeded
-	int _letterLocation;
-	int _numberLocation;
 	bool _hasWalked;
 
 public:

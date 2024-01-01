@@ -20,6 +20,11 @@
 #define ASCII_SUB_FOR_COL 97
 #define ASCII_SUB_FOR_ROW 49
 
+#define FIRST_ROW_BLACK 7
+#define FIRST_ROW_WHITE 0
+#define START_KING_COL 3
+#define START_TOWER_COL 7
+
 #define CHECK_SOURCE_POSITION true
 #define CHECK_DEST_POSITION false
 
@@ -36,6 +41,8 @@ private:
 public:
 	Board();
 	~Board();
+	bool Castle(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
+	bool isPathChecks(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
 	bool isPathClear(int sourceRow, int sourceCol, int destRow, int destCol);
 	MsgCode checkIfCanMove(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
 	void changePieceLocation(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
