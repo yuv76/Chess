@@ -116,7 +116,7 @@ namespace chessGraphics
 
             matBoard = new Button[BOARD_SIZE, BOARD_SIZE];
 
-            btnBoard.FlatAppearance.MouseOverBackColor = Color.LightGray;
+            btnBoard.FlatAppearance.MouseOverBackColor = Color.LightGreen;
             
             Button newBtn;
             Point pnt;
@@ -142,7 +142,7 @@ namespace chessGraphics
                     matBoard[i, j] = newBtn;
 
                     newBtn.FlatAppearance.MouseOverBackColor = btnBoard.FlatAppearance.MouseOverBackColor ;
-                    newBtn.BackColor = isColBlack ? Color.Gray : Color.White;
+                    newBtn.BackColor = isColBlack ? Color.Khaki : Color.Peru;
                     newBtn.FlatAppearance.BorderColor = btnBoard.FlatAppearance.BorderColor;
                     newBtn.FlatAppearance.BorderSize = btnBoard.FlatAppearance.BorderSize;
                     newBtn.FlatStyle = btnBoard.FlatStyle;
@@ -184,7 +184,7 @@ namespace chessGraphics
                 if (matBoard[srcSquare.Row, srcSquare.Col] == b)
                 {
                  
-                    matBoard[srcSquare.Row, srcSquare.Col].FlatAppearance.BorderColor = Color.Blue;
+                    matBoard[srcSquare.Row, srcSquare.Col].FlatAppearance.BorderColor = Color.Maroon;
                     srcSquare = null;
                 }
                 else
@@ -285,8 +285,8 @@ namespace chessGraphics
                         matBoard[dstSquare.Row, dstSquare.Col].BackgroundImage = matBoard[srcSquare.Row, srcSquare.Col].BackgroundImage;
                         matBoard[srcSquare.Row, srcSquare.Col].BackgroundImage = null;
 
-                        matBoard[srcSquare.Row, srcSquare.Col].FlatAppearance.BorderColor = Color.Blue;
-                        matBoard[dstSquare.Row, dstSquare.Col].FlatAppearance.BorderColor = Color.Blue;
+                        matBoard[srcSquare.Row, srcSquare.Col].FlatAppearance.BorderColor = Color.Maroon;
+                        matBoard[dstSquare.Row, dstSquare.Col].FlatAppearance.BorderColor = Color.Maroon;
                     
                     }
 
@@ -308,10 +308,10 @@ namespace chessGraphics
                     Invoke((MethodInvoker)delegate
                     {
                         if (srcSquare != null)
-                            matBoard[srcSquare.Row, srcSquare.Col].FlatAppearance.BorderColor = Color.Blue;
+                            matBoard[srcSquare.Row, srcSquare.Col].FlatAppearance.BorderColor = Color.Maroon;
 
                         if (dstSquare != null)
-                            matBoard[dstSquare.Row, dstSquare.Col].FlatAppearance.BorderColor = Color.Blue;
+                            matBoard[dstSquare.Row, dstSquare.Col].FlatAppearance.BorderColor = Color.Maroon;
 
                         dstSquare = null;
                         srcSquare = null;
@@ -327,6 +327,16 @@ namespace chessGraphics
 
             enginePipe.sendEngineMove("quit");
             enginePipe.close();
+        }
+
+        private void lblCurrentPlayer_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btnBoard_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
