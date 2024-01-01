@@ -95,19 +95,19 @@ bool Board::Castle(int sourceRow, int sourceCol, int destRow, int destCol, Color
 	{
 		if (turn == WHITE && !_pieces[0][7]->getIfWalked() && !_pieces[0][3]->getIfWalked())
 		{
-			if (!checkIfChess(turn, _blackKingPosition[0], _blackKingPosition[1]) && isPathClear(sourceRow, sourceCol, destRow, destCol))
+			if (!checkIfChess(BLACK, _blackKingPosition[0], _blackKingPosition[1]) && isPathClear(sourceRow, sourceCol, destRow, destCol))
 			{
-				if (isPathChecks(sourceRow, sourceCol, destRow, destCol, turn))
+				if (isPathChessed(sourceRow, sourceCol, destRow, destCol, BLACK))
 				{
 					canCastle = true;
 				}
 			}
 		}
-		if (turn == BLACK && !_pieces[7][7]->getIfWalked() && !_pieces[7][3]->getIfWalked())
+		if (turn == BLACK && !(_pieces[7][7]->getIfWalked()) && !(_pieces[7][3]->getIfWalked()))
 		{
-			if (!checkIfChess(turn, _blackKingPosition[0], _blackKingPosition[1]) && isPathClear(sourceRow, sourceCol, destRow, destCol))
+			if (!checkIfChess(WHITE, _blackKingPosition[0], _blackKingPosition[1]) && isPathClear(sourceRow, sourceCol, destRow, destCol))
 			{
-				if (isPathChecks(sourceRow, sourceCol, destRow, destCol, turn))
+				if (isPathChessed(sourceRow, sourceCol, destRow, destCol, WHITE))
 				{
 					canCastle = true;
 				}
@@ -130,7 +130,7 @@ function checks if there is chess in path.
 input: source and destination of the piece.
 output: true if path is clear and false if not.
 */
-bool Board::isPathChecks(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
+bool Board::isPathChessed(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
 {
 	int row = 0, col = 0;
 	int rowAdd = 0, colAdd = 0;
@@ -368,7 +368,12 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 	MsgCode canMove = checkIfCanMove(sourceRow, sourceCol, destRow, destCol, turn);
 	Piece* eated = this->_pieces[destRow][destCol];
 
-	if (canMove == VALID || Castle(sourceRow, sourceCol, destRow, destCol, turn))
+	if (Castle(sourceRow, sourceCol, destRow, destCol, turn))
+	{
+		return CASTLING;
+	}
+
+	if (canMove == VALID)
 	{
 		//check movement didn't cause self chess - if it didn't, it will move.
 		if (turn == WHITE)

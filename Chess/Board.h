@@ -30,7 +30,7 @@
 
 #define BUFF_SIZE 1024
 
-enum MsgCode {VALID, CHESS, NO_PIECE, PIECE_IN_DEST, CAUSE_SELF_CHESS, INVALID_INDEXES, ILLEGAL_TOOL_MOVE, SAME_POS, CHECKMATE};
+enum MsgCode {VALID, CHESS, NO_PIECE, PIECE_IN_DEST, CAUSE_SELF_CHESS, INVALID_INDEXES, ILLEGAL_TOOL_MOVE, SAME_POS, CHECKMATE, CASTLING};
 
 class Board
 {
@@ -42,7 +42,7 @@ public:
 	Board();
 	~Board();
 	bool Castle(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
-	bool isPathChecks(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
+	bool isPathChessed(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
 	bool isPathClear(int sourceRow, int sourceCol, int destRow, int destCol);
 	MsgCode checkIfCanMove(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
 	void changePieceLocation(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
