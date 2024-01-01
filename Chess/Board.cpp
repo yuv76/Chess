@@ -95,19 +95,19 @@ bool Board::Castle(int sourceRow, int sourceCol, int destRow, int destCol, Color
 	{
 		if (turn == WHITE && !_pieces[0][7]->getIfWalked() && !_pieces[0][3]->getIfWalked())
 		{
-			if (!checkIfChess(turn, _blackKingPosition[0], _blackKingPosition[1]) && isPathClear(sourceRow, sourceCol, destRow, destCol))
+			if (!checkIfChess(BLACK, _blackKingPosition[0], _blackKingPosition[1]) && isPathClear(sourceRow, sourceCol, destRow, destCol))
 			{
-				if (isPathChecks(sourceRow, sourceCol, destRow, destCol, turn))
+				if (isPathChessed(sourceRow, sourceCol, destRow, destCol, BLACK))
 				{
 					canCastle = true;
 				}
 			}
 		}
-		if (turn == BLACK && !_pieces[7][7]->getIfWalked() && !_pieces[7][3]->getIfWalked())
+		if (turn == BLACK && !(_pieces[7][7]->getIfWalked()) && !(_pieces[7][3]->getIfWalked()))
 		{
-			if (!checkIfChess(turn, _blackKingPosition[0], _blackKingPosition[1]) && isPathClear(sourceRow, sourceCol, destRow, destCol))
+			if (!checkIfChess(WHITE, _blackKingPosition[0], _blackKingPosition[1]) && isPathClear(sourceRow, sourceCol, destRow, destCol))
 			{
-				if (isPathChecks(sourceRow, sourceCol, destRow, destCol, turn))
+				if (isPathChessed(sourceRow, sourceCol, destRow, destCol, WHITE))
 				{
 					canCastle = true;
 				}
@@ -118,7 +118,7 @@ bool Board::Castle(int sourceRow, int sourceCol, int destRow, int destCol, Color
 	if (canCastle)
 	{
 		Piece* eated = _pieces[destRow][destCol];
-		changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn); //update king
+		changePieceLocation(sourceRow, sourceCol, destRow, destCol); //update king
 		_pieces[sourceRow][sourceCol] = eated; //update tower
 	}
 
@@ -130,7 +130,7 @@ function checks if there is chess in path.
 input: source and destination of the piece.
 output: true if path is clear and false if not.
 */
-bool Board::isPathChecks(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
+bool Board::isPathChessed(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
 {
 	int row = 0, col = 0;
 	int rowAdd = 0, colAdd = 0;
@@ -323,7 +323,7 @@ function changes the location of a piece on the board and updates the king if ne
 input: (sourceRow, sourceCol) - source row and col, (destRow, destCol) - dest row and col, turn - curr player's turn.
 output: none.
 */
-void Board::changePieceLocation(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
+void Board::changePieceLocation(int sourceRow, int sourceCol, int destRow, int destCol)
 {
 	//if one of the kings was moved, update his location.
 	if (_pieces[sourceRow][sourceCol] != nullptr)
@@ -367,39 +367,48 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 	Piece* piece = this->_pieces[sourceRow][sourceCol];
 	MsgCode canMove = checkIfCanMove(sourceRow, sourceCol, destRow, destCol, turn);
 	Piece* eated = this->_pieces[destRow][destCol];
+	bool castled = Castle(sourceRow, sourceCol, destRow, destCol, turn);
 
-	if (canMove == VALID || Castle(sourceRow, sourceCol, destRow, destCol, turn))
+	if (castled)
 	{
-		//check movement didn't cause self chess - if it didn't, it will move.
-		if (turn == WHITE)
+		return CASTLING;
+	}
+	 
+	if (canMove == VALID || castled)
+	{
+		if (!castled)
 		{
-			if (didMoveCauseChess(sourceRow, sourceCol, destRow, destCol, turn, _whiteKingPosition[0], _whiteKingPosition[1]))
+			//check movement didn't cause self chess - if it didn't, it will move.
+			if (turn == WHITE)
 			{
-				return CAUSE_SELF_CHESS;
-			}
-			else
-			{
-				changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
-				//if there is a piece in the location, eat it.
-				if (eated != nullptr)
+				if (didMoveCauseChess(sourceRow, sourceCol, destRow, destCol, turn, _whiteKingPosition[0], _whiteKingPosition[1]))
 				{
-					delete eated;
+					return CAUSE_SELF_CHESS;
+				}
+				else
+				{
+					changePieceLocation(sourceRow, sourceCol, destRow, destCol);
+					//if there is a piece in the location, eat it.
+					if (eated != nullptr)
+					{
+						delete eated;
+					}
 				}
 			}
-		}
-		if (turn == BLACK)
-		{
-			if (didMoveCauseChess(sourceRow, sourceCol, destRow, destCol, turn, _blackKingPosition[0], _blackKingPosition[1]))
+			if (turn == BLACK)
 			{
-				return CAUSE_SELF_CHESS;
-			}
-			else
-			{
-				changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
-				//if there is a piece in the location, eat it.
-				if (eated != nullptr)
+				if (didMoveCauseChess(sourceRow, sourceCol, destRow, destCol, turn, _blackKingPosition[0], _blackKingPosition[1]))
 				{
-					delete eated;
+					return CAUSE_SELF_CHESS;
+				}
+				else
+				{
+					changePieceLocation(sourceRow, sourceCol, destRow, destCol);
+					//if there is a piece in the location, eat it.
+					if (eated != nullptr)
+					{
+						delete eated;
+					}
 				}
 			}
 		}
@@ -407,6 +416,10 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 		//if there was checkmate on the other king
 		if (checkIfCheckmate(turn))
 		{
+			if (castled)
+			{
+				return CASTLING_AND_MATE;
+			}
 			return CHECKMATE;
 		}
 		
@@ -414,14 +427,26 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 		//check if movement caused chess
 		if (turn == WHITE && checkIfCanMove(destRow, destCol, _blackKingPosition[0], _blackKingPosition[1], WHITE) == VALID)
 		{
+			if (castled)
+			{
+				return CASTLING_AND_CHESS;
+			}
 			return CHESS;
 		}
 		else if (turn == BLACK && checkIfCanMove(destRow, destCol, _whiteKingPosition[0], _whiteKingPosition[1], BLACK) == VALID)
 		{
+			if (castled)
+			{
+				return CASTLING_AND_CHESS;
+			}
 			return CHESS;
 		}
 
 		//everything is valid
+		if (castled)
+		{
+			return CASTLING;
+		}
 		return VALID;
 	}
 	else
@@ -476,6 +501,11 @@ bool Board::checkIfChess(Colors turn, int kingRow, int kingCol)
 	return false;
 }
 
+/*
+function checks if the piece can move somewhere in the board.
+input: row and col of the piece.
+output: true if piece can move and false if not.
+*/
 bool Board::checkIfCanMoveSomewhere(int sourceRow, int sourceCol, Colors turn)
 {
 	int row = 0, col = 0;
@@ -720,7 +750,7 @@ bool Board::didMoveCauseChess(int sourceRow, int sourceCol, int destRow, int des
 	}
 
 	//move the desired tool to the wanted destination. - will happen only if all the checks were made so won't need to check again.
-	changePieceLocation(sourceRow, sourceCol, destRow, destCol, turn);
+	changePieceLocation(sourceRow, sourceCol, destRow, destCol);
 
 	//check if a chess occurred to the current player, if it did not return true - else false.
 	if (checkIfChess(turnToCheck, kingRow, kingCol)) // is turn for check if chess the turn to check if chess was on?
@@ -735,7 +765,7 @@ bool Board::didMoveCauseChess(int sourceRow, int sourceCol, int destRow, int des
 	}
 
 	//move piece back
-	changePieceLocation(destRow, destCol, sourceRow, sourceCol, turn);
+	changePieceLocation(destRow, destCol, sourceRow, sourceCol);
 	this->_pieces[destRow][destCol] = eated;
 
 	return causedChess;
