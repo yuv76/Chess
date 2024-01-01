@@ -218,6 +218,11 @@ namespace chessGraphics
             "Invalid move - illegeal movement with piece",
             "Invalid move - source and dest are equal",
             "Game over - check mate",
+            //added for castling
+            "Valid move - performed Castling",
+            "Valid move - performed Castling and Chess",
+            "Game over - performed Castling and CheckMate",
+
             "Unknown message"
             };
 
@@ -245,9 +250,9 @@ namespace chessGraphics
             {
                  Invoke((MethodInvoker)delegate {
 
-                     lblEngineCalc.Visible = true;
+                    lblEngineCalc.Visible = true;
             
-                     lblMove.Text = string.Format("Move from {0} to {1}", srcSquare, dstSquare);
+                    lblMove.Text = string.Format("Move from {0} to {1}", srcSquare, dstSquare);
                     lblMove.Visible = true;
                     //lblEngineCalc.Invalidate();
             
@@ -263,6 +268,14 @@ namespace chessGraphics
 
                      // should get pipe from engine
                     string m = enginePipe.getEngineMessage();
+                    if(m == "a")
+                     {
+                         m = "10";
+                     }
+                    else if(m == "b")
+                     {
+                         m = "11";
+                     }
 
                     if (!enginePipe.isConnected())
                     {
@@ -277,9 +290,19 @@ namespace chessGraphics
                     {
                         isCurPlWhite = !isCurPlWhite;
                         lblCurrentPlayer.Text = isCurPlWhite ? "White" : "Black";
-
-                        matBoard[dstSquare.Row, dstSquare.Col].BackgroundImage = matBoard[srcSquare.Row, srcSquare.Col].BackgroundImage;
-                        matBoard[srcSquare.Row, srcSquare.Col].BackgroundImage = null;
+                        
+                         if(res.ToLower().Contains("castling"))
+                         {
+                             Image temp = null;
+                             temp = matBoard[srcSquare.Row, srcSquare.Col].BackgroundImage;
+                             matBoard[srcSquare.Row, srcSquare.Col].BackgroundImage = matBoard[dstSquare.Row, dstSquare.Col].BackgroundImage;
+                             matBoard[dstSquare.Row, dstSquare.Col].BackgroundImage = temp;
+                         }
+                         else
+                         {
+                             matBoard[dstSquare.Row, dstSquare.Col].BackgroundImage = matBoard[srcSquare.Row, srcSquare.Col].BackgroundImage;
+                             matBoard[srcSquare.Row, srcSquare.Col].BackgroundImage = null;
+                         }
 
                         matBoard[srcSquare.Row, srcSquare.Col].FlatAppearance.BorderColor = Color.Maroon;
                         matBoard[dstSquare.Row, dstSquare.Col].FlatAppearance.BorderColor = Color.Maroon;
