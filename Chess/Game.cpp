@@ -98,6 +98,7 @@ void Game::playGame(Colors FirstPlayer)
 
 	while (this->getWinState() == UNDETERMINED && msgFromGraphics != "quit")
 	{
+		std::cout << std::endl;
 		this->_gameBoard.printBoard();
 		std::cout << std::endl;
 		do
@@ -142,7 +143,7 @@ void Game::playGame(Colors FirstPlayer)
 					if (status != VALID && status != CHECKMATE && status != CHESS)
 					{
 						legalTurn = false;
-						std::cout << status << std::endl << std::endl;
+						//std::cout << status << std::endl << std::endl;
 					}
 					else
 					{
@@ -157,13 +158,17 @@ void Game::playGame(Colors FirstPlayer)
 			}
 		} while (!legalTurn && msgFromGraphics != "quit");
 	}
-	if (this->getWinState() == WHITE)
+	if (this->getWinState() == WHITE_WON)
 	{
-		std::cout << "white won!";
+		std::cout << "white won!" << std::endl;
+	}
+	else if (this->getWinState() == BLACK_WON)
+	{
+		std::cout << "black won!" << std::endl;
 	}
 	else
 	{
-		std::cout << "black won!";
+		std::cout << "no winner..." << std::endl;
 	}
 	delete[] msgToGraphics;
 	p.close();
