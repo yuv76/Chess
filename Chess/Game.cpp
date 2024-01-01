@@ -118,19 +118,23 @@ void Game::playGame(Colors FirstPlayer)
 					{
 						this->_winner = WHITE_WON;
 						//if caused chess make wanted move, only then declare chess
+						/*
 						msgToGraphics[0] = '0';
 						msgToGraphics[1] = '\0';
 						p.sendMessageToGraphics(msgToGraphics);
 						msgFromGraphics = p.getMessageFromGraphics();
+						*/
 					}
 					else if (this->_turn == BLACK)
 					{
 						this->_winner == BLACK_WON;
+						/*
 						//if caused chess make wanted move, only then declare chess
 						msgToGraphics[0] = '0';
 						msgToGraphics[1] = '\0';
 						p.sendMessageToGraphics(msgToGraphics);
 						msgFromGraphics = p.getMessageFromGraphics();
+						*/
 					}
 				}
 				if (status != VALID && status != CHECKMATE && status != CHESS)
