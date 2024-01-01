@@ -349,6 +349,71 @@ bool Board::checkIfChess(Colors turn, int kingRow, int kingCol)
 	return false;
 }
 
+bool Board::checkIfCanMoveSomewhere(int sourceRow, int sourceCol, Colors turn)
+{
+	int row = 0, col = 0;
+	int kingRow = 0, kingCol = 0;
+
+	if (turn == BLACK)
+	{
+		kingRow = _blackKingPosition[0];
+		kingCol = _blackKingPosition[1];
+	}
+	if (turn == WHITE)
+	{
+
+		kingRow = _whiteKingPosition[0];
+		kingCol = _whiteKingPosition[1];
+	}
+
+	//go over board
+	for (row = 0; row < ROWS; row++)
+	{
+		for (col = 0; col < COLS; col++)
+		{
+			if (_pieces[row][col] != nullptr) //if place is empty
+			{
+				if (this->checkIfCanMove(sourceRow, sourceCol, row, col, turn) == VALID && !didMoveCauseChess(sourceRow, sourceCol, row, col, turn, kingRow, kingCol))
+				{
+					return true;
+				}
+			}
+		}
+	}
+	return false;
+}
+
+bool Board::checkIfKingTheOnlyOneCanMove(Colors turn)
+{
+	int row = 0, col = 0;
+	Colors opTurn = WHITE;
+
+	if (turn == WHITE)
+	{
+		opTurn = BLACK;
+	}
+
+	//go over board
+	for (row = 0; row < ROWS; row++)
+	{
+		for (col = 0; col < COLS; col++)
+		{
+			if (_pieces[row][col] != nullptr && _pieces[row][col]->getColor() == opTurn) //check if not empty and in the right turn
+			{
+				if (_pieces[row][col]->getType() != KING && checkIfCanMoveSomewhere(row, col, opTurn)) //check if not king can move somewhere
+				{
+					return false;
+				}
+				if (_pieces[row][col]->getType() == KING && !checkIfCanMoveSomewhere(row, col, opTurn)) //check if king can not move somewhere
+				{
+					return false;
+				}
+			}
+		}
+	}
+	return true;
+}
+
 /*
 function checks if there is checkmate on the opponent's king, (checks if there is chess on all the king's possible destinations).
 input: turn - the current player (white or black).
@@ -362,6 +427,7 @@ bool Board::checkIfCheckmate(Colors turn)
 	int kingRow = 0, kingCol = 0;
 	int i = 0, j  = 0;
 	bool gotToLoop = false;
+	bool canOnlyKingMove = checkIfKingTheOnlyOneCanMove(turn);
 	
 	if (turn == WHITE)
 	{
@@ -384,19 +450,10 @@ bool Board::checkIfCheckmate(Colors turn)
 	{
 		for (j = startPoseCol; j < (startPoseCol + 3) && j < COLS; j++)
 		{
-			if (i != kingRow || j != kingCol)
+			if ((i != kingRow || j != kingCol) && canOnlyKingMove)
 			{
 				if (i < ROWS && j < COLS && i > 0 && j > 0) //run for all legal indexes around the king
 				{
-					/*if (_pieces[i][j] != nullptr)
-					{
-						//if king can eat [i, j] it's not chess 
-						if (_pieces[i][j]->getColor() == turn)
-						{
-							return false;
-						}
-
-					}*/
 					if (_pieces[i][j] == nullptr || _pieces[i][j]->getColor() == turn)
 					{
 						if (!checkIfChess(turn, i, j)) //check if it's checkmate

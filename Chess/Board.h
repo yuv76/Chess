@@ -42,6 +42,8 @@ public:
 	MsgCode move(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
 	bool isTaken(int row, int col, Colors turn);
 	bool checkIfChess(Colors turn, int kingRow, int kingCol);
+	bool checkIfCanMoveSomewhere(int sourceRow, int sourceCol, Colors turn);
+	bool checkIfKingTheOnlyOneCanMove(Colors turn);
 	bool checkIfCheckmate(Colors turn);
 	char* toString();
 	bool didMoveCauseChess(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn, int kingRow, int kingCol);
