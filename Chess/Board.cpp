@@ -452,7 +452,7 @@ bool Board::checkIfCheckmate(Colors turn)
 		{
 			if ((i != kingRow || j != kingCol) && canOnlyKingMove)
 			{
-				if (i < ROWS && j < COLS && i > 0 && j > 0) //run for all legal indexes around the king
+				if (i < ROWS && j < COLS && i >= 0 && j >= 0) //run for all legal indexes around the king
 				{
 					if (_pieces[i][j] == nullptr || _pieces[i][j]->getColor() == turn)
 					{
