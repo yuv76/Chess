@@ -88,7 +88,7 @@ function checks if castling is possible, if it is it does it.
 input: turn - the curr turn of the player.
 output: true if castle is possible and false if not.
 */
-bool Board::Castle(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
+MsgCode Board::Castle(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
 {
 	bool canCastle = false;
 	Piece* tower = nullptr;
@@ -121,17 +121,41 @@ bool Board::Castle(int sourceRow, int sourceCol, int destRow, int destCol, Color
 					canCastle = true;
 				}
 			}
+			else
+			{
+				return ILLEGAL_TOOL_MOVE;
+			}
+		}
+		else
+		{
+			return ILLEGAL_TOOL_MOVE;
 		}
 		if (turn == BLACK && !(_pieces[7][7]->getIfWalked()) && !(_pieces[7][3]->getIfWalked()))
 		{
 			if (isPathClear(sourceRow, sourceCol, destRow, destCol))
 			{
-				if (isPathChessedForCastling(sourceRow, sourceCol, destRow, destCol, WHITE))
+				if (!isPathChessedForCastling(sourceRow, sourceCol, destRow, destCol, WHITE))
 				{
 					canCastle = true;
 				}
+				else
+				{
+					return CAUSE_SELF_CHESS;
+				}
+			}
+			else
+			{
+				return ILLEGAL_TOOL_MOVE;
 			}
 		}
+		else
+		{
+			return ILLEGAL_TOOL_MOVE;
+		}
+	}
+	else
+	{
+		return INVALID_INDEXES;
 	}
 	
 	//perform castling
@@ -148,9 +172,8 @@ bool Board::Castle(int sourceRow, int sourceCol, int destRow, int destCol, Color
 		{
 			_pieces[sourceRow][2] = tower;
 		}
+		return VALID;
 	}
-
-	return canCastle;
 }
 
 /*
@@ -177,18 +200,34 @@ bool Board::isPathChessedForCastling(int sourceRow, int sourceCol, int destRow, 
 		colAdd = 0;
 	}
 
-	for (col = sourceCol; col <= destCol; col += colAdd) //run until arrive to dest
+	if (colAdd == 1 || colAdd == 0)
 	{
-		if (_pieces[row][col] != nullptr) //if there is piece on the way
+		for (col = sourceCol; col <= destCol; col += colAdd) //run until arrive to dest
 		{
-			if (checkIfChess(turn, row, col))
+			if (_pieces[row][col] != nullptr) //if there is piece on the way
 			{
-				return false;
+				if (checkIfChess(turn, row, col))
+				{
+					return true;
+				}
+			}
+		}
+	}
+	if (colAdd == -1)
+	{
+		for (col = sourceCol; col >= destCol; col += colAdd) //run until arrive to dest
+		{
+			if (_pieces[row][col] != nullptr) //if there is piece on the way
+			{
+				if (checkIfChess(turn, row, col))
+				{
+					return true;
+				}
 			}
 		}
 	}
 
-	return true;
+	return false;
 }
 
 /*
@@ -357,12 +396,18 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 	Piece* piece = this->_pieces[sourceRow][sourceCol];
 	MsgCode canMove = checkIfCanMove(sourceRow, sourceCol, destRow, destCol, turn);
 	Piece* eated = this->_pieces[destRow][destCol];
-	bool castled = Castle(sourceRow, sourceCol, destRow, destCol, turn);
+	MsgCode castled = Castle(sourceRow, sourceCol, destRow, destCol, turn);
 	 
-	if (canMove == VALID || castled)
+	if (canMove == VALID || castled== VALID)
 	{
-		if (!castled)
+		if (castled != VALID)
 		{
+			//return more correct answer:
+			if (castled == ILLEGAL_TOOL_MOVE || castled == CAUSE_SELF_CHESS)
+			{
+				return castled;
+			}
+
 			//check movement didn't cause self chess - if it didn't, it will move.
 			if (turn == WHITE)
 			{
@@ -417,7 +462,7 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 		//if there was checkmate on the other king
 		if (checkIfCheckmate(turn))
 		{
-			if (castled)
+			if (castled == VALID)
 			{
 				return CASTLING_AND_MATE;
 			}
@@ -428,7 +473,7 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 		//check if movement caused chess
 		if (turn == WHITE && checkIfCanMove(destRow, destCol, _blackKingPosition[0], _blackKingPosition[1], WHITE) == VALID)
 		{
-			if (castled)
+			if (castled == VALID)
 			{
 				return CASTLING_AND_CHESS;
 			}
@@ -436,13 +481,13 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 		}
 		else if (turn == BLACK && checkIfCanMove(destRow, destCol, _whiteKingPosition[0], _whiteKingPosition[1], BLACK) == VALID)
 		{
-			if (castled)
+			if (castled == VALID)
 			{
 				return CASTLING_AND_CHESS;
 			}
 			return CHESS;
 		}
-		if (castled)
+		if (castled == VALID)
 		{
 			if (turn == WHITE && checkIfCanMove(sourceRow, sourceCol, _blackKingPosition[0], _blackKingPosition[1], WHITE) == VALID)
 			{
@@ -456,7 +501,7 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 		}
 
 		//everything is valid
-		if (castled)
+		if (castled == VALID)
 		{
 			return CASTLING;
 		}
