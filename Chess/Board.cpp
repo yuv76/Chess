@@ -91,14 +91,32 @@ output: true if castle is possible and false if not.
 bool Board::Castle(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
 {
 	bool canCastle = false;
+	Piece* tower = nullptr;
 
-	if (((turn == BLACK && sourceRow == FIRST_ROW_BLACK && destRow == FIRST_ROW_BLACK) || (turn == WHITE && sourceRow == FIRST_ROW_WHITE && destRow == FIRST_ROW_WHITE)) && ((sourceCol == START_KING_COL && destCol == START_TOWER_COL) || (sourceCol == START_KING_COL && destCol == 0) || (sourceCol == 0 && destCol == START_KING_COL) || (sourceCol == START_TOWER_COL && destCol == START_KING_COL)))
+
+	//check if castling is possible:
+	if ((turn == BLACK && sourceRow == FIRST_ROW_BLACK && destRow == FIRST_ROW_BLACK) || (turn == WHITE && sourceRow == FIRST_ROW_WHITE && destRow == FIRST_ROW_WHITE))
 	{
+		if (sourceCol == START_KING_COL && destCol == START_KING_COL - 2)
+		{
+			tower = _pieces[sourceRow][0];
+			canCastle = true;
+		}
+		if (sourceCol == START_KING_COL && destCol == START_KING_COL + 2)
+		{
+			tower = _pieces[sourceRow][7];
+			canCastle = true;
+		}
+	}
+	
+	if (canCastle)
+	{
+		canCastle = false;
 		if (turn == WHITE && !_pieces[0][7]->getIfWalked() && !_pieces[0][3]->getIfWalked())
 		{
-			if (!checkIfChess(BLACK, _blackKingPosition[0], _blackKingPosition[1]) && isPathClear(sourceRow, sourceCol, destRow, destCol))
+			if (isPathClear(sourceRow, sourceCol, destRow, destCol))
 			{
-				if (isPathChessed(sourceRow, sourceCol, destRow, destCol, BLACK))
+				if (isPathChessedForCastling(sourceRow, sourceCol, destRow, destCol, BLACK))
 				{
 					canCastle = true;
 				}
@@ -106,9 +124,9 @@ bool Board::Castle(int sourceRow, int sourceCol, int destRow, int destCol, Color
 		}
 		if (turn == BLACK && !(_pieces[7][7]->getIfWalked()) && !(_pieces[7][3]->getIfWalked()))
 		{
-			if (!checkIfChess(WHITE, _blackKingPosition[0], _blackKingPosition[1]) && isPathClear(sourceRow, sourceCol, destRow, destCol))
+			if (isPathClear(sourceRow, sourceCol, destRow, destCol))
 			{
-				if (isPathChessed(sourceRow, sourceCol, destRow, destCol, WHITE))
+				if (isPathChessedForCastling(sourceRow, sourceCol, destRow, destCol, WHITE))
 				{
 					canCastle = true;
 				}
@@ -116,11 +134,20 @@ bool Board::Castle(int sourceRow, int sourceCol, int destRow, int destCol, Color
 		}
 	}
 	
+	//perform castling
 	if (canCastle)
 	{
-		Piece* eated = _pieces[destRow][destCol];
 		changePieceLocation(sourceRow, sourceCol, destRow, destCol); //update king
-		_pieces[sourceRow][sourceCol] = eated; //update tower
+
+		//update tower
+		if (tower == _pieces[sourceRow][0])
+		{
+			_pieces[sourceRow][2] = tower;
+		}
+		if (tower == _pieces[sourceRow][7])
+		{
+			_pieces[sourceRow][2] = tower;
+		}
 	}
 
 	return canCastle;
@@ -131,37 +158,10 @@ function checks if there is chess in path.
 input: source and destination of the piece.
 output: true if path is clear and false if not.
 */
-bool Board::isPathChessed(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
+bool Board::isPathChessedForCastling(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn)
 {
 	int row = 0, col = 0;
-	int rowAdd = 0, colAdd = 0;
-	int kingRow = 0, kingCol = 0;
-
-	if (turn == WHITE)
-	{
-		kingRow = _whiteKingPosition[0];
-		kingCol = _whiteKingPosition[1];
-	}
-	if (turn == BLACK)
-	{
-		kingRow = _blackKingPosition[0];
-		kingCol = _blackKingPosition[1];
-	}
-
-
-	//find change in row (+, - or none).
-	if (destRow > sourceRow)
-	{
-		rowAdd = 1;
-	}
-	else if (destRow < sourceRow)
-	{
-		rowAdd = -1;
-	}
-	else
-	{
-		rowAdd = 0;
-	}
+	int colAdd = 0;
 
 	//find change in col (+, - or none).
 	if (destCol > sourceCol)
@@ -177,17 +177,15 @@ bool Board::isPathChessed(int sourceRow, int sourceCol, int destRow, int destCol
 		colAdd = 0;
 	}
 
-	col = sourceCol + colAdd; //col start
-	for (row = sourceRow + rowAdd; row != destRow || col != destCol; row += rowAdd) //run until arrive to dest
+	for (col = sourceCol; col <= destCol; col += colAdd) //run until arrive to dest
 	{
 		if (_pieces[row][col] != nullptr) //if there is piece on the way
 		{
-			if (checkIfChess(turn, kingRow, kingCol))
+			if (checkIfChess(turn, row, col))
 			{
 				return false;
 			}
 		}
-		col += colAdd; //increase col counter
 	}
 
 	return true;

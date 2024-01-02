@@ -42,7 +42,7 @@ public:
 	Board();
 	~Board();
 	bool Castle(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
-	bool isPathChessed(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
+	bool isPathChessedForCastling(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
 	bool isPathClear(int sourceRow, int sourceCol, int destRow, int destCol);
 	MsgCode checkIfCanMove(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn);
 	void changePieceLocation(int sourceRow, int sourceCol, int destRow, int destCol);
