@@ -23,7 +23,6 @@
 #define FIRST_ROW_BLACK 7
 #define FIRST_ROW_WHITE 0
 #define START_KING_COL 3
-#define START_TOWER_COL 7
 
 #define CHECK_SOURCE_POSITION true
 #define CHECK_DEST_POSITION false
