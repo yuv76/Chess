@@ -595,6 +595,11 @@ bool Board::checkIfCanMoveSomewhere(int sourceRow, int sourceCol, Colors turn)
 	return false;
 }
 
+/*
+function checks if king is the only one of his team who can move.
+input: turn - the curr team.
+output: true if king is the only one who can move and false if not.
+*/
 bool Board::checkIfKingTheOnlyOneCanMove(Colors turn)
 {
 	int row = 0, col = 0;
@@ -627,6 +632,11 @@ bool Board::checkIfKingTheOnlyOneCanMove(Colors turn)
 	return true;
 }
 
+/*
+function checks if there is a piece that is not the king who can move.
+input: turn - the curr team.
+output: true if there is a piece that is not the king who can move and false if not.
+*/
 bool Board::checkIfThereIsAPieceThatCanMove(Colors turn)
 {
 	int row = 0, col = 0;
@@ -656,8 +666,6 @@ output: true if there was a checkmate and false if not.
 */
 bool Board::checkIfCheckmate(Colors turn)
 {
-	//* check if chess on all pf the king's routs and on his curr place
-	//* if yes then it's checkmate
 	int startPoseRow = 0, startPoseCol = 0;
 	int kingRow = 0, kingCol = 0;
 	int i = 0, j = 0;
@@ -785,6 +793,11 @@ void Board::printBoard()
 	}
 }
 
+/*
+function checks if the player tried to cause chess on himself.
+input: source and dest of the piece, turn - the curr team, king's location.
+output: true if chess has been caused and false if not.
+*/
 bool Board::didMoveCauseChess(int sourceRow, int sourceCol, int destRow, int destCol, Colors turn, int kingRow, int kingCol)
 {
 	Piece* eated = nullptr; //will probably need to save in another way, if pointer was deleted it wont matter it was saved.
