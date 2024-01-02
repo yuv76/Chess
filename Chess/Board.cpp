@@ -92,6 +92,7 @@ MsgCode Board::Castle(int sourceRow, int sourceCol, int destRow, int destCol, Co
 {
 	bool canCastle = false;
 	Piece* tower = nullptr;
+	int towerCol = 0;
 
 
 	//check if castling is possible:
@@ -104,7 +105,8 @@ MsgCode Board::Castle(int sourceRow, int sourceCol, int destRow, int destCol, Co
 		}
 		if (sourceCol == START_KING_COL && destCol == START_KING_COL + 2)
 		{
-			tower = _pieces[sourceRow][7];
+			towerCol = 7;
+			tower = _pieces[sourceRow][towerCol];
 			canCastle = true;
 		}
 	}
@@ -112,11 +114,11 @@ MsgCode Board::Castle(int sourceRow, int sourceCol, int destRow, int destCol, Co
 	if (canCastle)
 	{
 		canCastle = false;
-		if (turn == WHITE && !_pieces[0][7]->getIfWalked() && !_pieces[0][3]->getIfWalked())
+		if (turn == WHITE && !_pieces[sourceRow][towerCol]->getIfWalked() && !_pieces[sourceRow][3]->getIfWalked())
 		{
 			if (isPathClear(sourceRow, sourceCol, destRow, destCol))
 			{
-				if (isPathChessedForCastling(sourceRow, sourceCol, destRow, destCol, BLACK))
+				if (!isPathChessedForCastling(sourceRow, sourceCol, destRow, destCol, BLACK))
 				{
 					canCastle = true;
 				}
@@ -126,7 +128,7 @@ MsgCode Board::Castle(int sourceRow, int sourceCol, int destRow, int destCol, Co
 				return ILLEGAL_TOOL_MOVE;
 			}
 		}
-		else if (turn == BLACK && !(_pieces[7][7]->getIfWalked()) && !(_pieces[7][3]->getIfWalked()))
+		else if (turn == BLACK && !(_pieces[sourceRow][towerCol]->getIfWalked()) && !(_pieces[sourceRow][3]->getIfWalked()))
 		{
 			if (isPathClear(sourceRow, sourceCol, destRow, destCol))
 			{
@@ -162,11 +164,13 @@ MsgCode Board::Castle(int sourceRow, int sourceCol, int destRow, int destCol, Co
 		//update tower
 		if (tower == _pieces[sourceRow][0])
 		{
+			_pieces[sourceRow][0] = nullptr;
 			_pieces[sourceRow][2] = tower;
 		}
 		if (tower == _pieces[sourceRow][7])
 		{
-			_pieces[sourceRow][2] = tower;
+			_pieces[sourceRow][7] = nullptr;
+			_pieces[sourceRow][4] = tower;
 		}
 		return VALID;
 	}
