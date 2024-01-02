@@ -649,7 +649,8 @@ bool Board::checkIfThereIsAPieceThatCanMove(Colors turn)
 		{
 			if (_pieces[row][col] != nullptr && _pieces[row][col]->getColor() == turn) //check if not empty and in the right turn
 			{
-				if (_pieces[row][col]->getType() != KING && checkIfCanMoveSomewhere(row, col, turn)) //check if not king can move somewhere
+				//_pieces[row][col]->getType() != KING && 
+				if (checkIfCanMoveSomewhere(row, col, turn)) //check if not king can move somewhere
 				{
 					return true;
 				}
@@ -678,6 +679,13 @@ bool Board::checkIfCheckmate(Colors turn)
 		opTurn = BLACK;
 	}
 
+
+	if (checkIfThereIsAPieceThatCanMove(opTurn))
+	{
+		return false;
+	}
+	return true;
+	/*
 	if (checkIfThereIsAPieceThatCanMove(opTurn))
 	{
 		return false;
@@ -723,6 +731,7 @@ bool Board::checkIfCheckmate(Colors turn)
 		}
 	}
 	return gotToLoop;
+	*/
 }
 
 
