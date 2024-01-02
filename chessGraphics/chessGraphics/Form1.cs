@@ -357,10 +357,40 @@ namespace chessGraphics
 
                          if (res.ToLower().Contains("castling"))
                          {
-                             Image temp = null;
+                             //four options for castling, check which one it is.
+                             if(srcSquare.ToString() + dstSquare.ToString() == "d1b1")
+                             {
+                                 matBoard[7, 1].BackgroundImage = matBoard[7, 0].BackgroundImage;
+                                 matBoard[7, 0].BackgroundImage = null;
+                                 matBoard[dstSquare.Row, dstSquare.Col].BackgroundImage = matBoard[srcSquare.Row, srcSquare.Col].BackgroundImage;
+                                 matBoard[srcSquare.Row, srcSquare.Col].BackgroundImage = null;
+                             }
+                             else if (srcSquare.ToString() + dstSquare.ToString() == "d1f1")
+                             {
+                                 matBoard[7, 4].BackgroundImage = matBoard[7, 7].BackgroundImage;
+                                 matBoard[7, 7].BackgroundImage = null;
+                                 matBoard[dstSquare.Row, dstSquare.Col].BackgroundImage = matBoard[srcSquare.Row, srcSquare.Col].BackgroundImage;
+                                 matBoard[srcSquare.Row, srcSquare.Col].BackgroundImage = null;
+                             }
+                             else if (srcSquare.ToString() + dstSquare.ToString() == "d8b8")
+                             {
+                                 matBoard[0, 2].BackgroundImage = matBoard[0, 0].BackgroundImage;
+                                 matBoard[0, 0].BackgroundImage = null;
+                                 matBoard[dstSquare.Row, dstSquare.Col].BackgroundImage = matBoard[srcSquare.Row, srcSquare.Col].BackgroundImage;
+                                 matBoard[srcSquare.Row, srcSquare.Col].BackgroundImage = null;
+                             }
+                             else if (srcSquare.ToString() + dstSquare.ToString() == "d8f8")
+                             {
+                                 matBoard[0, 5].BackgroundImage = matBoard[0, 7].BackgroundImage;
+                                 matBoard[0, 7].BackgroundImage = null;
+                                 matBoard[dstSquare.Row, dstSquare.Col].BackgroundImage = matBoard[srcSquare.Row, srcSquare.Col].BackgroundImage;
+                                 matBoard[srcSquare.Row, srcSquare.Col].BackgroundImage = null;
+                             }
+                             /*
                              temp = matBoard[srcSquare.Row, srcSquare.Col].BackgroundImage;
                              matBoard[srcSquare.Row, srcSquare.Col].BackgroundImage = matBoard[dstSquare.Row, dstSquare.Col].BackgroundImage;
                              matBoard[dstSquare.Row, dstSquare.Col].BackgroundImage = temp;
+                             */
                          }
                          else
                          {
