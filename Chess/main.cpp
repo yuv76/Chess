@@ -8,7 +8,7 @@ int main()
 	Board board = game.getGameBoard();
 	*/
 	Game game = Game(WHITE);
-	game.playGame(WHITE);
+	game.playGame();
 	//Board board = Board();
 	//board.printBoard();
 	//board.move(1, 3, 3, 3, WHITE);

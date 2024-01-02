@@ -386,11 +386,6 @@ namespace chessGraphics
                                  matBoard[dstSquare.Row, dstSquare.Col].BackgroundImage = matBoard[srcSquare.Row, srcSquare.Col].BackgroundImage;
                                  matBoard[srcSquare.Row, srcSquare.Col].BackgroundImage = null;
                              }
-                             /*
-                             temp = matBoard[srcSquare.Row, srcSquare.Col].BackgroundImage;
-                             matBoard[srcSquare.Row, srcSquare.Col].BackgroundImage = matBoard[dstSquare.Row, dstSquare.Col].BackgroundImage;
-                             matBoard[dstSquare.Row, dstSquare.Col].BackgroundImage = temp;
-                             */
                          }
                          else
                          {

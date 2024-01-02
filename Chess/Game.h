@@ -18,9 +18,7 @@ public:
 	Colors getTurn();
 	Board& getGameBoard();
 
-	std::string decodeMsg(std::string msg);
-	void sendNextMove();
-	void playGame(Colors FirstPlayer);
+	void playGame();
 	void nextTurn(int* move);
 	int* extractMsg(std::string msg);
 };
