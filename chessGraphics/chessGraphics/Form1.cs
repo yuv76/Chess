@@ -189,6 +189,7 @@ namespace chessGraphics
                         newBtn.FlatAppearance.BorderColor = btnBoard.FlatAppearance.BorderColor;
                         newBtn.FlatAppearance.BorderSize = btnBoard.FlatAppearance.BorderSize;
                         newBtn.FlatStyle = btnBoard.FlatStyle;
+                        this.BackColor = System.Drawing.Color.Tan;
 
                         newBtn.Size = new System.Drawing.Size(btnBoard.Width, btnBoard.Height);
                         newBtn.Tag = new Square(i, j);
@@ -206,6 +207,7 @@ namespace chessGraphics
                         newBtn.FlatAppearance.BorderColor = btnBoard.FlatAppearance.BorderColor;
                         newBtn.FlatAppearance.BorderSize = btnBoard.FlatAppearance.BorderSize;
                         newBtn.FlatStyle = btnBoard.FlatStyle;
+                        this.BackColor = System.Drawing.Color.Pink;
 
                         newBtn.Size = new System.Drawing.Size(btnBoard.Width, btnBoard.Height);
                         newBtn.Tag = new Square(i, j);
