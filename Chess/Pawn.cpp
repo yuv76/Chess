@@ -53,6 +53,7 @@ bool Pawn::canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) co
 			return true;
 		}
 	}
+
 	return false;
 }
 

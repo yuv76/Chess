@@ -344,15 +344,6 @@ void Board::changePieceLocation(int sourceRow, int sourceCol, int destRow, int d
 		}
 	}
 
-	//changed walking status
-	if (_pieces[sourceRow][sourceCol] != nullptr)
-	{
-		if (!_pieces[sourceRow][sourceCol]->getIfWalked())
-		{
-			_pieces[sourceRow][sourceCol]->changehasWalkedToTrue();
-		}
-	}
-
 	//move
 	_pieces[destRow][destCol] = _pieces[sourceRow][sourceCol];
 	_pieces[sourceRow][sourceCol] = nullptr;
@@ -389,6 +380,14 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 					{
 						delete eated;
 					}
+					//changed walking status
+					if (_pieces[sourceRow][sourceCol] != nullptr)
+					{
+						if (!_pieces[sourceRow][sourceCol]->getIfWalked())
+						{
+							_pieces[sourceRow][sourceCol]->changehasWalkedToTrue();
+						}
+					}
 				}
 			}
 			if (turn == BLACK)
@@ -404,6 +403,14 @@ MsgCode Board::move(int sourceRow, int sourceCol, int destRow, int destCol, Colo
 					if (eated != nullptr)
 					{
 						delete eated;
+					}
+					//changed walking status
+					if (_pieces[sourceRow][sourceCol] != nullptr)
+					{
+						if (!_pieces[sourceRow][sourceCol]->getIfWalked())
+						{
+							_pieces[sourceRow][sourceCol]->changehasWalkedToTrue();
+						}
 					}
 				}
 			}
