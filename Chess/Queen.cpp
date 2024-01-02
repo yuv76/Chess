@@ -1,18 +1,18 @@
 #include "Queen.h"
 
 /*
-C'tor for Queen object
-input: queen's color, type, row and column
-output: none
+C'tor for Queen object.
+input: queen's color, type, row and column.
+output: none.
 */
 Queen::Queen(Colors color, Types type, int row, int col) :
 	Piece(color, type, row, col)
 {}
 
 /*
-D'tor for Queen object
-input: none
-output: none
+D'tor for Queen object.
+input: none.
+output: none.
 */
 Queen::~Queen()
 {}
@@ -32,9 +32,9 @@ bool Queen::canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) c
 }
 
 /*
-prints queen's initial, according to its color
-input: the queen's color
-output: the initial
+prints queen's initial, according to its color.
+input: the queen's color.
+output: the initial.
 */
 char Queen::getInitial(Colors color)
 {
