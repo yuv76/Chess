@@ -1,8 +1,8 @@
 #include "Tower.h"
 
 /*
-C'tor for Tower object
-input: tower's color, type, row and column
+C'tor for Tower object.
+input: tower's color, type, row and column.
 output: none.
 */
 Tower::Tower(Colors color, Types type, int row, int col) :
@@ -10,9 +10,9 @@ Tower::Tower(Colors color, Types type, int row, int col) :
 {}
 
 /*
-D'tor for tower object
-input: none
-output: none
+D'tor for tower object.
+input: none.
+output: none.
 */
 Tower::~Tower()
 {}
@@ -32,9 +32,9 @@ bool Tower::canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) c
 }
 
 /*
-the << operator, will print R uppercase if white or lowercase if black
-input: stream, Knight
-output: stream with the letter
+the << operator, will print R uppercase if white or lowercase if black.
+input: stream, Knight.
+output: stream with the letter.
 */
 std::ostream& operator<<(std::ostream& os, const Tower& tower)
 {
@@ -53,9 +53,9 @@ std::ostream& operator<<(std::ostream& os, const Tower& tower)
 }
 
 /*
-prints tower's initial, according to its color
-input: the tower's color
-output: the initial
+prints tower's initial, according to its color.
+input: the tower's color.
+output: the initial.
 */
 char Tower::getInitial(Colors color)
 {

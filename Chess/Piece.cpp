@@ -1,7 +1,7 @@
 #include "Piece.h"
 
 /*
-C'tor for Piece object
+C'tor for Piece object.
 input: Piece's color, type, row, column.
 output: none.
 */
@@ -10,7 +10,7 @@ Piece::Piece(Colors color, Types type, int row, int col) :
 {}
 
 /*
-D'tor for Piece object
+D'tor for Piece object.
 input: none.
 output: none.
 */
@@ -20,7 +20,7 @@ Piece::~Piece()
 /*
 returns Piece's type.
 input: none.
-output: the Piece's type (from Types enum)
+output: the Piece's type (from Types enum).
 */
 Types Piece::getType() const
 {
@@ -30,13 +30,18 @@ Types Piece::getType() const
 /*
 Returns Piece's color.
 input: none.
-output: the color (from Colors enum)
+output: the color (from Colors enum).
 */
 Colors Piece::getColor() const
 {
 	return this->_color;
 }
 
+/*
+checks if tool can eat another in dest.
+input: source and destination positions (row and column).
+output: true if tool can eat, false otherwise.
+*/
 bool Piece::canEat(int sourceRow, int sourceCol, int destRow, int destCol) const
 {
 	if (this->canBeMoved(sourceRow, sourceCol, destRow, destCol))
@@ -67,9 +72,9 @@ void Piece::changehasWalkedToTrue()
 }
 
 /*
-the << operator, will print the piece's initial uppercase if white or lowercase if black
-input: stream, Piece
-output: stream with the letter
+the << operator, will print the piece's initial uppercase if white or lowercase if black.
+input: stream, Piece.
+output: stream with the letter.
 */
 std::ostream& operator<<(std::ostream& os, Piece& piece)
 {

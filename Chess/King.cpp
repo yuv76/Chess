@@ -1,8 +1,8 @@
 #include "King.h"
 
 /*
-C'tor for king object
-input: king's color, type, row and column
+C'tor for king object.
+input: king's color, type, row and column.
 output: none
 */
 King::King(Colors color, Types type, int row, int col) :
@@ -10,9 +10,9 @@ King::King(Colors color, Types type, int row, int col) :
 {}
 
 /*
-D'tor for king object
-input: none
-output: none
+D'tor for king object.
+input: none.
+output: none.
 */
 King::~King()
 {
@@ -26,6 +26,7 @@ output: true if can be moved and false if not.
 */
 bool King::canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) const
 {
+	//check king's movements to all 8 sides.
 	if (((destRow - sourceRow == 1) && (destCol == sourceCol)) || ((destRow - sourceRow == 1) && (destCol - sourceCol == 1)) || ((destRow - sourceRow == 1) && (destCol - sourceCol == -1)))
 	{
 		return true;
@@ -46,9 +47,9 @@ bool King::canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) co
 }
 
 /*
-prints king's initial, according to its color
-input: the king's color
-output: the initial
+prints king's initial, according to its color.
+input: the king's color.
+output: the initial.
 */
 char King::getInitial(Colors color)
 {

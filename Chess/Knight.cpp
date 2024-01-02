@@ -1,18 +1,18 @@
 #include "Knight.h"
 
 /*
-C'tor for knight object
-input: knight's color, type, row and column
-output: none
+C'tor for knight object.
+input: knight's color, type, row and column.
+output: none.
 */
 knight::knight(Colors color, Types type, int row, int col) :
 	Piece(color, type, row, col)
 {}
 
 /*
-D'tor for knight object
-input: none
-output: none
+D'tor for knight object.
+input: none.
+output: none.
 */
 knight::~knight()
 {
@@ -38,9 +38,9 @@ bool knight::canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) 
 }
 
 /*
-prints knight's initial, according to its color
-input: the knight's color
-output: the initial
+prints knight's initial, according to its color.
+input: the knight's color.
+output: the initial.
 */
 char knight::getInitial(Colors color)
 {

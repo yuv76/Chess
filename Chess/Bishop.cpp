@@ -1,8 +1,8 @@
 #include "Bishop.h"
 
 /*
-C'tor for Bishop object
-input: bishop's color, typerow and column
+C'tor for Bishop object.
+input: bishop's color, type, row and column.
 output: none.
 */
 Bishop::Bishop(Colors color, Types type, int row, int col) :
@@ -10,7 +10,7 @@ Bishop::Bishop(Colors color, Types type, int row, int col) :
 {}
 
 /*
-D'tor for bishop object
+D'tor for bishop object.
 input: none.
 output: none.
 */
@@ -32,9 +32,9 @@ bool Bishop::canBeMoved(int sourceRow, int sourceCol, int destRow, int destCol) 
 }
 
 /*
-prints bishop's initial, according to its color
-input: the bishop's color
-output: the initial
+prints bishop's initial, according to its color.
+input: the bishop's color.
+output: the initial.
 */
 char Bishop::getInitial(Colors color)
 {
