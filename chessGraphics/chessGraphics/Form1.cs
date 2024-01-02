@@ -168,8 +168,16 @@ namespace chessGraphics
             
             this.SuspendLayout();
 
-            lblCurrentPlayer.Text = isCurPlWhite ? "White" : "Black";
-            lblCurrentPlayer.ForeColor = isCurPlWhite ? System.Drawing.Color.White : System.Drawing.Color.Black;
+            if (isMer)
+            {
+                lblCurrentPlayer.Text = isCurPlWhite ? "Sky" : "Sea";
+                lblCurrentPlayer.ForeColor = isCurPlWhite ? System.Drawing.Color.Fuchsia : System.Drawing.Color.RoyalBlue;
+            }
+            else
+            {
+                lblCurrentPlayer.Text = isCurPlWhite ? "White" : "Black";
+                lblCurrentPlayer.ForeColor = isCurPlWhite ? System.Drawing.Color.White : System.Drawing.Color.Black;
+            }
 
             for (i = 0; i < BOARD_SIZE; i++)
             {
@@ -351,9 +359,19 @@ namespace chessGraphics
 
                     if (res.ToLower().StartsWith("valid") || res.ToLower().StartsWith("game over"))
                     {
-                        isCurPlWhite = !isCurPlWhite;
-                        lblCurrentPlayer.Text = isCurPlWhite ? "White" : "Black";
-                         lblCurrentPlayer.ForeColor = isCurPlWhite ? System.Drawing.Color.White : System.Drawing.Color.Black;
+                         isCurPlWhite = !isCurPlWhite;
+
+
+                         if (isMer)
+                         {
+                             lblCurrentPlayer.Text = isCurPlWhite ? "Sky" : "Sea";
+                             lblCurrentPlayer.ForeColor = isCurPlWhite ? System.Drawing.Color.Fuchsia : System.Drawing.Color.RoyalBlue;
+                         }
+                         else
+                         {
+                             lblCurrentPlayer.Text = isCurPlWhite ? "White" : "Black";
+                             lblCurrentPlayer.ForeColor = isCurPlWhite ? System.Drawing.Color.White : System.Drawing.Color.Black;
+                         }
 
                          if (res.ToLower().Contains("castling"))
                          {
@@ -398,14 +416,30 @@ namespace chessGraphics
                          //still do last move, just stop sfter it.
                          if (res.ToLower().StartsWith("game over"))
                          {
-                             if(isCurPlWhite)
+                             if (isMer)
                              {
-                                 res += "\n\nBlack ";
+                                 if (isCurPlWhite)
+                                 {
+                                     res += "\n\nMagical Sky ";
+                                 }
+                                 else
+                                 {
+                                     res += "\n\nMagical Sea ";
+                                 }
                              }
+
                              else
                              {
-                                 res += "\n\nWhite ";
+                                 if (isCurPlWhite)
+                                 {
+                                     res += "\n\nBlack ";
+                                 }
+                                 else
+                                 {
+                                     res += "\n\nWhite ";
+                                 }
                              }
+                           
                              res += "Won!";
                              isGameOver = true;
                              enginePipe.sendEngineMove("quit");
