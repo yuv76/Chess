@@ -169,6 +169,7 @@ namespace chessGraphics
             this.SuspendLayout();
 
             lblCurrentPlayer.Text = isCurPlWhite ? "White" : "Black";
+            lblCurrentPlayer.ForeColor = isCurPlWhite ? System.Drawing.Color.White : System.Drawing.Color.Black;
 
             for (i = 0; i < BOARD_SIZE; i++)
             {
@@ -350,8 +351,9 @@ namespace chessGraphics
                     {
                         isCurPlWhite = !isCurPlWhite;
                         lblCurrentPlayer.Text = isCurPlWhite ? "White" : "Black";
-                        
-                         if(res.ToLower().Contains("castling"))
+                         lblCurrentPlayer.ForeColor = isCurPlWhite ? System.Drawing.Color.White : System.Drawing.Color.Black;
+
+                         if (res.ToLower().Contains("castling"))
                          {
                              Image temp = null;
                              temp = matBoard[srcSquare.Row, srcSquare.Col].BackgroundImage;
@@ -425,6 +427,7 @@ namespace chessGraphics
             if(!gameStarted)
             {
                 isMer = !isMer;
+                skinType.Text = isMer ? "Sea vs. Sky" : "8-Bit";
             }
             else
             {

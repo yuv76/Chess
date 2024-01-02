@@ -71,6 +71,7 @@ namespace chessGraphics
             this.label32 = new System.Windows.Forms.Label();
             this.label33 = new System.Windows.Forms.Label();
             this.label34 = new System.Windows.Forms.Label();
+            this.skinType = new System.Windows.Forms.Label();
             this.changeSkin = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -535,17 +536,28 @@ namespace chessGraphics
             this.label34.AutoSize = true;
             this.label34.Font = new System.Drawing.Font("Arial Narrow", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label34.Location = new System.Drawing.Point(818, 855);
-            this.label34.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label34.Name = "label34";
             this.label34.Size = new System.Drawing.Size(33, 37);
             this.label34.TabIndex = 42;
             this.label34.Text = "h";
             // 
+            // skinType
+            // 
+            this.skinType.AutoSize = true;
+            this.skinType.Font = new System.Drawing.Font("Arial Narrow", 14.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.skinType.ForeColor = System.Drawing.Color.Maroon;
+            this.skinType.Location = new System.Drawing.Point(1069, 607);
+            this.skinType.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.skinType.Name = "skinType";
+            this.skinType.Size = new System.Drawing.Size(68, 33);
+            this.skinType.TabIndex = 4;
+            this.skinType.Text = "8-Bit";
+            // 
             // changeSkin
             // 
             this.changeSkin.AutoEllipsis = true;
             this.changeSkin.BackColor = System.Drawing.Color.PapayaWhip;
-            this.changeSkin.BackgroundImage = Properties.Resources.change_skin;
+            this.changeSkin.BackgroundImage = global::chessGraphics.Properties.Resources.change_skin;
             this.changeSkin.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.changeSkin.FlatAppearance.BorderColor = System.Drawing.Color.Maroon;
             this.changeSkin.FlatAppearance.BorderSize = 3;
@@ -557,16 +569,7 @@ namespace chessGraphics
             this.changeSkin.TabIndex = 2;
             this.changeSkin.Tag = "a8";
             this.changeSkin.UseVisualStyleBackColor = false;
-            this.changeSkin.Visible = true;
             this.changeSkin.Click += new System.EventHandler(this.changeSkin_Click);
-            /*
-            this.changeSkin.Location = new System.Drawing.Point(1054, 502);
-            this.changeSkin.Name = "changeSkin";
-            this.changeSkin.Size = new System.Drawing.Size(100, 100);
-            this.changeSkin.TabIndex = 50;
-            this.changeSkin.Visible = false;
-            this.changeSkin.Click += new System.EventHandler(this.changeSkin_Click);
-            */
             // 
             // Form1
             // 
@@ -614,6 +617,7 @@ namespace chessGraphics
             this.Controls.Add(this.lblMove);
             this.Controls.Add(this.btnBoard);
             this.Controls.Add(this.changeSkin);
+            this.Controls.Add(this.skinType);
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.Name = "Form1";
@@ -667,6 +671,7 @@ namespace chessGraphics
         private System.Windows.Forms.Label label32;
         private System.Windows.Forms.Label label33;
         private System.Windows.Forms.Label label34;
+        private System.Windows.Forms.Label skinType;
         private System.Windows.Forms.Button changeSkin;
     }
 }
