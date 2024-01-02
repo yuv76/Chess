@@ -126,11 +126,7 @@ MsgCode Board::Castle(int sourceRow, int sourceCol, int destRow, int destCol, Co
 				return ILLEGAL_TOOL_MOVE;
 			}
 		}
-		else
-		{
-			return ILLEGAL_TOOL_MOVE;
-		}
-		if (turn == BLACK && !(_pieces[7][7]->getIfWalked()) && !(_pieces[7][3]->getIfWalked()))
+		else if (turn == BLACK && !(_pieces[7][7]->getIfWalked()) && !(_pieces[7][3]->getIfWalked()))
 		{
 			if (isPathClear(sourceRow, sourceCol, destRow, destCol))
 			{
