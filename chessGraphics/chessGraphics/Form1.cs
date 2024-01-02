@@ -360,7 +360,7 @@ namespace chessGraphics
                              //four options for castling, check which one it is.
                              if(srcSquare.ToString() + dstSquare.ToString() == "d1b1")
                              {
-                                 matBoard[7, 1].BackgroundImage = matBoard[7, 0].BackgroundImage;
+                                 matBoard[7, 2].BackgroundImage = matBoard[7, 0].BackgroundImage;
                                  matBoard[7, 0].BackgroundImage = null;
                                  matBoard[dstSquare.Row, dstSquare.Col].BackgroundImage = matBoard[srcSquare.Row, srcSquare.Col].BackgroundImage;
                                  matBoard[srcSquare.Row, srcSquare.Col].BackgroundImage = null;
@@ -381,7 +381,7 @@ namespace chessGraphics
                              }
                              else if (srcSquare.ToString() + dstSquare.ToString() == "d8f8")
                              {
-                                 matBoard[0, 5].BackgroundImage = matBoard[0, 7].BackgroundImage;
+                                 matBoard[0, 4].BackgroundImage = matBoard[0, 7].BackgroundImage;
                                  matBoard[0, 7].BackgroundImage = null;
                                  matBoard[dstSquare.Row, dstSquare.Col].BackgroundImage = matBoard[srcSquare.Row, srcSquare.Col].BackgroundImage;
                                  matBoard[srcSquare.Row, srcSquare.Col].BackgroundImage = null;
@@ -459,7 +459,7 @@ namespace chessGraphics
             if(!gameStarted)
             {
                 isMer = !isMer;
-                skinType.Text = isMer ? "Sea vs. Sky" : "8-Bit";
+                skinType.Text = isMer ? "Magical Sea vs. Sky" : "8-Bit";
             }
             else
             {
