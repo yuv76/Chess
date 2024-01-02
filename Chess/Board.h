@@ -49,7 +49,6 @@ public:
 	bool isTaken(int row, int col, Colors turn);
 	bool checkIfChess(Colors turn, int kingRow, int kingCol);
 	bool checkIfCanMoveSomewhere(int sourceRow, int sourceCol, Colors turn);
-	bool checkIfKingTheOnlyOneCanMove(Colors turn);
 	bool checkIfThereIsAPieceThatCanMove(Colors turn);
 	bool checkIfCheckmate(Colors turn);
 	char* toString();

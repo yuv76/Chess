@@ -595,42 +595,6 @@ bool Board::checkIfCanMoveSomewhere(int sourceRow, int sourceCol, Colors turn)
 	return false;
 }
 
-/*
-function checks if king is the only one of his team who can move.
-input: turn - the curr team.
-output: true if king is the only one who can move and false if not.
-*/
-bool Board::checkIfKingTheOnlyOneCanMove(Colors turn)
-{
-	int row = 0, col = 0;
-	Colors opTurn = WHITE;
-
-	if (turn == WHITE)
-	{
-		opTurn = BLACK;
-	}
-
-	if (checkIfThereIsAPieceThatCanMove(opTurn))
-	{
-		return false;
-	}
-	if (turn == WHITE)
-	{
-		if (!checkIfCanMoveSomewhere(_whiteKingPosition[0], _whiteKingPosition[1], opTurn))
-		{
-			return false;
-		}
-	}
-	if (turn == BLACK)
-	{
-		if (!checkIfCanMoveSomewhere(_blackKingPosition[0], _blackKingPosition[1], opTurn))
-		{
-			return false;
-		}
-	}
-
-	return true;
-}
 
 /*
 function checks if there is a piece that is not the king who can move.
@@ -649,7 +613,6 @@ bool Board::checkIfThereIsAPieceThatCanMove(Colors turn)
 		{
 			if (_pieces[row][col] != nullptr && _pieces[row][col]->getColor() == turn) //check if not empty and in the right turn
 			{
-				//_pieces[row][col]->getType() != KING && 
 				if (checkIfCanMoveSomewhere(row, col, turn)) //check if not king can move somewhere
 				{
 					return true;
@@ -667,11 +630,6 @@ output: true if there was a checkmate and false if not.
 */
 bool Board::checkIfCheckmate(Colors turn)
 {
-	int startPoseRow = 0, startPoseCol = 0;
-	int kingRow = 0, kingCol = 0;
-	int i = 0, j = 0;
-	bool gotToLoop = false;
-	bool canOnlyKingMove = false;
 	Colors opTurn = WHITE;
 
 	if (turn == WHITE)
@@ -685,53 +643,6 @@ bool Board::checkIfCheckmate(Colors turn)
 		return false;
 	}
 	return true;
-	/*
-	if (checkIfThereIsAPieceThatCanMove(opTurn))
-	{
-		return false;
-	}
-
-	canOnlyKingMove = checkIfKingTheOnlyOneCanMove(turn);
-
-	if (turn == WHITE)
-	{
-		startPoseRow = _blackKingPosition[0] - 1;
-		kingRow = _blackKingPosition[0];
-		startPoseCol = _blackKingPosition[1] - 1;
-		kingCol = _blackKingPosition[1];
-	}
-	if (turn == BLACK)
-	{
-
-		startPoseRow = _whiteKingPosition[0] - 1;
-		kingRow = _whiteKingPosition[0];
-		startPoseCol = _whiteKingPosition[1] - 1;
-		kingCol = _whiteKingPosition[1];
-	}
-
-	//check the 3x3 positions that the king is in the middle of
-	for (i = startPoseRow; i < (startPoseRow + 3) && i < ROWS; i++)
-	{
-		for (j = startPoseCol; j < (startPoseCol + 3) && j < COLS; j++)
-		{
-			if ((i != kingRow || j != kingCol) && !canOnlyKingMove)
-			{
-				if (i < ROWS && j < COLS && i >= 0 && j >= 0) //run for all legal indexes around the king
-				{
-					if (_pieces[i][j] == nullptr || _pieces[i][j]->getColor() == turn)
-					{
-						if (!checkIfChess(turn, i, j)) //check if it's checkmate
-						{
-							return false;
-						}
-						gotToLoop = true;
-					}
-				}
-			}
-		}
-	}
-	return gotToLoop;
-	*/
 }
 
 
